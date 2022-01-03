@@ -9,33 +9,37 @@ class LoginPage extends Page {
     /**
      * define selectors using getter methods
      */
-    get inputUsername() {
-        return $('#username');
+    get inputEmail() {
+        return $('input[name="email"]');
     }
 
     get inputPassword() {
-        return $('#password');
+        return $('input[name="password"]');
     }
 
-    get btnSubmit() {
+    get btnSignIn() {
         return $('button[type="submit"]');
+    }
+
+    get errInvalidPass() {
+        return $('h3=The email address or password is incorrect')
     }
 
     /**
      * a method to encapsule automation code to interact with the page
      * e.g. to login using username and password
      */
-    async login (username, password) {
-        await this.inputUsername.setValue(username);
+    async login(email, password) {
+        await this.inputEmail.setValue(email);
         await this.inputPassword.setValue(password);
-        await this.btnSubmit.click();
+        await this.btnSignIn.click();
     }
 
     /**
      * overwrite specific options to adapt it to page object
      */
     open() {
-        return super.open('login');
+        return super.open('/sign-in');
     }
 }
 
