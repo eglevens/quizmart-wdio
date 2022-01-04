@@ -1,8 +1,8 @@
 const LoginPage = require('../pageobjects/login.page');
 const DiscoverPage = require('../pageobjects/discover.page');
 
-describe('My Login application', () => {
-    it('should login with valid credentials and br redirected to discover page', async () => {
+describe('Login cases', () => {
+    it('should login with valid credentials and be redirected to discover page', async () => {
         await LoginPage.open();
         await LoginPage.login('eglvns@telesoftas.com', 'myPasswordIs321');
         
