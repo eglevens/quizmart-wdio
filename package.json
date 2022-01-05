@@ -12,5 +12,8 @@
     },
     "scripts": {
         "wdio": "wdio run wdio.conf.js"
+    },
+    "dependencies": {
+        "typescript": "^4.5.4"
     }
 }
