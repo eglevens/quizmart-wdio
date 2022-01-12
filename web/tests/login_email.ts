@@ -1,4 +1,4 @@
-import * as LoginPage from "../pageObjects/login.page"
+import * as LoginPage from "../pageObjects/page"
 
 describe('Login with email cases', () => {
     it('Open login with email page & successfully login', async () => {
