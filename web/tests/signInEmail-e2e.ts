@@ -22,25 +22,25 @@ describe('Login with email from sign up page', () => {
         expect (await discoverPage.getDiscoverPageTitle()).to.be.true
     })
 
-    it("Attempt to login with invalid password", async() => {
+    it('Attempt to login with invalid password', async() => {
         await signInPage.signInWithEmail(email, invalidPass)
         expect (await signInPage.getSignInPageTitle()).to.be.true
         expect (await signInPage.getIncorrectCredentialsError()).to.be.true
     })
 
-    it("Attempt to login with non registered email", async() => {
+    it('Attempt to login with non registered email', async() => {
         await signInPage.signInWithEmail(unregistredEmail, invalidPass)
         expect (await signInPage.getSignInPageTitle()).to.be.true
         expect (await signInPage.getIncorrectCredentialsError()).to.be.true
     })
 
-    it("Validation error with invalid email format and too short password", async () => {
+    it('Validation error with invalid email format and too short password', async () => {
         await signInPage.signInWithEmail(invalidFormatEmail, shortPass)
         expect (await signInPage.getEmailFormatValidationError()).to.be.true
         expect (await signInPage.getPasswordLengthValidationError()).to.be.true
     })
 
-    it("Validation error with empty email & password", async () => {
+    it('Validation error with empty email & password', async () => {
         await signInPage.clickSignInBtn()
         expect (await signInPage.getEmailRequiredValidationError()).to.be.true
         expect (await signInPage.getPassRequiredValidationError()).to.be.true
