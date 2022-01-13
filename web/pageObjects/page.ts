@@ -17,3 +17,7 @@ export async function sendValueByLocator(locator: string, value: string): Promis
 export async function getElementTextByLocator(locator: string): Promise<string> {
     return await (await getElementByLocator(locator)).getText()
 }
+
+export async function elementPresentByLocator(locator: string): Promise<boolean> {
+    return (await getElementByLocator(locator)) != undefined ? true : false
+}

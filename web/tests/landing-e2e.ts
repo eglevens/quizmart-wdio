@@ -9,7 +9,7 @@ describe('Landing page cases', () => {
     it('Open login page from landing page', async () => {
         await page.openLanding()
         await landingPage.clickLoginWithEmailBtn()        
-        expect(await signInPage.getSignInPageTitle()).equals('Sign in')
+        expect(await signInPage.getSignInPageTitle()).to.be.true
     })
     
 })
