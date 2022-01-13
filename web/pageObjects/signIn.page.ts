@@ -2,7 +2,7 @@ import * as page from "./page"
 
 
 const signInPageTitle = '//h1[text()="Sign in"]'
-const emailInput = '//input[@name="email"][1]'
+const emailInput = '//input[@placeholder="Email" and @name="email"]'
 const passInput = '//input[@name="password"]'
 const signInBtn = '//button[text()="Sign in"]'
 const incorrectCredentialsError = '//*[text()="The email address or password is incorrect"]'
