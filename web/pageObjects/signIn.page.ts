@@ -10,12 +10,6 @@ export async function openSignIn(): Promise <void> {
     await browser.url('sign-in/')
 }
 
-
-export async function getSignInTitle(): Promise <void> {
-    await page.getElementByLocator(signInTitle)
-}
-
-
 export async function loginWithEmail(email: string, pass: string): Promise <void> {
     await page.sendValueByLocator(emailInput, email)
     await page.sendValueByLocator(passInput, pass)
@@ -23,6 +17,11 @@ export async function loginWithEmail(email: string, pass: string): Promise <void
 }
 
 
-export async function getIncorrectCredentialsError(): Promise <void> {
-    await page.getElementByLocator(incorrectCredentialsError)
+export async function getSignInTitle(): Promise <string> {
+    return await page.getElementTextByLocator(signInTitle)
+}
+
+
+export async function getIncorrectCredentialsError(): Promise <string> {
+    return await page.getElementTextByLocator(incorrectCredentialsError)
 }
