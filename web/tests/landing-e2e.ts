@@ -7,7 +7,7 @@ import { expect } from 'chai'
 describe('Landing page cases', () => {
     
     it('Open sign in page from landing page', async () => {
-        await page.openLanding()
+        await page.openLandingPage()
         await landingPage.clickSignInWithEmailBtn()        
         expect(await signInPage.getSignInPageTitle()).to.be.true
     })
