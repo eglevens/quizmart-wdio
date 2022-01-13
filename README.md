@@ -2,7 +2,7 @@
 quizmart tests with wdio + js 
 
 ## setup
-`npm init`
+`npm install`
 
 ## run
 
