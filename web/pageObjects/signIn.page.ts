@@ -16,7 +16,7 @@ export async function getSignInTitle(): Promise <void> {
 }
 
 
-export async function login(email: string, pass: string): Promise <void> {
+export async function loginWithEmail(email: string, pass: string): Promise <void> {
     await page.sendValueByLocator(emailInput, email)
     await page.sendValueByLocator(passInput, pass)
     await page.clickByLocator(signInBtn)

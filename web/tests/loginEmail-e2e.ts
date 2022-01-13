@@ -14,20 +14,20 @@ describe('Login with email from sign up page', () => {
 
 
     it('Success login', async () => {
-        await signInPage.login(email, pass)
+        await signInPage.loginWithEmail(email, pass)
         expect(browser).toHaveUrlContaining('discover')
         
     })
 
     it("Attempt to login with invalid password", async() => {
-        await signInPage.login(email, invalidPass)
+        await signInPage.loginWithEmail(email, invalidPass)
         //assertions do not work
         await expect(signInPage.getSignInTitle()).toBeDisplayed()
         await expect(signInPage.getIncorrectCredentialsError()).toBeDisplayed()
     })
 
     it("Attempt to login with non registered email", async() => {
-        await signInPage.login(unregistredEmail, invalidPass)
+        await signInPage.loginWithEmail(unregistredEmail, invalidPass)
         //assertions do not work
         await expect(signInPage.getSignInTitle()).toBeDisplayed()
         await expect(signInPage.getIncorrectCredentialsError()).toBeDisplayed()
