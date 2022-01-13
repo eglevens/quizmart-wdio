@@ -12,7 +12,7 @@ const emailRequiredValidationError = '//input[@name="email"]/../h3[text()="Requi
 const passRequiredValidationError = '//input[@name="password"]/../h3[text()="Required"]'
 
 
-export async function openSignIn(): Promise <void> {
+export async function openSignInPage(): Promise <void> {
     await browser.url('sign-in/')
 }
 

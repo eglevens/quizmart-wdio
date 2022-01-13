@@ -6,12 +6,10 @@ import { expect } from 'chai'
 
 describe('Landing page cases', () => {
     
-    it('Open login page from landing page', async () => {
+    it('Open sign in page from landing page', async () => {
         await page.openLanding()
-        await landingPage.clickLoginWithEmailBtn()        
+        await landingPage.clickSignInWithEmailBtn()        
         expect(await signInPage.getSignInPageTitle()).to.be.true
     })
     
 })
-
-
