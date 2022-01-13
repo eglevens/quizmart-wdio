@@ -10,6 +10,8 @@ const emailFormatValidationError = '//input[@name="email"]/../h3[text()="Must be
 const passwordlengthValidationError = '//input[@name="password"]/../h3[text()="Password must be at least of 6 characters in length"]'
 const emailRequiredValidationError = '//input[@name="email"]/../h3[text()="Required"]'
 const passRequiredValidationError = '//input[@name="password"]/../h3[text()="Required"]'
+const createAccountBtn = '//*[text()="Create account"]'
+const forgotPassBtn = '//*[text()="Forgot password?"]'
 
 
 export async function openSignIn(): Promise <void> {
@@ -18,6 +20,14 @@ export async function openSignIn(): Promise <void> {
 
 export async function clickSignInBtn(): Promise <void> {
     await page.clickByLocator(signInBtn)
+}
+
+export async function clickCreateAccountBtn(): Promise<void> {
+    await page.clickByLocator(createAccountBtn)
+}
+
+export async function clickForgotPassBtn(): Promise<void> {
+    await page.clickByLocator(forgotPassBtn)
 }
 
 export async function signInWithEmail(email: string, pass: string): Promise <void> {
