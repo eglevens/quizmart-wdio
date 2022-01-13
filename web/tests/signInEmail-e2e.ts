@@ -1,7 +1,5 @@
 import * as signInPage from "../pageObjects/signIn.page"
 import * as discoverPage from "../pageObjects/discover.page"
-import * as registerPage from "../pageObjects/register.page"
-import * as forgotPassPage from "../pageObjects/forgotPass.page"
 import { expect } from 'chai'
 
 
@@ -13,7 +11,7 @@ const invalidFormatEmail = 'eglvnstelesoftas.com'
 const shortPass = '12345'
 
 
-describe('Login with email from sign up page', () => {
+describe('Login with email from sign in page', () => {
 
     beforeEach(function(){
         signInPage.openSignIn()
@@ -46,16 +44,6 @@ describe('Login with email from sign up page', () => {
         await signInPage.clickSignInBtn()
         expect (await signInPage.getEmailRequiredValidationError()).to.be.true
         expect (await signInPage.getPassRequiredValidationError()).to.be.true
-    })
-
-    it('Open register page from sign in page',async () => {
-        await signInPage.clickCreateAccountBtn()
-        expect (await registerPage.getRegisterPageTitle()).to.be.true
-    })
-
-    it('Open forgot password page from sign in page',async () => {
-        await signInPage.clickForgotPassBtn()
-        expect (await forgotPassPage.getForgotPassPageTitle()).to.be.true
     })
 
 })
