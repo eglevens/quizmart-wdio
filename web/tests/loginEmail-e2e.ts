@@ -1,12 +1,14 @@
 import * as signInPage from "../pageObjects/signIn.page"
 import * as discoverPage from "../pageObjects/discover.page"
+import { expect } from 'chai'
 
 
 const email = 'eglvns@telesoftas.com'
 const pass = 'myPasswordIs321'
 const invalidPass = 'myPasswordIs'
 const unregistredEmail = 'eglvns+unregistered@telesoftas.com'
-import { expect } from 'chai'
+const invalidFormatEmail = 'eglvnstelesoftas.com'
+const shortPass = '12345'
 
 
 describe('Login with email from sign up page', () => {
@@ -22,22 +24,20 @@ describe('Login with email from sign up page', () => {
 
     it("Attempt to login with invalid password", async() => {
         await signInPage.loginWithEmail(email, invalidPass)
-        expect(await signInPage.getSignInPageTitle()).equals('Sign in')
-        expect(await signInPage.getIncorrectCredentialsError()).equals("The email address or password is incorrect")
+        expect (await signInPage.getSignInPageTitle()).equals('Sign in')
+        expect (await signInPage.getIncorrectCredentialsError()).equals("The email address or password is incorrect")
     })
 
     it("Attempt to login with non registered email", async() => {
         await signInPage.loginWithEmail(unregistredEmail, invalidPass)
-        expect(await signInPage.getSignInPageTitle()).equals('Sign in')
-        expect(await signInPage.getIncorrectCredentialsError()).equals("The email address or password is incorrect")
+        expect (await signInPage.getSignInPageTitle()).equals('Sign in')
+        expect (await signInPage.getIncorrectCredentialsError()).equals("The email address or password is incorrect")
     })
 
-    it("Login button disabled with invalid email format and error is shown", async () => {
-        
-    })
-
-    it("Login button disabled with too short password and error is shown", async () => {
-        
+    it("Validation error with invalid email format and too short password", async () => {
+        await signInPage.loginWithEmail(invalidFormatEmail, shortPass)
+        expect (await signInPage.getEmailFormatValidationError()).equals("Must be valid email")
+        expect (await signInPage.getPasswordlengthValidationError()).equals("Password must be at least of 6 characters in length")
     })
 
 })

@@ -6,6 +6,8 @@ const emailInput = '//input[@name="email"][1]'
 const passInput = '//input[@name="password"]'
 const signInBtn = '//button[text()="Sign in"]'
 const incorrectCredentialsError = '//*[text()="The email address or password is incorrect"]'
+const emailFormatValidationError = '//input[@name="email"]/../h3[text()="Must be valid email"]'
+const passwordlengthValidationError = '//input[@name="password"]/../h3[text()="Password must be at least of 6 characters in length"]'
 
 
 export async function openSignIn(): Promise <void> {
@@ -24,4 +26,12 @@ export async function getSignInPageTitle(): Promise <string> {
 
 export async function getIncorrectCredentialsError(): Promise <string> {
     return await page.getElementTextByLocator(incorrectCredentialsError)
+}
+
+export async function getEmailFormatValidationError(): Promise <string> {
+    return await page.getElementTextByLocator(emailFormatValidationError)
+}
+
+export async function getPasswordlengthValidationError(): Promise <string> {
+    return await page.getElementTextByLocator(passwordlengthValidationError)
 }
