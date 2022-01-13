@@ -1,9 +1,9 @@
 import * as page from "./page"
 
 
-const loginWithEmailBtn = '//button[text()="Sign in with email"]'
+const signInWithEmailBtn = '//button[text()="Sign in with email"]'
 
 
-export async function clickLoginWithEmailBtn(): Promise<void> {
-    await page.clickByLocator(loginWithEmailBtn)
+export async function clickSignInWithEmailBtn(): Promise<void> {
+    await page.clickByLocator(signInWithEmailBtn)
 }

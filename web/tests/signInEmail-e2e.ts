@@ -11,24 +11,24 @@ const invalidFormatEmail = 'eglvnstelesoftas.com'
 const shortPass = '12345'
 
 
-describe('Login with email from sign up page', () => {
+describe('Sign in with email from sign up page', () => {
 
     beforeEach(function(){
-        signInPage.openSignIn()
+        signInPage.openSignInPage()
     })
 
-    it('Success login', async () => {
+    it('Success sign in', async () => {
         await signInPage.signInWithEmail(email, pass)
         expect (await discoverPage.getDiscoverPageTitle()).to.be.true
     })
 
-    it('Attempt to login with invalid password', async() => {
+    it('Attempt to sign in with invalid password', async() => {
         await signInPage.signInWithEmail(email, invalidPass)
         expect (await signInPage.getSignInPageTitle()).to.be.true
         expect (await signInPage.getIncorrectCredentialsError()).to.be.true
     })
 
-    it('Attempt to login with non registered email', async() => {
+    it('Attempt to sign in with non registered email', async() => {
         await signInPage.signInWithEmail(unregistredEmail, invalidPass)
         expect (await signInPage.getSignInPageTitle()).to.be.true
         expect (await signInPage.getIncorrectCredentialsError()).to.be.true

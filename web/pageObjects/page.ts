@@ -1,4 +1,4 @@
-export async function openLanding(): Promise <void> {
+export async function openLandingPage(): Promise <void> {
     await browser.url('')
 }
 
