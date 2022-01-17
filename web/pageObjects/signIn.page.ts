@@ -1,15 +1,13 @@
 import * as page from "./page"
 
 
-const signInPageTitle = '//h1[text()="Sign in"]'
-const emailInput = '//input[@name="email"][1]'
+const signInPageTitle = 'h1'
+const emailInput = '//input[@placeholder = "Email"]'
 const passInput = '//input[@name="password"]'
 const signInBtn = '//button[text()="Sign in"]'
-const incorrectCredentialsError = '//*[text()="The email address or password is incorrect"]'
-const emailFormatValidationError = '//input[@name="email"]/../h3[text()="Must be valid email"]'
-const passwordlengthValidationError = '//input[@name="password"]/../h3[text()="Password must be at least of 6 characters in length"]'
-const emailRequiredValidationError = '//input[@name="email"]/../h3[text()="Required"]'
-const passRequiredValidationError = '//input[@name="password"]/../h3[text()="Required"]'
+const backendFormValidationError = '//form/div/h3'
+const frontendEmailValidationError = '//div[./input[@name="email"]]//h3'
+const frontendPasswordValidationError = '//div[./input[@name="password"]]//h3'
 
 
 export async function openSignInPage(): Promise <void> {
