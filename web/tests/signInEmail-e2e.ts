@@ -11,6 +11,7 @@ const invalidFormatEmail = 'eglvnstelesoftas.com'
 const shortPass = '12345'
 //---Errors------------------------------------------
 const incorrectCredentialsErrorText = 'The email address or password is incorrect'
+const requiredValidationErrorText = 'Required'
 
 
 
@@ -44,11 +45,11 @@ describe('Sign in with email from sign up page', () => {
     //     expect (await signInPage.getPasswordLengthValidationError()).to.be.true
     // })
 
-    // it('Validation error with empty email & password', async () => {
-    //     await signInPage.clickSignInBtn()
-    //     expect (await signInPage.getEmailRequiredValidationError()).to.be.true
-    //     expect (await signInPage.getPassRequiredValidationError()).to.be.true
-    // })
+    it('Validation error with empty email & password', async () => {
+        await signInPage.clickSignInBtn()
+        expect (await signInPage.getEmailValidationErrorText()).equals(requiredValidationErrorText)
+        expect (await signInPage.getPassValidationErrorText()).equals(requiredValidationErrorText)
+    })
 
 
 })

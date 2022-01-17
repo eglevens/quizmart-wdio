@@ -40,10 +40,10 @@ export async function getIncorrectCredentialsErrorText(): Promise<string> {
 //     return await page.elementPresentByLocator(passwordlengthValidationError)
 // }
 
-// export async function getEmailRequiredValidationError(): Promise <boolean> {
-//     return await page.elementPresentByLocator(emailRequiredValidationError)
-// }
+export async function getEmailValidationErrorText(): Promise <string> {
+    return await page.getElementTextByLocator(frontendEmailValidationError)
+}
 
-// export async function getPassRequiredValidationError(): Promise <boolean> {
-//     return await page.elementPresentByLocator(passRequiredValidationError)
-// }
+export async function getPassValidationErrorText(): Promise <string> {
+    return await page.getElementTextByLocator(frontendPasswordValidationError)
+}
