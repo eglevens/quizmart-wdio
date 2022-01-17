@@ -9,6 +9,9 @@ const invalidPass = 'myPasswordIs'
 const unregistredEmail = 'eglvns+unregistered@telesoftas.com'
 const invalidFormatEmail = 'eglvnstelesoftas.com'
 const shortPass = '12345'
+//---Errors------------------------------------------
+const incorrectCredentialsErrorText = 'The email address or password is incorrect'
+
 
 
 describe('Sign in with email from sign up page', () => {
@@ -24,27 +27,28 @@ describe('Sign in with email from sign up page', () => {
 
     it('Attempt to sign in with invalid password', async() => {
         await signInPage.signInWithEmail(email, invalidPass)
-        expect (await signInPage.getSignInPageTitle()).to.be.true
-        expect (await signInPage.getIncorrectCredentialsError()).to.be.true
+        browser.pause(2000)
+        expect (await signInPage.getSignInPageTitleText()).equals('Sign in')
+        expect (await signInPage.getIncorrectCredentialsErrorText()).equals(incorrectCredentialsErrorText)
     })
 
     it('Attempt to sign in with non registered email', async() => {
         await signInPage.signInWithEmail(unregistredEmail, invalidPass)
-        expect (await signInPage.getSignInPageTitle()).to.be.true
-        expect (await signInPage.getIncorrectCredentialsError()).to.be.true
+        expect (await signInPage.getSignInPageTitleText()).equals('Sign in')
+        expect (await signInPage.getIncorrectCredentialsErrorText()).equals(incorrectCredentialsErrorText)
     })
 
-    it('Validation error with invalid email format and too short password', async () => {
-        await signInPage.signInWithEmail(invalidFormatEmail, shortPass)
-        expect (await signInPage.getEmailFormatValidationError()).to.be.true
-        expect (await signInPage.getPasswordLengthValidationError()).to.be.true
-    })
+    // it('Validation error with invalid email format and too short password', async () => {
+    //     await signInPage.signInWithEmail(invalidFormatEmail, shortPass)
+    //     expect (await signInPage.getEmailFormatValidationError()).to.be.true
+    //     expect (await signInPage.getPasswordLengthValidationError()).to.be.true
+    // })
 
-    it('Validation error with empty email & password', async () => {
-        await signInPage.clickSignInBtn()
-        expect (await signInPage.getEmailRequiredValidationError()).to.be.true
-        expect (await signInPage.getPassRequiredValidationError()).to.be.true
-    })
+    // it('Validation error with empty email & password', async () => {
+    //     await signInPage.clickSignInBtn()
+    //     expect (await signInPage.getEmailRequiredValidationError()).to.be.true
+    //     expect (await signInPage.getPassRequiredValidationError()).to.be.true
+    // })
 
 
 })

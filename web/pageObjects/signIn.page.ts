@@ -24,26 +24,26 @@ export async function signInWithEmail(email: string, pass: string): Promise <voi
     await page.clickByLocator(signInBtn)
 }
 
-export async function getSignInPageTitle(): Promise <boolean> {
-    return await page.elementPresentByLocator(signInPageTitle)
+export async function getSignInPageTitleText(): Promise <string> {
+    return await page.getElementTextByLocator(signInPageTitle)
 }
 
-export async function getIncorrectCredentialsError(): Promise <boolean> {
-    return await page.elementPresentByLocator(incorrectCredentialsError)
+export async function getIncorrectCredentialsErrorText(): Promise<string> {
+    return await page.getElementTextByLocator(backendFormValidationError)
 }
 
-export async function getEmailFormatValidationError(): Promise <boolean> {
-    return await page.elementPresentByLocator(emailFormatValidationError)
-}
+// export async function getEmailFormatValidationError(): Promise <boolean> {
+//     return await page.elementPresentByLocator(emailFormatValidationError)
+// }
 
-export async function getPasswordLengthValidationError(): Promise <boolean> {
-    return await page.elementPresentByLocator(passwordlengthValidationError)
-}
+// export async function getPasswordLengthValidationError(): Promise <boolean> {
+//     return await page.elementPresentByLocator(passwordlengthValidationError)
+// }
 
-export async function getEmailRequiredValidationError(): Promise <boolean> {
-    return await page.elementPresentByLocator(emailRequiredValidationError)
-}
+// export async function getEmailRequiredValidationError(): Promise <boolean> {
+//     return await page.elementPresentByLocator(emailRequiredValidationError)
+// }
 
-export async function getPassRequiredValidationError(): Promise <boolean> {
-    return await page.elementPresentByLocator(passRequiredValidationError)
-}
+// export async function getPassRequiredValidationError(): Promise <boolean> {
+//     return await page.elementPresentByLocator(passRequiredValidationError)
+// }
