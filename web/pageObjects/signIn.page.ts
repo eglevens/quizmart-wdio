@@ -32,14 +32,6 @@ export async function getIncorrectCredentialsErrorText(): Promise<string> {
     return await page.getElementTextByLocator(backendFormValidationError)
 }
 
-// export async function getEmailFormatValidationError(): Promise <boolean> {
-//     return await page.elementPresentByLocator(emailFormatValidationError)
-// }
-
-// export async function getPasswordLengthValidationError(): Promise <boolean> {
-//     return await page.elementPresentByLocator(passwordlengthValidationError)
-// }
-
 export async function getEmailValidationErrorText(): Promise <string> {
     return await page.getElementTextByLocator(frontendEmailValidationError)
 }

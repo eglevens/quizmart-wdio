@@ -8,10 +8,15 @@ const pass = 'myPasswordIs321'
 const invalidPass = 'myPasswordIs'
 const unregistredEmail = 'eglvns+unregistered@telesoftas.com'
 const invalidFormatEmail = 'eglvnstelesoftas.com'
-const shortPass = '12345'
+const shortPass = Math.random().toString(16).slice(2, 7)
+const longPass = Math.random().toString(16).repeat(10)
 //---Errors------------------------------------------
 const incorrectCredentialsErrorText = 'The email address or password is incorrect'
 const requiredValidationErrorText = 'Required'
+const emailValidationErrorText = 'Must be valid email'
+const passTooShortValidationErrorText = 'Password must be at least of 6 characters in length'
+const passTooLongValidationErrorText = 'Password must be at most of 100 characters in length'
+
 
 
 
@@ -39,11 +44,19 @@ describe('Sign in with email from sign up page', () => {
         expect (await signInPage.getIncorrectCredentialsErrorText()).equals(incorrectCredentialsErrorText)
     })
 
-    // it('Validation error with invalid email format and too short password', async () => {
-    //     await signInPage.signInWithEmail(invalidFormatEmail, shortPass)
-    //     expect (await signInPage.getEmailFormatValidationError()).to.be.true
-    //     expect (await signInPage.getPasswordLengthValidationError()).to.be.true
-    // })
+    it('Validation error with invalid email format and too short password', async () => {
+        await signInPage.signInWithEmail(invalidFormatEmail, shortPass)
+        expect (await signInPage.getEmailValidationErrorText()).equals(emailValidationErrorText)
+        expect (await signInPage.getPassValidationErrorText()).equals(passTooShortValidationErrorText)
+        console.log(shortPass)
+    })
+
+    it('Validation error with invalid email format and too long password', async () => {
+        await signInPage.signInWithEmail(invalidFormatEmail, longPass)
+        console.log('my long pass: ' + longPass)
+        expect (await signInPage.getEmailValidationErrorText()).equals(emailValidationErrorText)
+        expect (await signInPage.getPassValidationErrorText()).equals(passTooLongValidationErrorText)
+    })
 
     it('Validation error with empty email & password', async () => {
         await signInPage.clickSignInBtn()
