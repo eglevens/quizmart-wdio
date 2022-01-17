@@ -7,7 +7,7 @@ const email = 'eglvns@telesoftas.com'
 const pass = 'myPasswordIs321'
 const invalidPass = 'myPasswordIs'
 const unregistredEmail = 'eglvns+unregistered@telesoftas.com'
-const invalidFormatEmail = 'eglvnstelesoftas.com'
+const invalidFormatEmails = ['eglvnstelesoftas.com', 'eglvns@telesoftascom', '@telesoftas.com', '!@#$%^&*()`~', '111.@email@email.com'] 
 const shortPass = Math.random().toString(16).slice(2, 7)
 const longPass = Math.random().toString(16).repeat(10)
 //---Errors------------------------------------------
@@ -45,8 +45,11 @@ describe('Sign in with email from sign up page', () => {
     })
 
     it('Validation error with invalid email format', async () => {
-        await signInPage.fillEmailInputAndLoseFocus(invalidFormatEmail)
-        expect (await signInPage.getEmailValidationErrorText()).equals(emailValidationErrorText)
+        for (const invalidFormatEmail of invalidFormatEmails) {
+            await signInPage.fillEmailInputAndLoseFocus(invalidFormatEmail)
+            expect(await signInPage.getEmailValidationErrorText()).equals(emailValidationErrorText)
+            await browser.refresh()  
+        }
     })
 
     it('Validation error with too short and too long password', async () => {
