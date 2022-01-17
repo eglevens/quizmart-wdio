@@ -24,6 +24,16 @@ export async function signInWithEmail(email: string, pass: string): Promise <voi
     await page.clickByLocator(signInBtn)
 }
 
+export async function fillEmailInputAndLoseFocus(email: string): Promise <void> {
+    await page.sendValueByLocator(emailInput, email)
+    await page.clickByLocator(passInput)
+}
+
+export async function fillPassInputAndLoseFocus(pass: string): Promise <void> {
+    await page.sendValueByLocator(passInput, pass)
+    await page.clickByLocator(emailInput)
+}
+
 export async function getSignInPageTitleText(): Promise <string> {
     return await page.getElementTextByLocator(signInPageTitle)
 }

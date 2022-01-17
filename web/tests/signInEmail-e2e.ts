@@ -44,17 +44,18 @@ describe('Sign in with email from sign up page', () => {
         expect (await signInPage.getIncorrectCredentialsErrorText()).equals(incorrectCredentialsErrorText)
     })
 
-    it('Validation error with invalid email format and too short password', async () => {
-        await signInPage.signInWithEmail(invalidFormatEmail, shortPass)
+    it('Validation error with invalid email format', async () => {
+        await signInPage.fillEmailInputAndLoseFocus(invalidFormatEmail)
         expect (await signInPage.getEmailValidationErrorText()).equals(emailValidationErrorText)
-        expect (await signInPage.getPassValidationErrorText()).equals(passTooShortValidationErrorText)
-        console.log(shortPass)
     })
 
-    it('Validation error with invalid email format and too long password', async () => {
-        await signInPage.signInWithEmail(invalidFormatEmail, longPass)
+    it('Validation error with too short and too long password', async () => {
+        await signInPage.fillPassInputAndLoseFocus(shortPass)
+        console.log('my short pass: ' + shortPass)
+        expect (await signInPage.getPassValidationErrorText()).equals(passTooShortValidationErrorText)
+        await browser.refresh()
+        await signInPage.fillPassInputAndLoseFocus(longPass)
         console.log('my long pass: ' + longPass)
-        expect (await signInPage.getEmailValidationErrorText()).equals(emailValidationErrorText)
         expect (await signInPage.getPassValidationErrorText()).equals(passTooLongValidationErrorText)
     })
 
