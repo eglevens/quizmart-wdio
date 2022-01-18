@@ -1,5 +1,7 @@
 import * as signInPage from "../pageObjects/signIn.page"
 import * as discoverPage from "../pageObjects/discover.page"
+import * as signUpPage from "../pageObjects/signUp.page"
+import * as resetPassPage from "../pageObjects/resetPass.page"
 import { expect } from 'chai'
 
 
@@ -65,5 +67,14 @@ describe('Sign in with email from sign up page', () => {
         expect (await signInPage.getPassValidationErrorText()).equals(requiredValidationErrorText)
     })
 
+    it('Open sign up page from sign in screen', async () => {
+        await signInPage.clickCreateAccBtn()
+        expect(await signUpPage.getSignUpPageTitleText()).equals('Register')
+    })
+
+    it('Open reset password page from sign in screen', async () => {
+        await signInPage.clickForgotPassBtn()
+        expect(await resetPassPage.getResetPassPageTitleText()).equals('Reset your password')
+    })
 
 })
