@@ -29,7 +29,7 @@ describe('Sign in with email from sign up page', () => {
 
     it('Success sign in', async () => {
         await signInPage.signInWithEmail(email, pass)
-        expect (await discoverPage.getDiscoverPageTitle()).to.be.true
+        expect (await discoverPage.getDiscoverPageTitleText()).equals('Discover')
     })
 
     it('Attempt to sign in with invalid password', async() => {
