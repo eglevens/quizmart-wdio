@@ -5,10 +5,10 @@ import { expect } from 'chai'
 
 const email = 'eglvns@telesoftas.com'
 const pass = 'myPasswordIs321'
-const invalidPass = 'myPasswordIs'
+const invalidPass = 'myPass'
 const unregistredEmail = 'eglvns+unregistered@telesoftas.com'
 const invalidFormatEmails = ['eglvnstelesoftas.com', 'eglvns@telesoftascom', '@telesoftas.com', '!@#$%^&*()`~', '111.@email@email.com'] 
-const shortPass = Math.random().toString(16).slice(2, 7)
+const shortPass = '12121'
 const longPass = Math.random().toString(16).repeat(10)
 //---Errors------------------------------------------
 const incorrectCredentialsErrorText = 'The email address or password is incorrect'
@@ -16,7 +16,6 @@ const requiredValidationErrorText = 'Required'
 const emailValidationErrorText = 'Must be valid email'
 const passTooShortValidationErrorText = 'Password must be at least of 6 characters in length'
 const passTooLongValidationErrorText = 'Password must be at most of 100 characters in length'
-
 
 
 
