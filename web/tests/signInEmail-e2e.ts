@@ -29,6 +29,7 @@ describe('Sign in with email from sign up page', () => {
 
     it('Success sign in', async () => {
         await signInPage.signInWithEmail(email, pass)
+        await browser.pause(2000)
         expect (await discoverPage.getDiscoverPageTitleText()).equals('Discover')
     })
 
