@@ -53,11 +53,9 @@ describe('Sign in with email from sign up page', () => {
 
     it('Validation error with too short and too long password', async () => {
         await signInPage.fillPassInputAndLoseFocus(shortPass)
-        console.log('my short pass: ' + shortPass)
         expect (await signInPage.getPassValidationErrorText()).equals(passTooShortValidationErrorText)
         await browser.refresh()
         await signInPage.fillPassInputAndLoseFocus(longPass)
-        console.log('my long pass: ' + longPass)
         expect (await signInPage.getPassValidationErrorText()).equals(passTooLongValidationErrorText)
     })
 
