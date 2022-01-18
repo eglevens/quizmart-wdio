@@ -66,12 +66,12 @@ describe('Sign in with email from sign up page', () => {
         expect (await signInPage.getPassValidationErrorText()).equals(requiredValidationErrorText)
     })
 
-    it('Open sign up page from sign in screen', async () => {
+    it('Open sign up page from sign in page', async () => {
         await signInPage.clickCreateAccBtn()
         expect(await signUpPage.getSignUpPageTitleText()).equals('Register')
     })
 
-    it('Open reset password page from sign in screen', async () => {
+    it('Open reset password page from sign in page', async () => {
         await signInPage.clickForgotPassBtn()
         expect(await resetPassPage.getResetPassPageTitleText()).equals('Reset your password')
     })
