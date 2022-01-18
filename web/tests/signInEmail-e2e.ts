@@ -36,13 +36,11 @@ describe('Sign in with email from sign up page', () => {
     it('Attempt to sign in with invalid password', async() => {
         await signInPage.signInWithEmail(email, invalidPass)
         browser.pause(2000)
-        expect (await signInPage.getSignInPageTitleText()).equals('Sign in')
         expect (await signInPage.getIncorrectCredentialsErrorText()).equals(incorrectCredentialsErrorText)
     })
 
     it('Attempt to sign in with non registered email', async() => {
         await signInPage.signInWithEmail(unregistredEmail, invalidPass)
-        expect (await signInPage.getSignInPageTitleText()).equals('Sign in')
         expect (await signInPage.getIncorrectCredentialsErrorText()).equals(incorrectCredentialsErrorText)
     })
 
