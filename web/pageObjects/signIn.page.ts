@@ -2,9 +2,14 @@ import * as page from "./page"
 
 
 const signInPageTitle = 'h1'
+
 const emailInput = '//input[@placeholder = "Email"]'
 const passInput = '//input[@name="password"]'
+
 const signInBtn = '//button[text()="Sign in"]'
+const createAccBtn = '//a[@href="/sign-up"]'
+const forgotPassBtn = '//a[@href="/reset-password"]'
+
 const backendFormValidationError = '//form/div/h3'
 const frontendEmailValidationError = '//div[./input[@name="email"]]//h3'
 const frontendPasswordValidationError = '//div[./input[@name="password"]]//h3'
@@ -16,6 +21,14 @@ export async function openSignInPage(): Promise<void> {
 
 export async function clickSignInBtn(): Promise<void> {
     await page.clickByLocator(signInBtn)
+}
+
+export async function clickCreateAccBtn(): Promise<void> {
+    await page.clickByLocator(createAccBtn)
+}
+
+export async function clickForgotPassBtn(): Promise<void> {
+    await page.clickByLocator(forgotPassBtn)
 }
 
 export async function signInWithEmail(email: string, pass: string): Promise<void> {

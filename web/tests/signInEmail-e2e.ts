@@ -1,5 +1,7 @@
 import * as signInPage from "../pageObjects/signIn.page"
 import * as discoverPage from "../pageObjects/discover.page"
+import * as signUpPage from "../pageObjects/signUp.page"
+import * as resetPassPage from "../pageObjects/resetPass.page"
 import { expect } from 'chai'
 
 
@@ -27,19 +29,18 @@ describe('Sign in with email from sign up page', () => {
 
     it('Success sign in', async () => {
         await signInPage.signInWithEmail(email, pass)
-        expect (await discoverPage.getDiscoverPageTitle()).to.be.true
+        await browser.pause(2000)
+        expect (await discoverPage.getDiscoverPageTitleText()).equals('Discover')
     })
 
     it('Attempt to sign in with invalid password', async() => {
         await signInPage.signInWithEmail(email, invalidPass)
         browser.pause(2000)
-        expect (await signInPage.getSignInPageTitleText()).equals('Sign in')
         expect (await signInPage.getIncorrectCredentialsErrorText()).equals(incorrectCredentialsErrorText)
     })
 
     it('Attempt to sign in with non registered email', async() => {
         await signInPage.signInWithEmail(unregistredEmail, invalidPass)
-        expect (await signInPage.getSignInPageTitleText()).equals('Sign in')
         expect (await signInPage.getIncorrectCredentialsErrorText()).equals(incorrectCredentialsErrorText)
     })
 
@@ -65,5 +66,14 @@ describe('Sign in with email from sign up page', () => {
         expect (await signInPage.getPassValidationErrorText()).equals(requiredValidationErrorText)
     })
 
+    it('Open sign up page from sign in page', async () => {
+        await signInPage.clickCreateAccBtn()
+        expect(await signUpPage.getSignUpPageTitleText()).equals('Register')
+    })
+
+    it('Open reset password page from sign in page', async () => {
+        await signInPage.clickForgotPassBtn()
+        expect(await resetPassPage.getResetPassPageTitleText()).equals('Reset your password')
+    })
 
 })

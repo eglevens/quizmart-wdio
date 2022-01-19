@@ -1,9 +1,9 @@
 import * as page from './page'
 
 
-const discoverPageTitle = '//h1[text()="Discover"]'
+const discoverPageTitle = 'h1'
 
 
-export async function getDiscoverPageTitle(): Promise <boolean> {
-    return await page.elementPresentByLocator(discoverPageTitle)
+export async function getDiscoverPageTitleText(): Promise<string> {
+    return await page.getElementTextByLocator(discoverPageTitle)
 }
