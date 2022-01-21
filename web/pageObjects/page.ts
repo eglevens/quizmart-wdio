@@ -1,10 +1,29 @@
-export async function openLandingPage(): Promise <void> {
+export async function openLandingPage(): Promise<void> {
     await browser.url('')
+    await browser.maximizeWindow()
 }
+
+export async function openRegisterPage(): Promise<void> {
+    await browser.url('sign-up/')
+    await browser.maximizeWindow()
+}
+
+export async function openSignInPage(): Promise<void> {
+    await browser.url('sign-in/')
+    await browser.maximizeWindow()
+}
+
+//----------------GET----------------
 
 export async function getElementByLocator(locator: string): Promise<WebdriverIO.Element> {
     return await (browser).$(locator)
 }
+
+export async function getElementTextByLocator(locator: string): Promise<string> {
+    return await (await getElementByLocator(locator)).getText()
+}
+
+//----------------ACTION----------------
 
 export async function clickByLocator(locator: string): Promise<void> {
     await (await getElementByLocator(locator)).click()
@@ -14,10 +33,34 @@ export async function sendValueByLocator(locator: string, value: string): Promis
     await (await getElementByLocator(locator)).addValue(value)
 }
 
-export async function getElementTextByLocator(locator: string): Promise<string> {
-    return await (await getElementByLocator(locator)).getText()
-}
+//----------------ASSERT----------------
 
 export async function elementPresentByLocator(locator: string): Promise<boolean> {
-    return (await getElementByLocator(locator)) != undefined ? true : false
+    return (await getElementByLocator(locator)) != undefined
+}
+
+//----------------WAIT----------------
+
+let defaultTimeout: number = 3000
+
+export async function waitUntilElementIsVisibleInViewportByLocator(locator: string, customTimeout?: number): Promise<void> {
+    const timeoutMessage = `${locator} element still invisible after ${customTimeout || defaultTimeout} ms`
+    await browser.waitUntil(async function () {
+        return (await getElementByLocator(locator)).isDisplayedInViewport()
+    },
+        {
+            timeout: customTimeout || defaultTimeout,
+            timeoutMsg: timeoutMessage
+        })
+}
+
+export async function waitUntilElementIsVisibleInDOMByLocator (locator: string, customTimeout?: number): Promise<void> {
+    const timeoutMessage = `${locator} element still invisible after ${customTimeout || defaultTimeout} ms`
+    await browser.waitUntil(async function () {
+        return (await getElementByLocator(locator)).isDisplayed()
+    },
+        {
+            timeout: customTimeout || defaultTimeout,
+            timeoutMsg: timeoutMessage
+        })
 }
