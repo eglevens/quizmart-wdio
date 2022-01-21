@@ -1,5 +1,5 @@
 # quizmart-wdio
-quizmart tests with wdio + js 
+quizmart tests with wdio + ts 
 
 ## setup
 `npm install`
