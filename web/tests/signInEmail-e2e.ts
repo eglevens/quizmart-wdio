@@ -1,6 +1,6 @@
 import * as signInPage from "../pageObjects/signIn.page"
 import * as discoverPage from "../pageObjects/discover.page"
-import * as registerPage from "../pageObjects/signUp.page"
+import * as registerPage from "../pageObjects/register"
 import * as resetPassPage from "../pageObjects/resetPass.page"
 import * as assert from '../values/assertionValue'
 import * as input from '../values/inputValue'
@@ -55,7 +55,7 @@ describe('Sign in with email', () => {
 
     it('Open register page from sign in page', async () => {
         await signInPage.clickCreateAccBtn()
-        expect(await registerPage.getSignUpPageTitleText()).equals(assert.registerHeader)
+        expect(await registerPage.getRegisterPageTitleText()).equals(assert.registerHeader)
     })
 
     it('Open reset password page from sign in page', async () => {

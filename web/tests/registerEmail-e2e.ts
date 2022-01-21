@@ -1,4 +1,4 @@
-import * as registerPage from "../pageObjects/signUp.page"
+import * as registerPage from "../pageObjects/register"
 import * as signInPage from "../pageObjects/signIn.page"
 import * as assert from "../values/assertionValue"
 
@@ -8,7 +8,7 @@ import { expect } from 'chai'
 describe('Register with email from register page', () => {
 
     beforeEach(function () {
-        registerPage.openSignUpPage()
+        registerPage.openRegisterPage()
     })
 
     it('Success register without newsletter', async () => {
