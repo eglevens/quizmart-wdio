@@ -1,79 +1,66 @@
 import * as signInPage from "../pageObjects/signIn.page"
 import * as discoverPage from "../pageObjects/discover.page"
-import * as signUpPage from "../pageObjects/signUp.page"
+import * as registerPage from "../pageObjects/signUp.page"
 import * as resetPassPage from "../pageObjects/resetPass.page"
+import * as assert from '../values/assertionValue'
+import * as input from '../values/inputValue'
 import { expect } from 'chai'
 
 
-const email = 'eglvns@telesoftas.com'
-const pass = 'myPasswordIs321'
-const invalidPass = 'myPass'
-const unregistredEmail = 'eglvns+unregistered@telesoftas.com'
-const invalidFormatEmails = ['eglvnstelesoftas.com', 'eglvns@telesoftascom', '@telesoftas.com', '!@#$%^&*()`~', '111.@email@email.com'] 
-const shortPass = '12121'
-const longPass = Math.random().toString(16).repeat(10)
-//---Errors------------------------------------------
-const incorrectCredentialsErrorText = 'The email address or password is incorrect'
-const requiredValidationErrorText = 'Required'
-const emailValidationErrorText = 'Must be valid email'
-const passTooShortValidationErrorText = 'Password must be at least of 6 characters in length'
-const passTooLongValidationErrorText = 'Password must be at most of 100 characters in length'
 
-
-
-describe('Sign in with email from sign up page', () => {
+describe('Sign in with email', () => {
 
     beforeEach(function(){
         signInPage.openSignInPage()
     })
 
     it('Success sign in', async () => {
-        await signInPage.signInWithEmail(email, pass)
+        await signInPage.signInWithEmail(input.email, input.pass)
         await browser.pause(2000)
-        expect (await discoverPage.getDiscoverPageTitleText()).equals('Discover')
+        expect (await discoverPage.getDiscoverPageTitleText()).equals(assert.discoverHeader)
     })
 
     it('Attempt to sign in with invalid password', async() => {
-        await signInPage.signInWithEmail(email, invalidPass)
+        await signInPage.signInWithEmail(input.email, input.invalidPass)
         browser.pause(2000)
-        expect (await signInPage.getIncorrectCredentialsErrorText()).equals(incorrectCredentialsErrorText)
+        expect (await signInPage.getIncorrectCredentialsErrorText()).equals(assert.incorrectCredentialsErrorText)
     })
 
     it('Attempt to sign in with non registered email', async() => {
-        await signInPage.signInWithEmail(unregistredEmail, invalidPass)
-        expect (await signInPage.getIncorrectCredentialsErrorText()).equals(incorrectCredentialsErrorText)
+        await signInPage.signInWithEmail(input.unregistredEmail, input.invalidPass)
+        expect (await signInPage.getIncorrectCredentialsErrorText()).equals(assert.incorrectCredentialsErrorText)
     })
 
     it('Validation error with invalid email format', async () => {
-        for (const invalidFormatEmail of invalidFormatEmails) {
+        for (const invalidFormatEmail of input.invalidFormatEmails) {
             await signInPage.fillEmailInputAndLoseFocus(invalidFormatEmail)
-            expect(await signInPage.getEmailValidationErrorText()).equals(emailValidationErrorText)
+            expect(await signInPage.getEmailValidationErrorText()).equals(assert.emailValidationErrorText)
             await browser.refresh()  
         }
     })
 
     it('Validation error with too short and too long password', async () => {
-        await signInPage.fillPassInputAndLoseFocus(shortPass)
-        expect (await signInPage.getPassValidationErrorText()).equals(passTooShortValidationErrorText)
+        await signInPage.fillPassInputAndLoseFocus(input.shortPass)
+        expect (await signInPage.getPassValidationErrorText()).equals(assert.passTooShortValidationErrorText)
         await browser.refresh()
-        await signInPage.fillPassInputAndLoseFocus(longPass)
-        expect (await signInPage.getPassValidationErrorText()).equals(passTooLongValidationErrorText)
+        await signInPage.fillPassInputAndLoseFocus(input.longPass)
+        expect (await signInPage.getPassValidationErrorText()).equals(assert.passTooLongValidationErrorText)
     })
 
     it('Validation error with empty email & password', async () => {
         await signInPage.clickSignInBtn()
-        expect (await signInPage.getEmailValidationErrorText()).equals(requiredValidationErrorText)
-        expect (await signInPage.getPassValidationErrorText()).equals(requiredValidationErrorText)
+        expect (await signInPage.getEmailValidationErrorText()).equals(assert.requiredValidationErrorText)
+        expect (await signInPage.getPassValidationErrorText()).equals(assert.requiredValidationErrorText)
     })
 
-    it('Open sign up page from sign in page', async () => {
+    it('Open register page from sign in page', async () => {
         await signInPage.clickCreateAccBtn()
-        expect(await signUpPage.getSignUpPageTitleText()).equals('Register')
+        expect(await registerPage.getSignUpPageTitleText()).equals(assert.registerHeader)
     })
 
     it('Open reset password page from sign in page', async () => {
         await signInPage.clickForgotPassBtn()
-        expect(await resetPassPage.getResetPassPageTitleText()).equals('Reset your password')
+        expect(await resetPassPage.getResetPassPageTitleText()).equals(assert.resetPassHeader)
     })
 
 })
