@@ -1,6 +1,7 @@
 import * as registerPage from "../pageObjects/register"
 import * as signInPage from "../pageObjects/signIn.page"
 import * as assert from "../values/assertionValue"
+import * as input from "../values/inputValue"
 
 import { expect } from 'chai'
 
@@ -18,12 +19,15 @@ describe('Register with email from register page', () => {
     })
 
     it('Attempt to register with already registered email', async () => {
+
     })
 
     it('Validation error with invalid email format, too short password and not matching repeat password', async () => {
+
     })
 
     it('Validation error with empty email & passwords', async () => {
+        
     })
 
     it('Open sign in page from register page', async () => {
