@@ -4,7 +4,7 @@ import * as page from "./page"
 const registerPageTitle = 'h1'
 const emailInput = '//input[@placeholder="Email"]'
 const passInput = '//input[@name="password"]'
-const repeatPassInput = '//input[@name="passwordRepeat"]'
+const passRepeatInput = '//input[@name="passwordRepeat"]'
 
 const registerBtn = '//button[text()="Sign up"]'
 const signInBtn = '//*[@href="/sign-in"]'
@@ -21,6 +21,10 @@ export async function openRegisterPage(): Promise<void> {
     await browser.url('sign-up/')
 } 
 
+export async function clickRegisterBtn(): Promise<void> {
+    await page.clickByLocator(registerBtn)
+}
+
 export async function clickSignInBtn(): Promise<void> {
     await page.clickByLocator(signInBtn)
 }
@@ -31,4 +35,27 @@ export async function clickNewsletterPrivacyPolicyLink(): Promise<void> {
 
 export async function getRegisterPageTitleText(): Promise<string> {
     return await page.getElementTextByLocator(registerPageTitle)
+}
+
+export async function getEmailValidationErrorText(): Promise<string> {
+    return await page.getElementTextByLocator(frontendEmailValidationError)
+}
+
+export async function getPassValidationErrorText(): Promise<string> {
+    return await page.getElementTextByLocator(frontendPasswordValidationError)
+}
+
+export async function getPassRepeatValidationErrorText(): Promise<string> {
+    return await page.getElementTextByLocator(frontendPasswordRepeatValidationError)
+}
+
+export async function getAlreadyRegisteredUserErrorText(): Promise<string> {
+    return await page.getElementTextByLocator(backendFormValidationError)
+}
+
+export async function registerWithEmail(email: string, pass: string, passRepeat: string): Promise<void> {
+    await page.sendValueByLocator(emailInput, email)
+    await page.sendValueByLocator(passInput, pass)
+    await page.sendValueByLocator(passRepeatInput, passRepeat)
+    await page.clickByLocator(registerBtn)
 }

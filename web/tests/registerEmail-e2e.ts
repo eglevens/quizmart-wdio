@@ -13,13 +13,16 @@ describe('Register with email from register page', () => {
     })
 
     it('Success register without newsletter', async () => {
+
     })
 
     it('Success register with newsletter', async () => {
+
     })
 
     it('Attempt to register with already registered email', async () => {
-
+        await registerPage.registerWithEmail(input.email, input.pass, input.pass)
+        expect(await registerPage.getAlreadyRegisteredUserErrorText()).equals(assert.alreadyRegisteredUserErrorText)
     })
 
     it('Validation error with invalid email format, too short password and not matching repeat password', async () => {
@@ -27,7 +30,10 @@ describe('Register with email from register page', () => {
     })
 
     it('Validation error with empty email & passwords', async () => {
-        
+        await registerPage.clickRegisterBtn()
+        expect(await registerPage.getEmailValidationErrorText()).equals(assert.requiredValidationErrorText)
+        expect(await registerPage.getPassValidationErrorText()).equals(assert.requiredValidationErrorText)
+        expect(await registerPage.getPassRepeatValidationErrorText()).equals(assert.requiredValidationErrorText)
     })
 
     it('Open sign in page from register page', async () => {
@@ -35,7 +41,5 @@ describe('Register with email from register page', () => {
         await browser.pause(2000)
         expect(await signInPage.getSignInPageTitleText()).equals(assert.signInHeader)
     })
-
-
 
 })
