@@ -23,8 +23,8 @@ describe('Register with email from register page', () => {
 
     it('Attempt to register with already registered email', async () => {
         await registerPage.registerWithEmail(userCredentials.email, userCredentials.pass, userCredentials.pass)
-        //await registerPage.waitForErrorMessage(FormValidationMessage.alreadyRegisteredUserErrorText)
-       expect(await registerPage.getAlreadyRegisteredUserErrorText()).equals(FormValidationMessage.alreadyRegisteredUserErrorText)
+        await registerPage.waitForError()
+        expect(await registerPage.getAlreadyRegisteredUserErrorText()).equals(FormValidationMessage.alreadyRegisteredUserErrorText)
     })
 
     it('Validation error with invalid email format, too short password and not matching repeat password', async () => {

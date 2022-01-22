@@ -1,12 +1,13 @@
-import * as signInPage from "../pageObjects/signIn.page"
-import * as discoverPage from "../pageObjects/discover.page"
-import * as registerPage from "../pageObjects/register"
-import * as resetPassPage from "../pageObjects/resetPass.page"
+import * as signInPage from '../pageObjects/signIn.page'
+import * as discoverPage from '../pageObjects/discover.page'
+import * as registerPage from '../pageObjects/register'
+import * as resetPassPage from '../pageObjects/resetPass.page'
+import * as header from "../pageObjects/header"
 import { openSignInPage } from '../pageObjects/page'
 import { FormValidationMessage } from '../utils/formValidationMessages'
 import * as userCredentials from '../utils/userCredentials'
 import { expect } from 'chai'
-import { HeaderText } from "../utils/enums"
+import { HeaderText } from '../utils/enums'
 
 
 describe('Sign in with email', () => {
@@ -17,7 +18,7 @@ describe('Sign in with email', () => {
 
     it('Success sign in', async () => {
         await signInPage.signInWithEmail(userCredentials.email, userCredentials.pass)
-        await browser.pause(2000)
+        await header.waitForUserProfileImage()
         expect (await discoverPage.getDiscoverPageTitleText()).equals(HeaderText.discover)
     })
 
@@ -55,12 +56,12 @@ describe('Sign in with email', () => {
     })
 
     it('Open register page from sign in page', async () => {
-        await signInPage.clickCreateAccBtn()
+        await signInPage.clickCreateAccLink()
         expect(await registerPage.getRegisterPageTitleText()).equals(HeaderText.register)
     })
 
     it('Open reset password page from sign in page', async () => {
-        await signInPage.clickForgotPassBtn()
+        await signInPage.clickForgotPassLink()
         expect(await resetPassPage.getResetPassPageTitleText()).equals(HeaderText.resetPass)
     })
 

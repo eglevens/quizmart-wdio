@@ -65,3 +65,7 @@ export async function registerWithEmail(email: string, pass: string, passRepeat:
 export async function waitForRegisterFormBtn(): Promise<void> {
     return await page.waitUntilElementIsVisibleInDOMByLocator(registerBtn)
 }
+
+export async function waitForError(): Promise<void> {
+    return await page.waitUntilElementIsVisibleInViewportByLocator(backendFormValidationError)
+}
