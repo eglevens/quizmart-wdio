@@ -36,11 +36,7 @@ export async function sendValueByLocator(locator: string, value: string): Promis
 //----------------ASSERT----------------
 
 export async function elementPresentByLocator(locator: string): Promise<boolean> {
-    return (await getElementByLocator(locator)) != undefined
-}
-
-export async function returnUrl(): Promise<string> {
-    return (await browser.getUrl())
+    return (await getElementByLocator(locator)).isDisplayed()
 }
 
 //----------------WAIT----------------

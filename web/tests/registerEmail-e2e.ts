@@ -1,13 +1,13 @@
 import * as registerPage from '../pageObjects/register'
 import * as userCredentials from '../utils/userCredentials'
 import { getSignInPageTitleText, waitForSignInFormBtnInDOM } from '../pageObjects/signIn.page'
-import { openRegisterPage, returnUrl} from '../pageObjects/page'
+import { openRegisterPage} from '../pageObjects/page'
 import { FormValidationMessage } from '../utils/formValidationMessages'
-import { HeaderText } from '../utils/enums'
-import { expect } from 'chai'
 import { waitForUserProfileImageInHeader } from '../pageObjects/header.element'
 import { getDiscoverPageTitleText } from '../pageObjects/discover.page'
-import { waitForPrivacyPolicyPageTitleText } from '../pageObjects/privacyPolicy.page'
+import { isPrivacyPolicyTitleTextInDOM, waitForPrivacyPolicyPageTitleText } from '../pageObjects/privacyPolicy.page'
+import { HeaderText } from '../utils/enums'
+import { expect } from 'chai'
 const randomEmail = require('random-email')
 
 const passRepeatMustMatchValidationErrorText = 'Passwords must match'
@@ -73,7 +73,7 @@ describe('Register with email from register page', () => {
     it('Open privacy policy page from register page', async () => {
         await registerPage.clickNewsletterPrivacyPolicyLink()
         await waitForPrivacyPolicyPageTitleText()
-        expect(await returnUrl()).equals('https://staging.quizmart.io/privacy-policy')
+        expect (await isPrivacyPolicyTitleTextInDOM()).to.be.true
     })
 
 })
