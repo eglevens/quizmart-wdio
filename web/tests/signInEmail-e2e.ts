@@ -39,7 +39,7 @@ describe('Sign in with email', () => {
     it('Validation error with invalid email format', async () => {
         for (const invalidFormatEmail of userCredentials.invalidFormatEmails) {
             await signInPage.fillEmailInputAndLoseFocus(invalidFormatEmail)
-            expect(await signInPage.getEmailValidationErrorText()).equals(FormValidationMessage.emailValidationErrorText)
+            expect (await signInPage.getEmailValidationErrorText()).equals(FormValidationMessage.emailValidationErrorText)
             await browser.refresh()  
         }
     })
@@ -61,13 +61,13 @@ describe('Sign in with email', () => {
     it('Open register page from sign in page', async () => {
         await signInPage.clickCreateAccLink()
         await waitForRegisterFormBtnInDOM()
-        expect(await getRegisterPageTitleText()).equals(HeaderText.register)
+        expect (await getRegisterPageTitleText()).equals(HeaderText.register)
     })
 
     it('Open reset password page from sign in page', async () => {
         await signInPage.clickForgotPassLink()
         await waitForSendRecoveryCodeBtnInDOM()
-        expect(await getResetPassPageTitleText()).equals(HeaderText.resetPass)
+        expect (await getResetPassPageTitleText()).equals(HeaderText.resetPass)
     })
 
 })

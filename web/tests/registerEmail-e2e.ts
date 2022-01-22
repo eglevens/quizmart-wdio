@@ -24,7 +24,7 @@ describe('Register with email from register page', () => {
     it('Attempt to register with already registered email', async () => {
         await registerPage.registerWithEmail(userCredentials.email, userCredentials.pass, userCredentials.pass)
         await registerPage.waitForRegisterFormBtnIsClickable() 
-        expect(await registerPage.getAlreadyRegisteredUserErrorText()).equals(FormValidationMessage.alreadyRegisteredUserErrorText)
+        expect (await registerPage.getAlreadyRegisteredUserErrorText()).equals(FormValidationMessage.alreadyRegisteredUserErrorText)
     })
 
     it('Success register without newsletter', async () => {
@@ -42,7 +42,7 @@ describe('Register with email from register page', () => {
     it('Validation error with invalid email format', async () => {
         for (const invalidFormatEmail of userCredentials.invalidFormatEmails) {
             await registerPage.fillEmailInputAndLoseFocus(invalidFormatEmail)
-            expect(await registerPage.getEmailValidationErrorText()).equals(FormValidationMessage.emailValidationErrorText)
+            expect (await registerPage.getEmailValidationErrorText()).equals(FormValidationMessage.emailValidationErrorText)
             await browser.refresh()  
         }
     })
@@ -59,15 +59,15 @@ describe('Register with email from register page', () => {
 
     it('Validation error with empty email & passwords', async () => {
         await registerPage.clickRegisterBtn()
-        expect(await registerPage.getEmailValidationErrorText()).equals(FormValidationMessage.requiredValidationErrorText)
-        expect(await registerPage.getPassValidationErrorText()).equals(FormValidationMessage.requiredValidationErrorText)
-        expect(await registerPage.getPassRepeatValidationErrorText()).equals(FormValidationMessage.requiredValidationErrorText)
+        expect (await registerPage.getEmailValidationErrorText()).equals(FormValidationMessage.requiredValidationErrorText)
+        expect (await registerPage.getPassValidationErrorText()).equals(FormValidationMessage.requiredValidationErrorText)
+        expect (await registerPage.getPassRepeatValidationErrorText()).equals(FormValidationMessage.requiredValidationErrorText)
     })
 
     it('Open sign in page from register page', async () => {
         await registerPage.clickSignInLink()
         await waitForSignInFormBtnInDOM()
-        expect(await getSignInPageTitleText()).equals(HeaderText.signIn)
+        expect (await getSignInPageTitleText()).equals(HeaderText.signIn)
     })
 
     it('Open privacy policy page from register page', async () => {
