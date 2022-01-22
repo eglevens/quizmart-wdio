@@ -1,7 +1,7 @@
 import * as signInPage from '../pageObjects/signIn.page'
 import { getDiscoverPageTitleText } from '../pageObjects/discover.page'
-import { getRegisterPageTitleText } from '../pageObjects/register'
-import { getResetPassPageTitleText } from '../pageObjects/resetPass.page'
+import { getRegisterPageTitleText, waitForRegisterFormBtnInDOM } from '../pageObjects/register'
+import { getResetPassPageTitleText, waitForSendRecoveryCodeBtnInDOM } from '../pageObjects/resetPass.page'
 import { waitForUserProfileImageInHeader } from "../pageObjects/header.element"
 import { openSignInPage } from '../pageObjects/page'
 import { FormValidationMessage } from '../utils/formValidationMessages'
@@ -24,13 +24,14 @@ describe('Sign in with email', () => {
 
     it('Attempt to sign in with invalid password', async() => {
         await signInPage.signInWithEmail(userCredentials.email, userCredentials.invalidPass)
-        browser.pause(2000)
+        await signInPage.waitForSignInFormBtnIsClickable()
         expect (await signInPage.getIncorrectCredentialsErrorText()).equals(FormValidationMessage.incorrectCredentialsErrorText)
     })
 
     it('Attempt to sign in with non registered email', async() => {
         const randomEmail = require('random-email')
         await signInPage.signInWithEmail(randomEmail(), userCredentials.invalidPass)
+        await signInPage.waitForSignInFormBtnIsClickable()
         expect (await signInPage.getIncorrectCredentialsErrorText()).equals(FormValidationMessage.incorrectCredentialsErrorText)
     })
 
@@ -58,11 +59,13 @@ describe('Sign in with email', () => {
 
     it('Open register page from sign in page', async () => {
         await signInPage.clickCreateAccLink()
+        await waitForRegisterFormBtnInDOM()
         expect(await getRegisterPageTitleText()).equals(HeaderText.register)
     })
 
     it('Open reset password page from sign in page', async () => {
         await signInPage.clickForgotPassLink()
+        await waitForSendRecoveryCodeBtnInDOM()
         expect(await getResetPassPageTitleText()).equals(HeaderText.resetPass)
     })
 

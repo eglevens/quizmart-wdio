@@ -1,6 +1,6 @@
 import * as registerPage from '../pageObjects/register'
 import * as userCredentials from '../utils/userCredentials'
-import { getSignInPageTitleText, waitForSignInFormBtn } from '../pageObjects/signIn.page'
+import { getSignInPageTitleText, waitForSignInFormBtnInDOM } from '../pageObjects/signIn.page'
 import { openRegisterPage, returnUrl} from '../pageObjects/page'
 import { FormValidationMessage } from '../utils/formValidationMessages'
 import { HeaderText } from '../utils/enums'
@@ -18,12 +18,12 @@ describe('Register with email from register page', () => {
 
     beforeEach(async function () {
         await openRegisterPage()
-        await registerPage.waitForRegisterBtnIsClickable()
+        await registerPage.waitForRegisterFormBtnIsClickable()
     })
 
     it('Attempt to register with already registered email', async () => {
         await registerPage.registerWithEmail(userCredentials.email, userCredentials.pass, userCredentials.pass)
-        await registerPage.waitForRegisterBtnIsClickable() 
+        await registerPage.waitForRegisterFormBtnIsClickable() 
         expect(await registerPage.getAlreadyRegisteredUserErrorText()).equals(FormValidationMessage.alreadyRegisteredUserErrorText)
     })
 
@@ -55,7 +55,6 @@ describe('Register with email from register page', () => {
         await registerPage.fillPassInputsAndLoseFocus(userCredentials.longPass, notMatchingRepeatPass)
         expect (await registerPage.getPassValidationErrorText()).equals(FormValidationMessage.passTooLongValidationErrorText)
         expect (await registerPage.getPassRepeatValidationErrorText()).equals(passRepeatMustMatchValidationErrorText)
-        
     })
 
     it('Validation error with empty email & passwords', async () => {
@@ -67,7 +66,7 @@ describe('Register with email from register page', () => {
 
     it('Open sign in page from register page', async () => {
         await registerPage.clickSignInLink()
-        await waitForSignInFormBtn()
+        await waitForSignInFormBtnInDOM()
         expect(await getSignInPageTitleText()).equals(HeaderText.signIn)
     })
 
