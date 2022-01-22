@@ -1,4 +1,3 @@
-import { VoidExpression } from "typescript"
 import * as page from "./page"
 
 
@@ -60,12 +59,21 @@ export async function registerWithEmail(email: string, pass: string, passRepeat:
     await page.clickByLocator(registerBtn)
 }
 
+export async function registerWithEmailAndNewsletterSubscription(email: string, pass: string, passRepeat: string): Promise<void> {
+    await page.sendValueByLocator(emailInput, email)
+    await page.sendValueByLocator(passInput, pass)
+    await page.sendValueByLocator(passRepeatInput, passRepeat)
+    await page.clickByLocator(newsletterCheckbox)
+    await page.clickByLocator(registerBtn)
+}
+
+
 //----------------WAIT----------------
 
 export async function waitForRegisterFormBtn(): Promise<void> {
     return await page.waitUntilElementIsVisibleInDOMByLocator(registerBtn)
 }
 
-export async function waitForError(): Promise<void> {
+export async function waitForErrorInViewport(): Promise<void> {
     return await page.waitUntilElementIsVisibleInViewportByLocator(backendFormValidationError)
 }

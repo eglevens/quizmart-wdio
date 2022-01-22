@@ -64,3 +64,14 @@ export async function waitUntilElementIsVisibleInDOMByLocator (locator: string, 
             timeoutMsg: timeoutMessage
         })
 }
+
+export async function waitUntilElementIsClickableByLocator(locator: string, customTimeout?: number): Promise<void> {
+    const timeoutMessage = `${locator} element still invisible after ${customTimeout || defaultTimeout} ms`
+    await browser.waitUntil(async function () {
+        return (await getElementByLocator(locator)).isClickable()
+    },
+        {
+            timeout: customTimeout || defaultTimeout,
+            timeoutMsg: timeoutMessage
+        })
+}

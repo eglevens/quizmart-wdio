@@ -1,10 +1,12 @@
 import * as registerPage from '../pageObjects/register'
-import * as signInPage from '../pageObjects/signIn.page'
 import * as userCredentials from '../utils/userCredentials'
+import { getSignInPageTitleText } from '../pageObjects/signIn.page'
 import { openRegisterPage } from '../pageObjects/page'
 import { FormValidationMessage } from '../utils/formValidationMessages'
 import { HeaderText } from '../utils/enums'
 import { expect } from 'chai'
+import { waitForUserProfileImageInHeader } from '../pageObjects/header.element'
+import { getDiscoverPageTitleText } from '../pageObjects/discover.page'
 
 
 describe('Register with email from register page', () => {
@@ -14,16 +16,22 @@ describe('Register with email from register page', () => {
     })
 
     it('Success register without newsletter', async () => {
-
+        const randomEmail = require('random-email')
+        await registerPage.registerWithEmail(randomEmail(), userCredentials.pass, userCredentials.pass)
+        await waitForUserProfileImageInHeader()
+        expect (await getDiscoverPageTitleText()).equals(HeaderText.discover)
     })
 
     it('Success register with newsletter', async () => {
-
+        const randomEmail = require('random-email')
+        await registerPage.registerWithEmailAndNewsletterSubscription(randomEmail(), userCredentials.pass, userCredentials.pass)
+        await waitForUserProfileImageInHeader()
+        expect (await getDiscoverPageTitleText()).equals(HeaderText.discover)
     })
 
     it('Attempt to register with already registered email', async () => {
         await registerPage.registerWithEmail(userCredentials.email, userCredentials.pass, userCredentials.pass)
-        await registerPage.waitForError()
+        await registerPage.waitForErrorInViewport()
         expect(await registerPage.getAlreadyRegisteredUserErrorText()).equals(FormValidationMessage.alreadyRegisteredUserErrorText)
     })
 
@@ -40,7 +48,7 @@ describe('Register with email from register page', () => {
 
     it('Open sign in page from register page', async () => {
         await registerPage.clickSignInLink()
-        expect(await signInPage.getSignInPageTitleText()).equals(HeaderText.signIn)
+        expect(await getSignInPageTitleText()).equals(HeaderText.signIn)
     })
 
 })

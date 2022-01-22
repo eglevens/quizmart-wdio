@@ -64,6 +64,6 @@ export async function fillPassInputAndLoseFocus(pass: string): Promise<void> {
 
 //----------------WAIT----------------
 
-export async function waitForSignInFormBtn(waitForElement): Promise<void> {
-    return await page.waitUntilElementIsVisibleInDOMByLocator(signInBtn, waitForElement)
+export async function waitForSignInFormBtn(): Promise<void> {
+    return await page.waitUntilElementIsVisibleInDOMByLocator(signInBtn)
 }

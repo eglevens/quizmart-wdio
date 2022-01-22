@@ -1,8 +1,8 @@
 import * as signInPage from '../pageObjects/signIn.page'
-import * as discoverPage from '../pageObjects/discover.page'
-import * as registerPage from '../pageObjects/register'
-import * as resetPassPage from '../pageObjects/resetPass.page'
-import * as header from "../pageObjects/header"
+import { getDiscoverPageTitleText } from '../pageObjects/discover.page'
+import { getRegisterPageTitleText } from '../pageObjects/register'
+import { getResetPassPageTitleText } from '../pageObjects/resetPass.page'
+import { waitForUserProfileImageInHeader } from "../pageObjects/header.element"
 import { openSignInPage } from '../pageObjects/page'
 import { FormValidationMessage } from '../utils/formValidationMessages'
 import * as userCredentials from '../utils/userCredentials'
@@ -18,8 +18,8 @@ describe('Sign in with email', () => {
 
     it('Success sign in', async () => {
         await signInPage.signInWithEmail(userCredentials.email, userCredentials.pass)
-        await header.waitForUserProfileImage()
-        expect (await discoverPage.getDiscoverPageTitleText()).equals(HeaderText.discover)
+        await waitForUserProfileImageInHeader()
+        expect (await getDiscoverPageTitleText()).equals(HeaderText.discover)
     })
 
     it('Attempt to sign in with invalid password', async() => {
@@ -29,7 +29,8 @@ describe('Sign in with email', () => {
     })
 
     it('Attempt to sign in with non registered email', async() => {
-        await signInPage.signInWithEmail(userCredentials.unregistredEmail, userCredentials.invalidPass)
+        const randomEmail = require('random-email')
+        await signInPage.signInWithEmail(randomEmail(), userCredentials.invalidPass)
         expect (await signInPage.getIncorrectCredentialsErrorText()).equals(FormValidationMessage.incorrectCredentialsErrorText)
     })
 
@@ -57,12 +58,12 @@ describe('Sign in with email', () => {
 
     it('Open register page from sign in page', async () => {
         await signInPage.clickCreateAccLink()
-        expect(await registerPage.getRegisterPageTitleText()).equals(HeaderText.register)
+        expect(await getRegisterPageTitleText()).equals(HeaderText.register)
     })
 
     it('Open reset password page from sign in page', async () => {
         await signInPage.clickForgotPassLink()
-        expect(await resetPassPage.getResetPassPageTitleText()).equals(HeaderText.resetPass)
+        expect(await getResetPassPageTitleText()).equals(HeaderText.resetPass)
     })
 
 })

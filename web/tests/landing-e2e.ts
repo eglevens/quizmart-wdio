@@ -13,8 +13,9 @@ describe('Landing page cases', () => {
     })
     
     it('Open sign in page from landing page', async () => {
+        await landingPage.waitForSignInButtonToBeClickable()
         await landingPage.clickSignInWithEmailBtn()
-        await signInPage.waitForSignInFormBtn(6000)
+        await signInPage.waitForSignInFormBtn()
         expect(await signInPage.getSignInPageTitleText()).equals(HeaderText.signIn)
     })
 
