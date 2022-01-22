@@ -7,6 +7,7 @@ import { HeaderText } from '../utils/enums'
 import { expect } from 'chai'
 import { waitForUserProfileImageInHeader } from '../pageObjects/header.element'
 import { getDiscoverPageTitleText } from '../pageObjects/discover.page'
+const randomEmail = require('random-email')
 
 
 describe('Register with email from register page', () => {
@@ -16,14 +17,12 @@ describe('Register with email from register page', () => {
     })
 
     it('Success register without newsletter', async () => {
-        const randomEmail = require('random-email')
         await registerPage.registerWithEmail(randomEmail(), userCredentials.pass, userCredentials.pass)
         await waitForUserProfileImageInHeader()
         expect (await getDiscoverPageTitleText()).equals(HeaderText.discover)
     })
 
     it('Success register with newsletter', async () => {
-        const randomEmail = require('random-email')
         await registerPage.registerWithEmailAndNewsletterSubscription(randomEmail(), userCredentials.pass, userCredentials.pass)
         await waitForUserProfileImageInHeader()
         expect (await getDiscoverPageTitleText()).equals(HeaderText.discover)

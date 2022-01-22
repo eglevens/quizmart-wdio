@@ -15,7 +15,3 @@ export async function clickRegisterWithEmailBtn(): Promise<void> {
     await page.clickByLocator(registerTab)
     await page.clickByLocator(registerWithEmailBtn)
 }
-
-export async function waitForSignInButtonToBeClickable() {
-    await page.waitUntilElementIsClickableByLocator(signInWithEmailBtn)
-}

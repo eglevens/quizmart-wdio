@@ -67,7 +67,6 @@ export async function registerWithEmailAndNewsletterSubscription(email: string, 
     await page.clickByLocator(registerBtn)
 }
 
-
 //----------------WAIT----------------
 
 export async function waitForRegisterFormBtn(): Promise<void> {
