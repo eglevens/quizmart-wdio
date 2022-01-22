@@ -67,12 +67,23 @@ export async function registerWithEmailAndNewsletterSubscription(email: string, 
     await page.clickByLocator(registerBtn)
 }
 
+export async function fillEmailInputAndLoseFocus(email: string): Promise<void> {
+    await page.sendValueByLocator(emailInput, email)
+    await page.clickByLocator(passInput)
+}
+
+export async function fillPassInputsAndLoseFocus(pass: string, passRepeat: string): Promise<void> {
+    await page.sendValueByLocator(passInput, pass)
+    await page.sendValueByLocator(passRepeatInput, passRepeat)
+    await page.clickByLocator(emailInput)
+}
+
 //----------------WAIT----------------
 
 export async function waitForRegisterFormBtn(): Promise<void> {
     return await page.waitUntilElementIsVisibleInDOMByLocator(registerBtn)
 }
 
-export async function waitForErrorInViewport(): Promise<void> {
-    return await page.waitUntilElementIsVisibleInViewportByLocator(backendFormValidationError)
+export async function waitForRegisterBtnIsClickable(): Promise<void> {
+    return await page.waitUntilElementIsClickableByLocator(registerBtn)
 }
