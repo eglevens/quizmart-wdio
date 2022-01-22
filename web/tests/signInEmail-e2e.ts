@@ -14,6 +14,7 @@ describe('Sign in with email', () => {
 
     beforeEach(async function(){
         await openSignInPage()
+        await signInPage.waitForSignInFormBtnIsClickable()
     })
 
     it('Success sign in', async () => {
