@@ -22,19 +22,19 @@ describe('Register with email from register page', () => {
     })
 
     it('Attempt to register with already registered email', async () => {
-        await registerPage.registerWithEmail(userCredentials.email, userCredentials.pass, userCredentials.pass)
+        await registerPage.registerWithEmail(userCredentials.user1.email, userCredentials.user1.pass, userCredentials.user1.pass)
         await registerPage.waitForRegisterFormBtnIsClickable() 
         expect (await registerPage.getAlreadyRegisteredUserErrorText()).equals(FormValidationMessage.alreadyRegisteredUserErrorText)
     })
 
     it('Success register without newsletter', async () => {
-        await registerPage.registerWithEmail(randomEmail(), userCredentials.pass, userCredentials.pass)
+        await registerPage.registerWithEmail(randomEmail(), userCredentials.user1.pass, userCredentials.user1.pass)
         await waitForUserProfileImageInHeader(6000)
         expect (await getDiscoverPageTitleText()).equals(HeaderText.discover)
     })
 
     it('Success register with newsletter', async () => {
-        await registerPage.registerWithEmailAndNewsletterSubscription(randomEmail(), userCredentials.pass, userCredentials.pass)
+        await registerPage.registerWithEmailAndNewsletterSubscription(randomEmail(), userCredentials.user1.pass, userCredentials.user1.pass)
         await waitForUserProfileImageInHeader(6000)
         expect (await getDiscoverPageTitleText()).equals(HeaderText.discover)
     })

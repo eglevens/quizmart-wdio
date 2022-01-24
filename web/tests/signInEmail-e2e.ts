@@ -18,13 +18,13 @@ describe('Sign in with email', () => {
     })
 
     it('Success sign in', async () => {
-        await signInPage.signInWithEmail(userCredentials.email, userCredentials.pass)
+        await signInPage.signInWithEmail(userCredentials.user1.email, userCredentials.user1.pass)
         await waitForUserProfileImageInHeader(6000)
         expect (await getDiscoverPageTitleText()).equals(HeaderText.discover)
     })
 
     it('Attempt to sign in with invalid password', async() => {
-        await signInPage.signInWithEmail(userCredentials.email, userCredentials.invalidPass)
+        await signInPage.signInWithEmail(userCredentials.user1.email, userCredentials.invalidPass)
         await signInPage.waitForSignInFormBtnIsClickable()
         expect (await signInPage.getIncorrectCredentialsErrorText()).equals(FormValidationMessage.incorrectCredentialsErrorText)
     })
