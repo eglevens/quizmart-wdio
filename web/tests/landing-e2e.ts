@@ -27,8 +27,7 @@ describe('Landing page cases', () => {
 
     it('Open Terms and conditions page in new tab from landing page', async () => {
         await landingPage.clickTermsAndConditionsLink()
-        await browser.pause(1000)
-        await browser.switchWindow('Terms and Conditions | QuizMart')
+        await browser.switchWindow('terms-and-conditions/')
         await waitForTermsAndConditionsPageTitleText()
         expect (await isTermsAndConditionsTitleTextInDOM()).to.be.true
     })
