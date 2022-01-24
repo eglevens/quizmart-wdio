@@ -23,7 +23,7 @@ describe('Register with email from register page', () => {
 
     it('Attempt to register with already registered email', async () => {
         await registerPage.registerWithEmail(userCredentials.email, userCredentials.pass, userCredentials.pass)
-        await registerPage.waitForRegisterFormBtnIsClickable() 
+        await registerPage.waitForRegisterFormBtnIsClickable(6000) 
         expect (await registerPage.getAlreadyRegisteredUserErrorText()).equals(FormValidationMessage.alreadyRegisteredUserErrorText)
     })
 

@@ -80,10 +80,10 @@ export async function fillPassInputsAndLoseFocus(pass: string, passRepeat: strin
 
 //----------------WAIT----------------
 
-export async function waitForRegisterFormBtnInDOM(): Promise<void> {
+export async function waitForRegisterFormBtnInDOM(timeToWait?): Promise<void> {
     return await page.waitUntilElementIsVisibleInDOMByLocator(registerBtn)
 }
 
-export async function waitForRegisterFormBtnIsClickable(): Promise<void> {
-    return await page.waitUntilElementIsClickableByLocator(registerBtn)
+export async function waitForRegisterFormBtnIsClickable(timeToWait?): Promise<void> {
+    return await page.waitUntilElementIsClickableByLocator(registerBtn, timeToWait)
 }
