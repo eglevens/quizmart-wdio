@@ -19,7 +19,7 @@ describe('Sign in with email', () => {
 
     it('Success sign in', async () => {
         await signInPage.signInWithEmail(userCredentials.email, userCredentials.pass)
-        await waitForUserProfileImageInHeader()
+        await waitForUserProfileImageInHeader(6000)
         expect (await getDiscoverPageTitleText()).equals(HeaderText.discover)
     })
 
