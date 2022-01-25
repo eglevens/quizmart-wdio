@@ -2,6 +2,7 @@ import * as page from "./page"
 
 
 const signInWithEmailBtn = '//button[text()="Sign in with email"]'
+const continueWithGoogleBtn = '//button[text()="Continue with Google"]'
 const registerTab = '//button[text()="Register"]'
 const registerWithEmailBtn = '//button[text()="Register with email"]'
 const termsAndConditionsLink = '//a[@href="terms-and-conditions"]'
@@ -19,4 +20,14 @@ export async function clickRegisterWithEmailBtn(): Promise<void> {
 
 export async function clickTermsAndConditionsLink(): Promise<void> {
     await page.clickByLocator(termsAndConditionsLink)
+}
+
+export async function clickContinueWithGoogleBtn(): Promise<void> {
+    await page.clickByLocator(continueWithGoogleBtn)
+}
+
+//----------------WAIT----------------
+
+export async function waitForTermsAndConditionsLinkInViewport(timeToWait?: number) {
+    await page.waitUntilElementIsVisibleInViewportByLocator(termsAndConditionsLink, timeToWait)
 }
