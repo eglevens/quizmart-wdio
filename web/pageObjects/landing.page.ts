@@ -31,3 +31,9 @@ export async function clickContinueWithGoogleBtn(): Promise<void> {
 export async function waitForTermsAndConditionsLinkInViewport(timeToWait?: number) {
     await page.waitUntilElementIsVisibleInViewportByLocator(termsAndConditionsLink, timeToWait)
 }
+
+//----------------GET----------------
+
+export async function isTermsAndConditionsLinkDisplayed(): Promise<boolean> {
+    return await page.elementPresentByLocator(continueWithGoogleBtn)
+}
