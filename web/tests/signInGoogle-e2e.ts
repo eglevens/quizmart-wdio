@@ -1,6 +1,6 @@
 import * as landingPage from '../pageObjects/landing.page'
 import { openLandingPage } from '../pageObjects/page'
-import * as signInGoogle from '../pageObjects/signInGoogle'
+import * as signInGoogle from '../pageObjects/signInGoogle.page'
 import { expect } from 'chai'
 import { waitForUserProfileImageInHeader } from '../pageObjects/header.element'
 import { userGoogle } from '../utils/userCredentials'

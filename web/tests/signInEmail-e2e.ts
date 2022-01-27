@@ -1,6 +1,6 @@
 import * as signInPage from '../pageObjects/signIn.page'
 import { getDiscoverPageTitleText } from '../pageObjects/discover.page'
-import { getRegisterPageTitleText, waitForRegisterFormBtnInDOM } from '../pageObjects/register'
+import { getRegisterPageTitleText, waitForRegisterFormBtnInDOM } from '../pageObjects/register.page'
 import { getResetPassPageTitleText, waitForSendRecoveryCodeBtnInDOM } from '../pageObjects/resetPass.page'
 import { waitForUserProfileImageInHeader } from "../pageObjects/header.element"
 import { openSignInPage } from '../pageObjects/page'

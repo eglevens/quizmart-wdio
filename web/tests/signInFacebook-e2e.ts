@@ -1,6 +1,6 @@
 import * as landingPage from '../pageObjects/landing.page'
 import { openLandingPage } from '../pageObjects/page'
-import * as signInFacebook from '../pageObjects/signInFacebook'
+import * as signInFacebook from '../pageObjects/signInFacebook.page'
 import { expect } from 'chai'
 import { waitForUserProfileImageInHeader } from '../pageObjects/header.element'
 import { userFacebook } from '../utils/userCredentials'

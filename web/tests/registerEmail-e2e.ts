@@ -1,4 +1,4 @@
-import * as registerPage from '../pageObjects/register'
+import * as registerPage from '../pageObjects/register.page'
 import * as userCredentials from '../utils/userCredentials'
 import { getSignInPageTitleText, waitForSignInFormBtnInDOM } from '../pageObjects/signIn.page'
 import { openRegisterPage} from '../pageObjects/page'

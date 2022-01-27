@@ -1,7 +1,7 @@
 import * as landingPage from '../pageObjects/landing.page'
 import { openLandingPage } from '../pageObjects/page'
 import { waitForSignInFormBtnInDOM, getSignInPageTitleText} from '../pageObjects/signIn.page'
-import { waitForRegisterFormBtnInDOM, getRegisterPageTitleText } from '../pageObjects/register'
+import { waitForRegisterFormBtnInDOM, getRegisterPageTitleText } from '../pageObjects/register.page'
 import { isTermsAndConditionsTitleTextInDOM, waitForTermsAndConditionsPageTitleText } from '../pageObjects/termsAndConditions.page'
 import { HeaderText } from '../utils/enums'
 import { expect } from 'chai'
