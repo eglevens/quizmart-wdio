@@ -1,8 +1,10 @@
 import * as page from "./page"
 
+const landingPageTitle = '(//h1)[1]'
 
 const signInWithEmailBtn = '//button[text()="Sign in with email"]'
 const continueWithGoogleBtn = '//button[text()="Continue with Google"]'
+const continueWithFacebookBtn = '//button[text()="Continue with Facebook"]'
 const registerTab = '//button[text()="Register"]'
 const registerWithEmailBtn = '//button[text()="Register with email"]'
 const termsAndConditionsLink = '//a[@href="terms-and-conditions"]'
@@ -26,6 +28,10 @@ export async function clickContinueWithGoogleBtn(): Promise<void> {
     await page.clickByLocator(continueWithGoogleBtn)
 }
 
+export async function clickContinueWithFacebookBtn(): Promise<void> {
+    await page.clickByLocator(continueWithFacebookBtn)
+}
+
 //----------------WAIT----------------
 
 export async function waitForTermsAndConditionsLinkInViewport(timeToWait?: number) {
@@ -36,4 +42,8 @@ export async function waitForTermsAndConditionsLinkInViewport(timeToWait?: numbe
 
 export async function isTermsAndConditionsLinkDisplayed(): Promise<boolean> {
     return await page.elementPresentByLocator(continueWithGoogleBtn)
+}
+
+export async function getLandingPageTitleText(): Promise<string> {
+    return await page.getElementTextByLocator(landingPageTitle)
 }

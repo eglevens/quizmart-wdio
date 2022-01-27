@@ -8,6 +8,11 @@ export const userGoogle = {
     email: 'mobile@telesoftas.com',
     pass: '---'
 }
+
+export const userFacebook = {
+    email: '---',
+    pass: '---'
+}
   
 export const invalidFormatEmails = ['eglvnstelesoftas.com', 'eglvns@telesoftascom', '@telesoftas.com', '!@#$%^&*()`~', '111.@email@email.com'] 
 export const invalidPass = 'myPass'
