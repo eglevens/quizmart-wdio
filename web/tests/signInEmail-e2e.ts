@@ -1,8 +1,7 @@
 import * as signInPage from '../pageObjects/signIn.page'
-import { getDiscoverPageTitleText } from '../pageObjects/discover.page'
+import { getDiscoverPageTitleText, waitForUserProfileImageInHeader } from '../pageObjects/discover.page'
 import { getRegisterPageTitleText, waitForRegisterFormBtnInDOM } from '../pageObjects/register.page'
 import { getResetPassPageTitleText, waitForSendRecoveryCodeBtnInDOM } from '../pageObjects/resetPass.page'
-import { waitForUserProfileImageInHeader } from "../pageObjects/header.element"
 import { openSignInPage } from '../pageObjects/page'
 import { FormValidationMessage } from '../utils/formValidationMessages'
 import * as userCredentials from '../utils/userCredentials'
