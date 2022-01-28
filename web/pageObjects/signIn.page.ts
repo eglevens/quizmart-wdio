@@ -14,6 +14,22 @@ const backendFormValidationError = '//form/div/h3'
 const frontendEmailValidationError = '//div[./input[@name="email"]]//h3'
 const frontendPasswordValidationError = '//div[./input[@name="password"]]//h3'
 
+//---Google
+const emailGoogleInput = '//input[@type="email"]'
+const passGoogleInput = '//input[@name="password"]'
+
+const nextGoogleBtn = '//*[text()="Kitas"]'
+
+//---Facebook
+const cookiesPopup = '//div[@id="cookie_banner_title"]'
+const acceptCookies = '//*[@data-testid="cookie-policy-dialog-accept-button"]'
+
+const emailFacebookInput = '//input[@id="email"]'
+const passFacebookInput = '//input[@id="pass"]'
+
+const loginFacebookBtn = '//button[@id="loginbutton"]'
+
+
 //----------------GET----------------
 
 export async function getSignInPageTitleText(): Promise<string> {
@@ -62,6 +78,22 @@ export async function fillPassInputAndLoseFocus(pass: string): Promise<void> {
     await page.clickByLocator(emailInput)
 }
 
+export async function loginOnGoogle(email: string, pass: string): Promise<void> {
+        await page.waitUntilElementIsClickableByLocator(nextGoogleBtn, 10000)
+        await page.sendValueByLocator(emailGoogleInput, email)
+        await page.clickByLocator(nextGoogleBtn)
+        await page.waitUntilElementIsClickableByLocator(nextGoogleBtn, 10000)
+        await page.sendValueByLocator(passGoogleInput, pass)
+        await page.clickByLocator(nextGoogleBtn)
+}
+
+export async function loginOnFacebook(email: string, pass: string): Promise<void> {
+    await page.clickByLocator(acceptCookies)
+    await page.sendValueByLocator(emailFacebookInput, email)
+    await page.sendValueByLocator(passFacebookInput, pass)
+    await page.clickByLocator(loginFacebookBtn)
+}
+
 //----------------WAIT----------------
 
 export async function waitForSignInFormBtnInDOM(timeToWait?: number): Promise<void> {
@@ -70,4 +102,12 @@ export async function waitForSignInFormBtnInDOM(timeToWait?: number): Promise<vo
 
 export async function waitForSignInFormBtnIsClickable(timeToWait?: number): Promise<void> {
     return await page.waitUntilElementIsClickableByLocator(signInBtn)
+}
+
+export async function waitForNextBtnInGoogleIsClickable(timeToWait?: number): Promise<void> {
+    await page.waitUntilElementIsClickableByLocator(nextGoogleBtn, timeToWait)
+}
+
+export async function waitForConsentsPopupInFacebookIsVisible(timeToWait?: number): Promise<void> {
+    await page.waitUntilElementIsVisibleInViewportByLocator(cookiesPopup, timeToWait)
 }
