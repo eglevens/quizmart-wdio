@@ -13,6 +13,11 @@ export async function openSignInPage(): Promise<void> {
     browser.execute('localStorage.clear()')
 }
 
+export async function openForgotPassPage(): Promise<void> {
+    await browser.url('reset-password/')
+    browser.execute('localStorage.clear()')
+}
+
 //----------------GET----------------
 
 export async function getElementByLocator(locator: string): Promise<WebdriverIO.Element> {
