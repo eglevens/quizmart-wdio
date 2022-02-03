@@ -12,6 +12,6 @@ export async function getResetPassPageTitleText(): Promise<string> {
 
 //----------------WAIT----------------
 
-export async function waitForSendRecoveryCodeBtnInDOM(timeToWait?: number): Promise<void> {
-    await page.waitUntilElementIsVisibleInDOMByLocator(sendRecoveryCodeBtn)
+export async function waitForSendRecoveryCodeBtnIsVisible(timeToWait?: number): Promise<void> {
+    await page.waitUntilElementIsVisibleInViewportByLocator(sendRecoveryCodeBtn)
 }
