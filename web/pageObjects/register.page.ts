@@ -56,7 +56,7 @@ export async function registerWithEmail(email: string, pass: string, passRepeat:
     await page.sendValueByLocator(emailInput, email)
     await page.sendValueByLocator(passInput, pass)
     await page.sendValueByLocator(passRepeatInput, passRepeat)
-    await page.clickByLocator(registerBtn)
+    await clickRegisterBtn()
 }
 
 export async function registerWithEmailAndNewsletterSubscription(email: string, pass: string, passRepeat: string): Promise<void> {
@@ -64,7 +64,7 @@ export async function registerWithEmailAndNewsletterSubscription(email: string, 
     await page.sendValueByLocator(passInput, pass)
     await page.sendValueByLocator(passRepeatInput, passRepeat)
     await page.clickByLocator(newsletterCheckbox)
-    await page.clickByLocator(registerBtn)
+    await clickRegisterBtn()
 }
 
 export async function fillEmailInputAndLoseFocus(email: string): Promise<void> {

@@ -66,7 +66,7 @@ export async function clickForgotPassLink(): Promise<void> {
 export async function signInWithEmail(email: string, pass: string): Promise<void> {
     await page.sendValueByLocator(emailInput, email)
     await page.sendValueByLocator(passInput, pass)
-    await page.clickByLocator(signInBtn)
+    await clickSignInBtn()
 }
 
 export async function fillEmailInputAndLoseFocus(email: string): Promise<void> {
