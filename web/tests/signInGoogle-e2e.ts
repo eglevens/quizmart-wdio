@@ -8,7 +8,7 @@ import { HeaderText } from '../utils/enums'
 
 
 describe('Continue with Google', () => {
-//does not work on headless mdoe
+//does not work on headless mode
     beforeEach(async function (){
         await openLandingPage()        
     })
