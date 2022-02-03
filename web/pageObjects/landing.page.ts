@@ -40,8 +40,8 @@ export async function waitForTermsAndConditionsLinkInViewport(timeToWait?: numbe
 
 //----------------GET----------------
 
-export async function isTermsAndConditionsLinkDisplayed(): Promise<boolean> {
-    return await page.elementPresentByLocator(continueWithGoogleBtn)
+export async function isContinueWithGoogleBtnDisplayed(): Promise<boolean> {
+    return await page.isElementVisibleInViewportByLocator(continueWithGoogleBtn)
 }
 
 export async function getLandingPageTitleText(): Promise<string> {
