@@ -3,7 +3,7 @@ import { openLandingPage } from '../pageObjects/page'
 import * as signInPage from '../pageObjects/signIn.page'
 import { expect } from 'chai'
 import { userGoogle } from '../utils/userCredentials'
-import { getDiscoverPageTitleText, waitForUserProfileImageInHeader } from '../pageObjects/discover.page'
+import { getDiscoverPageTitleText, waitForUserProfileImageInHeaderIsDisplayed } from '../pageObjects/discover.page'
 import { HeaderText } from '../utils/enums'
 
 
@@ -15,7 +15,7 @@ describe('Continue with Google', () => {
     
     it('Initiate Continue with Google and return back to landing', async () => {
         await landingPage.clickContinueWithGoogleBtn()
-        await signInPage.waitForNextBtnInGoogleIsClickable(6000)
+        await signInPage.waitForNextEmailBtnInGoogleIsClickable(6000)
         await browser.back()
         await landingPage.waitForTermsAndConditionsLinkInViewport(8000)
         expect (await landingPage.getLandingPageTitleText()).equals(HeaderText.landing)
@@ -25,7 +25,7 @@ describe('Continue with Google', () => {
         await landingPage.clickContinueWithGoogleBtn()
         await signInPage.loginOnGoogle(userGoogle.email, userGoogle.pass)
         await landingPage.waitForTermsAndConditionsLinkInViewport(8000)
-        await waitForUserProfileImageInHeader(8000)
+        await waitForUserProfileImageInHeaderIsDisplayed(8000)
         expect (await getDiscoverPageTitleText()).equals(HeaderText.discover)
     })
 

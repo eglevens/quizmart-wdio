@@ -3,7 +3,7 @@ import { openLandingPage } from '../pageObjects/page'
 import * as signInPage from '../pageObjects/signIn.page'
 import { expect } from 'chai'
 import { userFacebook } from '../utils/userCredentials'
-import { getDiscoverPageTitleText, waitForUserProfileImageInHeader } from '../pageObjects/discover.page'
+import { getDiscoverPageTitleText, waitForUserProfileImageInHeaderIsDisplayed } from '../pageObjects/discover.page'
 import { HeaderText } from '../utils/enums'
 
 
@@ -26,7 +26,7 @@ describe('Continue with Facebook', () => {
         await signInPage.waitForConsentsPopupInFacebookIsVisible(6000)
         await signInPage.loginOnFacebook(userFacebook.email, userFacebook.pass)
         await landingPage.waitForTermsAndConditionsLinkInViewport(8000)
-        await waitForUserProfileImageInHeader(8000)
+        await waitForUserProfileImageInHeaderIsDisplayed(8000)
         expect (await getDiscoverPageTitleText()).equals(HeaderText.discover)
     })
 
