@@ -18,6 +18,16 @@ export async function openForgotPassPage(): Promise<void> {
     browser.execute('localStorage.clear()')
 }
 
+export async function openForgotPassPageRecoveryCode(): Promise<void> {
+    await browser.url('reset-password/#recovery')
+    browser.execute('localStorage.clear()')
+}
+
+export async function openForgotPassCreateNewPass(): Promise<void> {
+    await browser.url('reset-password/#recovery#create-new-password')
+    browser.execute('localStorage.clear()')
+}
+
 //----------------GET----------------
 
 export async function getElementByLocator(locator: string): Promise<WebdriverIO.Element> {
