@@ -1,10 +1,9 @@
 import * as landingPage from '../pageObjects/landing.page'
 import { openLandingPage } from '../pageObjects/page'
-import * as signInFacebook from '../pageObjects/signInFacebook.page'
+import * as signInPage from '../pageObjects/signIn.page'
 import { expect } from 'chai'
-import { waitForUserProfileImageInHeader } from '../pageObjects/header.element'
 import { userFacebook } from '../utils/userCredentials'
-import { getDiscoverPageTitleText } from '../pageObjects/discover.page'
+import { getDiscoverPageTitleText, waitForUserProfileImageInHeaderIsDisplayed } from '../pageObjects/discover.page'
 import { HeaderText } from '../utils/enums'
 
 
@@ -16,7 +15,7 @@ describe('Continue with Facebook', () => {
     
     it('Initiate Continue with Facebook and return back to landing', async () => {
         await landingPage.clickContinueWithFacebookBtn()
-        await signInFacebook.waitForConsentsPopupIsVisible(6000)
+        await signInPage.waitForConsentsPopupInFacebookIsVisible(6000)
         await browser.back()
         await landingPage.waitForTermsAndConditionsLinkInViewport(8000)
         expect (await landingPage.getLandingPageTitleText()).equals(HeaderText.landing)
@@ -24,10 +23,10 @@ describe('Continue with Facebook', () => {
 
     it('Success Continue with Facebook login', async () => {
         await landingPage.clickContinueWithFacebookBtn()
-        await signInFacebook.waitForConsentsPopupIsVisible(6000)
-        await signInFacebook.loginOnFacebook(userFacebook.email, userFacebook.pass)
+        await signInPage.waitForConsentsPopupInFacebookIsVisible(6000)
+        await signInPage.loginOnFacebook(userFacebook.email, userFacebook.pass)
         await landingPage.waitForTermsAndConditionsLinkInViewport(8000)
-        await waitForUserProfileImageInHeader(8000)
+        await waitForUserProfileImageInHeaderIsDisplayed(8000)
         expect (await getDiscoverPageTitleText()).equals(HeaderText.discover)
     })
 

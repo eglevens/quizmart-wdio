@@ -1,8 +1,7 @@
 import * as signInPage from '../pageObjects/signIn.page'
-import { getDiscoverPageTitleText } from '../pageObjects/discover.page'
-import { getRegisterPageTitleText, waitForRegisterFormBtnInDOM } from '../pageObjects/register.page'
-import { getResetPassPageTitleText, waitForSendRecoveryCodeBtnInDOM } from '../pageObjects/resetPass.page'
-import { waitForUserProfileImageInHeader } from "../pageObjects/header.element"
+import { getDiscoverPageTitleText, waitForUserProfileImageInHeaderIsDisplayed } from '../pageObjects/discover.page'
+import { getRegisterPageTitleText, waitForRegisterFormBtnIsVisible } from '../pageObjects/register.page'
+import { getResetPassPageTitleText, waitForSendRecoveryCodeBtnIsVisible } from '../pageObjects/resetPass.page'
 import { openSignInPage } from '../pageObjects/page'
 import { FormValidationMessage } from '../utils/formValidationMessages'
 import * as userCredentials from '../utils/userCredentials'
@@ -19,7 +18,7 @@ describe('Sign in with email', () => {
 
     it('Success sign in', async () => {
         await signInPage.signInWithEmail(userCredentials.user1.email, userCredentials.user1.pass)
-        await waitForUserProfileImageInHeader(6000)
+        await waitForUserProfileImageInHeaderIsDisplayed(6000)
         expect (await getDiscoverPageTitleText()).equals(HeaderText.discover)
     })
 
@@ -60,13 +59,13 @@ describe('Sign in with email', () => {
 
     it('Open register page from sign in page', async () => {
         await signInPage.clickCreateAccLink()
-        await waitForRegisterFormBtnInDOM()
+        await waitForRegisterFormBtnIsVisible()
         expect (await getRegisterPageTitleText()).equals(HeaderText.register)
     })
 
     it('Open reset password page from sign in page', async () => {
         await signInPage.clickForgotPassLink()
-        await waitForSendRecoveryCodeBtnInDOM()
+        await waitForSendRecoveryCodeBtnIsVisible()
         expect (await getResetPassPageTitleText()).equals(HeaderText.resetPass)
     })
 

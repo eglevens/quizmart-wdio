@@ -1,8 +1,8 @@
 import * as landingPage from '../pageObjects/landing.page'
 import { openLandingPage } from '../pageObjects/page'
-import { waitForSignInFormBtnInDOM, getSignInPageTitleText} from '../pageObjects/signIn.page'
-import { waitForRegisterFormBtnInDOM, getRegisterPageTitleText } from '../pageObjects/register.page'
-import { isTermsAndConditionsTitleTextInDOM, waitForTermsAndConditionsPageTitleText } from '../pageObjects/termsAndConditions.page'
+import { waitForSignInFormBtnIsVisible, getSignInPageTitleText} from '../pageObjects/signIn.page'
+import { waitForRegisterFormBtnIsVisible, getRegisterPageTitleText } from '../pageObjects/register.page'
+import { isTermsAndConditionsTitleTextDisplayed, waitForTermsAndConditionsPageTitleText } from '../pageObjects/termsAndConditions.page'
 import { HeaderText } from '../utils/enums'
 import { expect } from 'chai'
 
@@ -15,13 +15,13 @@ describe('Landing page cases', () => {
     
     it('Open sign in page from landing page', async () => {
         await landingPage.clickSignInWithEmailBtn()
-        await waitForSignInFormBtnInDOM()
+        await waitForSignInFormBtnIsVisible()
         expect (await getSignInPageTitleText()).equals(HeaderText.signIn)
     })
 
     it('Open register page from landing page', async () => {
         await landingPage.clickRegisterWithEmailBtn()
-        await waitForRegisterFormBtnInDOM()
+        await waitForRegisterFormBtnIsVisible()
         expect (await getRegisterPageTitleText()).equals(HeaderText.register)
     })
 
@@ -29,7 +29,7 @@ describe('Landing page cases', () => {
         await landingPage.clickTermsAndConditionsLink()
         await browser.switchWindow('terms-and-conditions/')
         await waitForTermsAndConditionsPageTitleText()
-        expect (await isTermsAndConditionsTitleTextInDOM()).to.be.true
+        expect (await isTermsAndConditionsTitleTextDisplayed()).to.be.true
     })
     
 })

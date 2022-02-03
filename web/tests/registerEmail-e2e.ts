@@ -1,11 +1,10 @@
 import * as registerPage from '../pageObjects/register.page'
 import * as userCredentials from '../utils/userCredentials'
-import { getSignInPageTitleText, waitForSignInFormBtnInDOM } from '../pageObjects/signIn.page'
+import { getSignInPageTitleText, waitForSignInFormBtnIsVisible } from '../pageObjects/signIn.page'
 import { openRegisterPage} from '../pageObjects/page'
 import { FormValidationMessage } from '../utils/formValidationMessages'
-import { waitForUserProfileImageInHeader } from '../pageObjects/header.element'
-import { getDiscoverPageTitleText } from '../pageObjects/discover.page'
-import { isPrivacyPolicyTitleTextInDOM, waitForPrivacyPolicyPageTitleText } from '../pageObjects/privacyPolicy.page'
+import { getDiscoverPageTitleText, waitForUserProfileImageInHeaderIsDisplayed } from '../pageObjects/discover.page'
+import { isPrivacyPolicyTitleDisplayed, waitForPrivacyPolicyPageTitleTextIsDisplayed } from '../pageObjects/privacyPolicy.page'
 import { HeaderText } from '../utils/enums'
 import { expect } from 'chai'
 const randomEmail = require('random-email')
@@ -29,13 +28,13 @@ describe('Register with email from register page', () => {
 
     it('Success register without newsletter', async () => {
         await registerPage.registerWithEmail(randomEmail(), userCredentials.user1.pass, userCredentials.user1.pass)
-        await waitForUserProfileImageInHeader(6000)
+        await waitForUserProfileImageInHeaderIsDisplayed(6000)
         expect (await getDiscoverPageTitleText()).equals(HeaderText.discover)
     })
 
     it('Success register with newsletter', async () => {
         await registerPage.registerWithEmailAndNewsletterSubscription(randomEmail(), userCredentials.user1.pass, userCredentials.user1.pass)
-        await waitForUserProfileImageInHeader(6000)
+        await waitForUserProfileImageInHeaderIsDisplayed(6000)
         expect (await getDiscoverPageTitleText()).equals(HeaderText.discover)
     })
 
@@ -66,14 +65,14 @@ describe('Register with email from register page', () => {
 
     it('Open sign in page from register page', async () => {
         await registerPage.clickSignInLink()
-        await waitForSignInFormBtnInDOM()
+        await waitForSignInFormBtnIsVisible()
         expect (await getSignInPageTitleText()).equals(HeaderText.signIn)
     })
 
     it('Open privacy policy page from register page', async () => {
         await registerPage.clickNewsletterPrivacyPolicyLink()
-        await waitForPrivacyPolicyPageTitleText()
-        expect (await isPrivacyPolicyTitleTextInDOM()).to.be.true
+        await waitForPrivacyPolicyPageTitleTextIsDisplayed(6000)
+        expect (await isPrivacyPolicyTitleDisplayed()).to.be.true
     })
 
 })

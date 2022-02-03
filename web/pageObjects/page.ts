@@ -1,16 +1,16 @@
 export async function openLandingPage(): Promise<void> {
     await browser.url('')
-    await browser.maximizeWindow()
+    browser.execute('localStorage.clear()')
 }
 
 export async function openRegisterPage(): Promise<void> {
     await browser.url('sign-up/')
-    await browser.maximizeWindow()
+    browser.execute('localStorage.clear()')
 }
 
 export async function openSignInPage(): Promise<void> {
     await browser.url('sign-in/')
-    await browser.maximizeWindow()
+    browser.execute('localStorage.clear()')
 }
 
 //----------------GET----------------
@@ -35,29 +35,18 @@ export async function sendValueByLocator(locator: string, value: string): Promis
 
 //----------------ASSERT----------------
 
-export async function elementPresentByLocator(locator: string): Promise<boolean> {
+export async function isElementVisibleInViewportByLocator(locator: string): Promise<boolean> {
     return (await getElementByLocator(locator)).isDisplayed()
 }
 
 //----------------WAIT----------------
 
-let defaultTimeout: number = 3000
+let defaultTimeout: number = 2000
 
 export async function waitUntilElementIsVisibleInViewportByLocator(locator: string, customTimeout?: number): Promise<void> {
     const timeoutMessage = `${locator} element still invisible after ${customTimeout || defaultTimeout} ms`
     await browser.waitUntil(async function () {
         return (await getElementByLocator(locator)).isDisplayedInViewport()
-    },
-        {
-            timeout: customTimeout || defaultTimeout,
-            timeoutMsg: timeoutMessage
-        })
-}
-
-export async function waitUntilElementIsVisibleInDOMByLocator (locator: string, customTimeout?: number): Promise<void> {
-    const timeoutMessage = `${locator} element still invisible after ${customTimeout || defaultTimeout} ms`
-    await browser.waitUntil(async function () {
-        return (await getElementByLocator(locator)).isDisplayed()
     },
         {
             timeout: customTimeout || defaultTimeout,

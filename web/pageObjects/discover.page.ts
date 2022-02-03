@@ -10,3 +10,9 @@ const headerAccountImage = '(//button/div)[1]'
 export async function getDiscoverPageTitleText(): Promise<string> {
     return await page.getElementTextByLocator(discoverPageTitle)
 }
+
+//----------------WAIT----------------
+
+export async function waitForUserProfileImageInHeaderIsDisplayed(timeToWait?: number): Promise<void> {
+    await page.waitUntilElementIsVisibleInViewportByLocator(headerAccountImage, timeToWait)
+}
