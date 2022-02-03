@@ -13,6 +13,6 @@ export async function getDiscoverPageTitleText(): Promise<string> {
 
 //----------------WAIT----------------
 
-export async function waitForUserProfileImageInHeader(timeToWait?: number): Promise<void> {
+export async function waitForUserProfileImageInHeaderIsDisplayed(timeToWait?: number): Promise<void> {
     await page.waitUntilElementIsVisibleInViewportByLocator(headerAccountImage, timeToWait)
 }

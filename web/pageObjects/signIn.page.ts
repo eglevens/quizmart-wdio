@@ -18,7 +18,8 @@ const frontendPasswordValidationError = '//div[./input[@name="password"]]//h3'
 const emailGoogleInput = '//input[@type="email"]'
 const passGoogleInput = '//input[@name="password"]'
 
-const nextGoogleBtn = '//*[text()="Kitas"]'
+const nextEmailGoogleBtn = '//div[@id="identifierNext"] //button'
+const nextPassGoogleBtn = '//div[@id="passwordNext"] //button'
 
 //---Facebook
 const cookiesPopup = '//div[@id="cookie_banner_title"]'
@@ -79,12 +80,12 @@ export async function fillPassInputAndLoseFocus(pass: string): Promise<void> {
 }
 
 export async function loginOnGoogle(email: string, pass: string): Promise<void> {
-        await page.waitUntilElementIsClickableByLocator(nextGoogleBtn, 10000)
+        await page.waitUntilElementIsClickableByLocator(nextEmailGoogleBtn, 10000)
         await page.sendValueByLocator(emailGoogleInput, email)
-        await page.clickByLocator(nextGoogleBtn)
-        await page.waitUntilElementIsClickableByLocator(nextGoogleBtn, 10000)
+        await page.clickByLocator(nextEmailGoogleBtn)
+        await page.waitUntilElementIsClickableByLocator(nextPassGoogleBtn, 10000)
         await page.sendValueByLocator(passGoogleInput, pass)
-        await page.clickByLocator(nextGoogleBtn)
+        await page.clickByLocator(nextPassGoogleBtn)
 }
 
 export async function loginOnFacebook(email: string, pass: string): Promise<void> {
@@ -96,16 +97,16 @@ export async function loginOnFacebook(email: string, pass: string): Promise<void
 
 //----------------WAIT----------------
 
-export async function waitForSignInFormBtnInDOM(timeToWait?: number): Promise<void> {
-    return await page.waitUntilElementIsVisibleInDOMByLocator(signInBtn)
+export async function waitForSignInFormBtnIsVisible(timeToWait?: number): Promise<void> {
+    return await page.waitUntilElementIsVisibleInViewportByLocator(signInBtn)
 }
 
 export async function waitForSignInFormBtnIsClickable(timeToWait?: number): Promise<void> {
     return await page.waitUntilElementIsClickableByLocator(signInBtn)
 }
 
-export async function waitForNextBtnInGoogleIsClickable(timeToWait?: number): Promise<void> {
-    await page.waitUntilElementIsClickableByLocator(nextGoogleBtn, timeToWait)
+export async function waitForNextEmailBtnInGoogleIsClickable(timeToWait?: number): Promise<void> {
+    await page.waitUntilElementIsClickableByLocator(nextEmailGoogleBtn, timeToWait)
 }
 
 export async function waitForConsentsPopupInFacebookIsVisible(timeToWait?: number): Promise<void> {
