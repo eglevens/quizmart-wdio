@@ -35,7 +35,7 @@ export async function sendValueByLocator(locator: string, value: string): Promis
 
 //----------------ASSERT----------------
 
-export async function elementPresentByLocator(locator: string): Promise<boolean> {
+export async function isElementVisibleInViewportByLocator(locator: string): Promise<boolean> {
     return (await getElementByLocator(locator)).isDisplayed()
 }
 
@@ -47,17 +47,6 @@ export async function waitUntilElementIsVisibleInViewportByLocator(locator: stri
     const timeoutMessage = `${locator} element still invisible after ${customTimeout || defaultTimeout} ms`
     await browser.waitUntil(async function () {
         return (await getElementByLocator(locator)).isDisplayedInViewport()
-    },
-        {
-            timeout: customTimeout || defaultTimeout,
-            timeoutMsg: timeoutMessage
-        })
-}
-
-export async function waitUntilElementIsVisibleInDOMByLocator (locator: string, customTimeout?: number): Promise<void> {
-    const timeoutMessage = `${locator} element still invisible after ${customTimeout || defaultTimeout} ms`
-    await browser.waitUntil(async function () {
-        return (await getElementByLocator(locator)).isDisplayed()
     },
         {
             timeout: customTimeout || defaultTimeout,
