@@ -1,45 +1,91 @@
-import * as page from "./page"
+import * as page from './page'
+import * as Enums from '../utils/enums'
 
-const landingPageTitle = '(//h1)[1]'
+//---Google
+const emailGoogleInput = '//input[@type="email"]'
+const passGoogleInput = '//input[@name="password"]'
 
-const signInWithEmailBtn = '//button[text()="Sign in with email"]'
-const continueWithGoogleBtn = '//button[text()="Continue with Google"]'
-const continueWithFacebookBtn = '//button[text()="Continue with Facebook"]'
-const registerTab = '//button[text()="Register"]'
-const registerWithEmailBtn = '//button[text()="Register with email"]'
-const termsAndConditionsLink = '//a[@href="terms-and-conditions"]'
+const nextEmailGoogleBtn = '//div[@id="identifierNext"] //button'
+const nextPassGoogleBtn = '//div[@id="passwordNext"] //button'
+
+//---Facebook
+const cookiesPopup = '//div[@id="cookie_banner_title"]'
+const acceptCookies = '//*[@data-testid="cookie-policy-dialog-accept-button"]'
+
+const emailFacebookInput = '//input[@id="email"]'
+const passFacebookInput = '//input[@id="pass"]'
+
+const loginFacebookBtn = '//button[@id="loginbutton"]'
+
+
+async function clickLoginBtn() {
+    await page.clickOnFormButton(Enums.Button.SignIn)
+}
+
 
 //----------------ACTION----------------
 
-export async function clickSignInWithEmailBtn(): Promise<void> {
-    await page.clickByLocator(signInWithEmailBtn)
+
+export async function clickRegisterWithEmailBtnFromRegisterTab(): Promise<void> {
+    await page.clickOnButton('Register')
+    await page.clickOnButton('Register with email')
 }
 
-export async function clickRegisterWithEmailBtn(): Promise<void> {
-    await page.clickByLocator(registerTab)
-    await page.clickByLocator(registerWithEmailBtn)
+export async function openFacebook(): Promise <void> {
+    await page.openLandingPage() 
+    await page.clickOnButton(Enums.Button.ContinueWithFacebook)
+    await waitForConsentsPopupInFacebookIsVisible(6000)
 }
 
-export async function clickTermsAndConditionsLink(): Promise<void> {
-    await page.clickByLocator(termsAndConditionsLink)
+export async function openGoogle(): Promise <void> {
+    await page.openLandingPage() 
+    await page.clickOnButton(Enums.Button.ContinueWithGoogle)
+    await waitForNextEmailBtnInGoogleIsClickable(6000)
 }
 
-export async function clickContinueWithGoogleBtn(): Promise<void> {
-    await page.clickByLocator(continueWithGoogleBtn)
+
+//----------------ACTION----------------
+
+
+
+export async function signInWithEmail(email: string, pass: string): Promise<void> {
+    await page.fillFormInputWithValue(Enums.Input.Email, email)
+    await page.fillFormInputWithValue(Enums.Input.Password, pass)
+    await clickLoginBtn()
 }
 
-export async function clickContinueWithFacebookBtn(): Promise<void> {
-    await page.clickByLocator(continueWithFacebookBtn)
+export async function fillEmailInputAndLoseFocus(email: string): Promise<void> {
+    await page.fillFormInputWithValue(Enums.Input.Email, email)
+    await clickLoginBtn()
+}
+
+export async function fillPassInputAndLoseFocus(pass: string): Promise<void> {
+    await page.fillFormInputWithValue(Enums.Input.Password, pass)
+    await clickLoginBtn()
+}
+
+export async function loginOnGoogle(email: string, pass: string): Promise<void> {
+    await page.waitUntilElementIsClickableByLocator(nextEmailGoogleBtn, 10000)
+    await page.sendValueByLocator(emailGoogleInput, email)
+    await page.clickByLocator(nextEmailGoogleBtn)
+    await page.waitUntilElementIsClickableByLocator(nextPassGoogleBtn, 10000)
+    await page.sendValueByLocator(passGoogleInput, pass)
+    await page.clickByLocator(nextPassGoogleBtn)
+}
+
+export async function loginOnFacebook(email: string, pass: string): Promise<void> {
+    await page.clickByLocator(acceptCookies)
+    await page.sendValueByLocator(emailFacebookInput, email)
+    await page.sendValueByLocator(passFacebookInput, pass)
+    await page.clickByLocator(loginFacebookBtn)
 }
 
 //----------------WAIT----------------
 
-export async function waitForTermsAndConditionsLinkInViewport(timeToWait?: number) {
-    await page.waitUntilElementIsVisibleInViewportByLocator(termsAndConditionsLink, timeToWait)
+export async function waitForNextEmailBtnInGoogleIsClickable(timeToWait?: number): Promise<void> {
+    await page.waitUntilElementIsClickableByLocator(nextEmailGoogleBtn, timeToWait)
 }
 
-//----------------GET----------------
-
-export async function getLandingPageTitleText(): Promise<string> {
-    return await page.getElementTextByLocator(landingPageTitle)
+export async function waitForConsentsPopupInFacebookIsVisible(timeToWait?: number): Promise<void> {
+    await page.waitUntilElementIsVisibleInViewportByLocator(cookiesPopup, timeToWait)
 }
