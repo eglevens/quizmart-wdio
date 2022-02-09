@@ -5,7 +5,4 @@ export enum FormValidationMessage {
     passTooShortValidationErrorText = 'Password must be at least of 6 characters in length',
     passTooLongValidationErrorText = 'Password must be at most of 100 characters in length',
     alreadyRegisteredUserErrorText = 'User with this email already exists.',
-    noUserWithThisEmailErrorText = 'There is no user with this email address',
-    recoveryCodeTooShortValidationErrorText = 'Recovery code must be at least 10 characters',
-    recoveryCodeTooLongValidationErrorText = 'Recovery code must be at most 20 characters',
 }

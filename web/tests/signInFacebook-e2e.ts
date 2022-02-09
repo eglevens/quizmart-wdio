@@ -1,33 +1,26 @@
-import * as landingPage from '../pageObjects/landing.page'
-import { openLandingPage } from '../pageObjects/page'
-import * as signInPage from '../pageObjects/signIn.page'
+import *  as landingPage from '../pageObjects/landing.page'
+import * as page from '../pageObjects/page'
+import * as discoverPage from '../pageObjects/discover.page'
 import { expect } from 'chai'
 import { userFacebook } from '../utils/userCredentials'
-import { getDiscoverPageTitleText, waitForUserProfileImageInHeaderIsDisplayed } from '../pageObjects/discover.page'
-import { HeaderText } from '../utils/enums'
+import * as Enums from '../utils/enums'
 
 
 describe('Continue with Facebook', () => {
-
     beforeEach(async function (){
-        await openLandingPage()        
+        await landingPage.openFacebook()
     })
     
-    it('Initiate Continue with Facebook and return back to landing', async () => {
-        await landingPage.clickContinueWithFacebookBtn()
-        await signInPage.waitForConsentsPopupInFacebookIsVisible(6000)
+    it('Return back from facebook to landing', async () => {
         await browser.back()
-        await landingPage.waitForTermsAndConditionsLinkInViewport(8000)
-        expect (await landingPage.getLandingPageTitleText()).equals(HeaderText.landing)
+        await page.waitUntilButtonByTextIsVisibleInViewport(Enums.Button.ContinueWithFacebook, 6000)
+        expect (await page.getPageHeaderText()).equals(Enums.Header.Landing)
     })
 
-    it('Success Continue with Facebook login', async () => {
-        await landingPage.clickContinueWithFacebookBtn()
-        await signInPage.waitForConsentsPopupInFacebookIsVisible(6000)
-        await signInPage.loginOnFacebook(userFacebook.email, userFacebook.pass)
-        await landingPage.waitForTermsAndConditionsLinkInViewport(8000)
-        await waitForUserProfileImageInHeaderIsDisplayed(8000)
-        expect (await getDiscoverPageTitleText()).equals(HeaderText.discover)
+    it('Success Facebook login & redirection to discover', async () => {
+        await landingPage.loginOnFacebook(userFacebook.email, userFacebook.pass)
+        await discoverPage.waitForSortButtonIsDisplayed(8000)
+        expect (await page.getPageHeaderText()).equals(Enums.Header.Discover)
     })
 
 })
