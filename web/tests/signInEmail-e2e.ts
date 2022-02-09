@@ -1,72 +1,68 @@
 import * as signInPage from '../pageObjects/signIn.page'
-import { getDiscoverPageTitleText, waitForUserProfileImageInHeaderIsDisplayed } from '../pageObjects/discover.page'
-import { getRegisterPageTitleText, waitForRegisterFormBtnIsVisible } from '../pageObjects/register.page'
-import { getResetPassPageTitleText, waitForSendRecoveryCodeBtnIsVisible } from '../pageObjects/resetPass.page'
-import { openSignInPage } from '../pageObjects/page'
-import { FormValidationMessage } from '../utils/formValidationMessages'
+import * as discoverPage from '../pageObjects/discover.page'
+import * as page from '../pageObjects/page'
+import * as Validations from '../utils/validations'
 import * as userCredentials from '../utils/userCredentials'
 import { expect } from 'chai'
-import { HeaderText } from '../utils/enums'
-
+import * as Enums from '../utils/enums'
+import randomEmail = require('random-email')
 
 describe('Sign in with email', () => {
 
     beforeEach(async function(){
-        await openSignInPage()
-        await signInPage.waitForSignInFormBtnIsClickable()
+        await page.openSignInPage()
+        await page.waitUntilFormButtonByTextIsClickable(Enums.Button.SignIn)
     })
 
     it('Success sign in', async () => {
         await signInPage.signInWithEmail(userCredentials.user1.email, userCredentials.user1.pass)
-        await waitForUserProfileImageInHeaderIsDisplayed(6000)
-        expect (await getDiscoverPageTitleText()).equals(HeaderText.discover)
+        await discoverPage.waitForSortButtonIsDisplayed(6000)
+        expect (await page.getPageHeaderText()).equals(Enums.Header.Discover)
     })
 
     it('Attempt to sign in with invalid password', async() => {
         await signInPage.signInWithEmail(userCredentials.user1.email, userCredentials.invalidPass)
-        await signInPage.waitForSignInFormBtnIsClickable()
-        expect (await signInPage.getIncorrectCredentialsErrorText()).equals(FormValidationMessage.incorrectCredentialsErrorText)
+        await page.waitUntilFormButtonByTextIsClickable(Enums.Button.SignIn)
+        expect (await page.getBackendFormValidationError()).equals(Validations.Form.IncorrectCredentials)
     })
 
     it('Attempt to sign in with non registered email', async() => {
-        const randomEmail = require('random-email')
-        await signInPage.signInWithEmail(randomEmail(), userCredentials.invalidPass)
-        await signInPage.waitForSignInFormBtnIsClickable()
-        expect (await signInPage.getIncorrectCredentialsErrorText()).equals(FormValidationMessage.incorrectCredentialsErrorText)
+        await signInPage.signInWithEmail(randomEmail, userCredentials.invalidPass)
+        await page.waitUntilFormButtonByTextIsClickable(Enums.Button.SignIn)
+        expect (await page.getBackendFormValidationError()).equals(Validations.Form.IncorrectCredentials)
     })
 
     it('Validation error with invalid email format', async () => {
         for (const invalidFormatEmail of userCredentials.invalidFormatEmails) {
             await signInPage.fillEmailInputAndLoseFocus(invalidFormatEmail)
-            expect (await signInPage.getEmailValidationErrorText()).equals(FormValidationMessage.emailValidationErrorText)
+            expect (await page.getFrontendInputValidationTextByInputName(Enums.Input.Email)).equals(Validations.Form.InvalidEmail)
             await browser.refresh()  
         }
     })
 
     it('Validation error with too short and too long password', async () => {
         await signInPage.fillPassInputAndLoseFocus(userCredentials.shortPass)
-        expect (await signInPage.getPassValidationErrorText()).equals(FormValidationMessage.passTooShortValidationErrorText)
-        await browser.refresh()
+        expect (await page.getFrontendInputValidationTextByInputName(Enums.Input.Password)).equals(Validations.Form.PassTooShort)
         await signInPage.fillPassInputAndLoseFocus(userCredentials.longPass)
-        expect (await signInPage.getPassValidationErrorText()).equals(FormValidationMessage.passTooLongValidationErrorText)
+        expect (await page.getFrontendInputValidationTextByInputName(Enums.Input.Password)).equals(Validations.Form.PassTooLong)
     })
 
     it('Validation error with empty email & password', async () => {
-        await signInPage.clickSignInBtn()
-        expect (await signInPage.getEmailValidationErrorText()).equals(FormValidationMessage.requiredValidationErrorText)
-        expect (await signInPage.getPassValidationErrorText()).equals(FormValidationMessage.requiredValidationErrorText)
+        await page.clickOnFormButton(Enums.Button.SignIn)
+        expect (await page.getFrontendInputValidationTextByInputName(Enums.Input.Email)).equals(Validations.Form.Required)
+        expect (await page.getFrontendInputValidationTextByInputName(Enums.Input.Password)).equals(Validations.Form.Required)
     })
 
     it('Open register page from sign in page', async () => {
-        await signInPage.clickCreateAccLink()
-        await waitForRegisterFormBtnIsVisible()
-        expect (await getRegisterPageTitleText()).equals(HeaderText.register)
+        await page.clickOnLink(Enums.Link.SignUp)
+        await page.waitUntilFormButtonByTextIsVisibleInViewport(Enums.Button.Register)
+        expect (await page.getPageHeaderText()).equals(Enums.Header.Register)
     })
 
     it('Open reset password page from sign in page', async () => {
-        await signInPage.clickForgotPassLink()
-        await waitForSendRecoveryCodeBtnIsVisible()
-        expect (await getResetPassPageTitleText()).equals(HeaderText.resetPass)
+        await page.clickOnLink(Enums.Link.ResetPass)
+        await page.waitUntilFormButtonByTextIsVisibleInViewport(Enums.Button.SendRecoveryCode)
+        expect (await page.getPageHeaderText()).equals(Enums.Header.ResetPass)
     })
 
 })

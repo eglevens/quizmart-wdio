@@ -1,35 +1,31 @@
 import * as landingPage from '../pageObjects/landing.page'
-import { openLandingPage } from '../pageObjects/page'
-import { waitForSignInFormBtnIsVisible, getSignInPageTitleText} from '../pageObjects/signIn.page'
-import { waitForRegisterFormBtnIsVisible, getRegisterPageTitleText } from '../pageObjects/register.page'
-import { isTermsAndConditionsTitleTextDisplayed, waitForTermsAndConditionsPageTitleText } from '../pageObjects/termsAndConditions.page'
-import { HeaderText } from '../utils/enums'
+import * as page from '../pageObjects/page'
+import * as Enums from '../utils/enums'
 import { expect } from 'chai'
 
 
 describe('Landing page cases', () => {
 
     beforeEach(async function (){
-        await openLandingPage()
+        await page.openLandingPage()
     })
     
     it('Open sign in page from landing page', async () => {
-        await landingPage.clickSignInWithEmailBtn()
-        await waitForSignInFormBtnIsVisible()
-        expect (await getSignInPageTitleText()).equals(HeaderText.signIn)
+        await page.clickOnButton(Enums.Button.SignInWithEmail)
+        await page.waitUntilFormButtonByTextIsVisibleInViewport(Enums.Button.SignIn)
+        expect (await page.getPageHeaderText()).equals(Enums.Header.SignIn)
     })
 
     it('Open register page from landing page', async () => {
-        await landingPage.clickRegisterWithEmailBtn()
-        await waitForRegisterFormBtnIsVisible()
-        expect (await getRegisterPageTitleText()).equals(HeaderText.register)
+        await landingPage.clickRegisterWithEmailBtnFromRegisterTab()
+        await page.waitUntilFormButtonByTextIsVisibleInViewport(Enums.Button.Register)
+        expect (await page.getPageHeaderText()).equals(Enums.Header.Register)
     })
 
     it('Open Terms and conditions page in new tab from landing page', async () => {
-        await landingPage.clickTermsAndConditionsLink()
+        await page.clickOnLink(Enums.Link.TermsAndConditions)
         await browser.switchWindow('terms-and-conditions/')
-        await waitForTermsAndConditionsPageTitleText()
-        expect (await isTermsAndConditionsTitleTextDisplayed()).to.be.true
+        expect (await page.getPageHeaderText()).equals(Enums.Header.TermsAndConditions)
     })
     
 })
