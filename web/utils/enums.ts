@@ -16,6 +16,8 @@ export enum Button {
     SignIn = 'Sign in',
     Register = 'Sign up',
     SendRecoveryCode = 'Send recovery code',
+    NextWithRecoveryCode = 'Next',
+    DonePasswordReset ='Done',
     ContinueWithFacebook = 'Continue with Facebook',
     ContinueWithGoogle = 'Continue with Google',
 }
@@ -30,5 +32,6 @@ export enum Link {
 export enum Input {
     Email = 'email',
     Password = 'password',
-    RepeatPass = 'passwordRepeat'
+    RepeatPass = 'passwordRepeat',
+    RecoveryCode = 'recoveryCode',  
 } 
