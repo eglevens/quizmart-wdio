@@ -60,8 +60,10 @@ export const config: WebdriverIO.Config = {
         'goog:chromeOptions': {
             args: [
                 '--window-size=1920,1440',
-               // '--headless',
-               // '--remote-debugging-port=9222',
+                '--headless',
+                '--remote-debugging-port=9222',
+                //required for login with google
+                '--user-agent=Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/98.0.4758.80 Safari/537.36'
             ],
         },
         acceptInsecureCerts: true
