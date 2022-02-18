@@ -38,17 +38,10 @@ export async function openSignInPage(): Promise<void> {
 
 export async function openForgotPassPage(): Promise<void> {
     await browser.url('reset-password/')
-    browser.execute('localStorage.clear()')
 }
 
 export async function openForgotPassPageRecoveryCode(): Promise<void> {
     await browser.url('reset-password/#recovery')
-    browser.execute('localStorage.clear()')
-}
-
-export async function openForgotPassCreateNewPass(): Promise<void> {
-    await browser.url('reset-password/#recovery#create-new-password')
-    browser.execute('localStorage.clear()')
 }
 
 //----------------GET----------------
@@ -164,7 +157,7 @@ export async function waitUntilFormButtonByTextIsVisibleInViewport(btnName: stri
 }
 
 export async function waitUntilFormButtonByTextIsClickable(btnName: string, customTimeout?: number): Promise<void> {
-    const timeoutMessage = `${btnName} button still unlickable after ${customTimeout || defaultTimeout} ms`
+    const timeoutMessage = `${btnName} button still unclickable after ${customTimeout || defaultTimeout} ms`
     await browser.waitUntil(async function () {
         return (await getElementByLocator(formButton(btnName))).isClickable()
     },
