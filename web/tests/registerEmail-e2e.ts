@@ -18,6 +18,7 @@ describe('Register with email from register page', () => {
 
     it('Attempt to register with already registered email', async () => {
         await registerPage.registerWithEmail(userCredentials.user1.email, userCredentials.user1.pass, userCredentials.user1.pass)
+        //TODO susitvarkyt waitus. issikviest, kad nebutu testuose ko nereik 
         await page.waitUntilFormButtonByTextIsClickable(enums.Button.Register)
         expect (await page.getBackendFormValidationError()).equals(Validations.Form.AlreadyRegisteredEmail)
     })
@@ -25,13 +26,13 @@ describe('Register with email from register page', () => {
     it('Success register without newsletter', async () => {
         await registerPage.registerWithEmail(randomEmail(), userCredentials.user1.pass, userCredentials.user1.pass)
         await discoverPage.waitForSortButtonIsDisplayed(8000)
-        expect (await page.getPageHeaderText()).equals(enums.Header.Discover)
+        expect (await page.getPageHeaderTextForGuest()).equals(enums.Header.Discover)
     })
-
+    //TODO pasipildyt kai bus API 
     it('Success register with newsletter', async () => {
         await registerPage.registerWithEmailAndNewsletterSubscription(randomEmail(), userCredentials.user1.pass, userCredentials.user1.pass)
         await discoverPage.waitForSortButtonIsDisplayed(8000)
-        expect (await page.getPageHeaderText()).equals(enums.Header.Discover)
+        expect (await page.getPageHeaderTextForGuest()).equals(enums.Header.Discover)
     })
 
     it('Validation error with invalid email format', async () => {
@@ -62,13 +63,13 @@ describe('Register with email from register page', () => {
     it('Open sign in page from register page', async () => {
         await page.clickOnLink(enums.Link.SignIn)
         await page.waitUntilFormButtonByTextIsVisibleInViewport(enums.Button.SignIn)
-        expect (await page.getPageHeaderText()).equals(enums.Header.SignIn)
+        expect (await page.getPageHeaderTextForGuest()).equals(enums.Header.SignIn)
     })
 
     it('Open privacy policy page from register page', async () => {
         await registerPage.clickNewsletterPrivacyPolicyLink()
         await privacyPolicyPage.waitForCloseBtnToBePresent(3000)
-        expect (await page.getPageHeaderText()).equals(enums.Header.PrivacyPolicy)
+        expect (await page.getPageHeaderTextForGuest()).equals(enums.Header.PrivacyPolicy)
     })
 
 })

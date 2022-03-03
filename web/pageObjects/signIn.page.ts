@@ -1,5 +1,7 @@
 import * as page from './page'
 import * as enums from '../utils/enums'
+import * as userCredentials from '../utils/userCredentials'
+import * as discoverPage from '../pageObjects/discover.page'
 
 async function clickLoginBtn() {
     await page.clickOnFormButton(enums.Button.SignIn)
@@ -24,3 +26,8 @@ export async function fillPassInputAndLoseFocus(pass: string): Promise<void> {
     await clickLoginBtn()
 }
 
+export async function signIn(): Promise<void> {
+    await page.openSignInPage()
+    await signInWithEmail(userCredentials.user1.email, userCredentials.user1.pass) 
+    await discoverPage.waitForSortButtonIsDisplayed(6000)
+}

@@ -1,4 +1,5 @@
-const header = '(//h1)[1]'
+const headerGuest = '(//h1)[1]'
+const headerLoggedIn = '//div[./p[@data-cy="subtitle"]]//h1'
 const backendFormValidationError = '//form/div/h3'
 
 function link(href: string): string {
@@ -54,8 +55,12 @@ export async function getElementTextByLocator(locator: string): Promise<string> 
     return await (await getElementByLocator(locator)).getText()
 }
 
-export async function getPageHeaderText(): Promise<string> {
-    return await (await getElementByLocator(header)).getText()
+export async function getPageHeaderTextForGuest(): Promise<string> {
+    return await (await getElementByLocator(headerGuest)).getText()
+}
+
+export async function getPageHeaderTextForLoggedInUser(): Promise<string> {
+    return await (await getElementByLocator(headerLoggedIn)).getText()
 }
 
 export async function getBackendFormValidationError(): Promise<string> {
