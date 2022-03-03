@@ -1,5 +1,5 @@
 import * as page from './page'
-import * as Enums from '../utils/enums'
+import * as enums from '../utils/enums'
 
 //---Google
 const emailGoogleInput = '//input[@type="email"]'
@@ -19,7 +19,7 @@ const loginFacebookBtn = '//button[@id="loginbutton"]'
 
 
 async function clickLoginBtn() {
-    await page.clickOnFormButton(Enums.Button.SignIn)
+    await page.clickOnFormButton(enums.Button.SignIn)
 }
 
 
@@ -33,13 +33,13 @@ export async function clickRegisterWithEmailBtnFromRegisterTab(): Promise<void> 
 
 export async function openFacebook(): Promise <void> {
     await page.openLandingPage() 
-    await page.clickOnButton(Enums.Button.ContinueWithFacebook)
+    await page.clickOnButton(enums.Button.ContinueWithFacebook)
     await waitForConsentsPopupInFacebookIsVisible(6000)
 }
 
 export async function openGoogle(): Promise <void> {
     await page.openLandingPage() 
-    await page.clickOnButton(Enums.Button.ContinueWithGoogle)
+    await page.clickOnButton(enums.Button.ContinueWithGoogle)
     await waitForNextEmailBtnInGoogleIsClickable(6000)
 }
 
@@ -49,18 +49,18 @@ export async function openGoogle(): Promise <void> {
 
 
 export async function signInWithEmail(email: string, pass: string): Promise<void> {
-    await page.fillFormInputWithValue(Enums.Input.Email, email)
-    await page.fillFormInputWithValue(Enums.Input.Password, pass)
+    await page.fillFormInputWithValue(enums.Input.Email, email)
+    await page.fillFormInputWithValue(enums.Input.Password, pass)
     await clickLoginBtn()
 }
 
 export async function fillEmailInputAndLoseFocus(email: string): Promise<void> {
-    await page.fillFormInputWithValue(Enums.Input.Email, email)
+    await page.fillFormInputWithValue(enums.Input.Email, email)
     await clickLoginBtn()
 }
 
 export async function fillPassInputAndLoseFocus(pass: string): Promise<void> {
-    await page.fillFormInputWithValue(Enums.Input.Password, pass)
+    await page.fillFormInputWithValue(enums.Input.Password, pass)
     await clickLoginBtn()
 }
 

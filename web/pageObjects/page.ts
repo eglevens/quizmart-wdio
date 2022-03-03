@@ -36,6 +36,14 @@ export async function openSignInPage(): Promise<void> {
     await browser.url('sign-in/')
 }
 
+export async function openForgotPassPage(): Promise<void> {
+    await browser.url('reset-password/')
+}
+
+export async function openForgotPassPageRecoveryCode(): Promise<void> {
+    await browser.url('reset-password/#recovery')
+}
+
 //----------------GET----------------
 
 export async function getElementByLocator(locator: string): Promise<WebdriverIO.Element> {
@@ -149,7 +157,7 @@ export async function waitUntilFormButtonByTextIsVisibleInViewport(btnName: stri
 }
 
 export async function waitUntilFormButtonByTextIsClickable(btnName: string, customTimeout?: number): Promise<void> {
-    const timeoutMessage = `${btnName} button still unlickable after ${customTimeout || defaultTimeout} ms`
+    const timeoutMessage = `${btnName} button still unclickable after ${customTimeout || defaultTimeout} ms`
     await browser.waitUntil(async function () {
         return (await getElementByLocator(formButton(btnName))).isClickable()
     },

@@ -3,7 +3,7 @@ import * as page from '../pageObjects/page'
 import * as discoverPage from '../pageObjects/discover.page'
 import { expect } from 'chai'
 import { userFacebook } from '../utils/userCredentials'
-import * as Enums from '../utils/enums'
+import * as enums from '../utils/enums'
 
 
 describe('Continue with Facebook', () => {
@@ -13,14 +13,14 @@ describe('Continue with Facebook', () => {
     
     it('Return back from facebook to landing', async () => {
         await browser.back()
-        await page.waitUntilButtonByTextIsVisibleInViewport(Enums.Button.ContinueWithFacebook, 6000)
-        expect (await page.getPageHeaderText()).equals(Enums.Header.Landing)
+        await page.waitUntilButtonByTextIsVisibleInViewport(enums.Button.ContinueWithFacebook, 6000)
+        expect (await page.getPageHeaderText()).equals(enums.Header.Landing)
     })
 
     it('Success Facebook login & redirection to discover', async () => {
         await landingPage.loginOnFacebook(userFacebook.email, userFacebook.pass)
-        await discoverPage.waitForSortButtonIsDisplayed(8000)
-        expect (await page.getPageHeaderText()).equals(Enums.Header.Discover)
+        await discoverPage.waitForSortButtonIsDisplayed(10000)
+        expect (await page.getPageHeaderText()).equals(enums.Header.Discover)
     })
 
 })

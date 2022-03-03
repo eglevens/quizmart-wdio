@@ -1,6 +1,6 @@
 import * as landingPage from '../pageObjects/landing.page'
 import * as page from '../pageObjects/page'
-import * as Enums from '../utils/enums'
+import * as enums from '../utils/enums'
 import { expect } from 'chai'
 
 
@@ -11,21 +11,21 @@ describe('Landing page cases', () => {
     })
     
     it('Open sign in page from landing page', async () => {
-        await page.clickOnButton(Enums.Button.SignInWithEmail)
-        await page.waitUntilFormButtonByTextIsVisibleInViewport(Enums.Button.SignIn)
-        expect (await page.getPageHeaderText()).equals(Enums.Header.SignIn)
+        await page.clickOnButton(enums.Button.SignInWithEmail)
+        await page.waitUntilFormButtonByTextIsVisibleInViewport(enums.Button.SignIn)
+        expect (await page.getPageHeaderText()).equals(enums.Header.SignIn)
     })
 
     it('Open register page from landing page', async () => {
         await landingPage.clickRegisterWithEmailBtnFromRegisterTab()
-        await page.waitUntilFormButtonByTextIsVisibleInViewport(Enums.Button.Register)
-        expect (await page.getPageHeaderText()).equals(Enums.Header.Register)
+        await page.waitUntilFormButtonByTextIsVisibleInViewport(enums.Button.Register)
+        expect (await page.getPageHeaderText()).equals(enums.Header.Register)
     })
 
     it('Open Terms and conditions page in new tab from landing page', async () => {
-        await page.clickOnLink(Enums.Link.TermsAndConditions)
+        await page.clickOnLink(enums.Link.TermsAndConditions)
         await browser.switchWindow('terms-and-conditions/')
-        expect (await page.getPageHeaderText()).equals(Enums.Header.TermsAndConditions)
+        expect (await page.getPageHeaderText()).equals(enums.Header.TermsAndConditions)
     })
     
 })

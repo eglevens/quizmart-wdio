@@ -5,6 +5,6 @@ const closeBtn = '//*[@id="btn_close"]'
 
 //----------------WAIT----------------
 
-export async function waitForCloseBtnIsDisplayed(timeToWait?: number): Promise<void> {
-    await page.waitUntilElementIsVisibleInViewportByLocator(closeBtn, timeToWait)
+export async function waitForCloseBtnToBePresent(timeToWait?: number): Promise<void> {
+    await page.waitUntilElementIsPresentByLocator(closeBtn, timeToWait)
 }
