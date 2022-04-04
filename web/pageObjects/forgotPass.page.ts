@@ -7,7 +7,8 @@ const backendFormValidationError = '//main //form/h3'
 
 //----------------GET----------------
 
-export async function getBackendValidationErrorText(): Promise<string> {
+export async function getBackendValidationErrorTextAfterBtnIsClickable(btn: string): Promise<string> {
+    await page.waitUntilFormButtonByTextIsClickable(btn)
     return await page.getElementTextByLocator(backendFormValidationError)
 }
 
@@ -19,6 +20,7 @@ export async function receiveRecoveryCodeWithEmail(email: string): Promise<void>
 }
 
 export async function fillRecoveryCode(recoveryCode: string): Promise<void> {
+    await page.waitUntilFormButtonByTextIsClickable(enums.Button.NextWithRecoveryCode)
     await page.fillFormInputWithValue(enums.Input.RecoveryCode, recoveryCode)
     await page.clickOnFormButton(enums.Button.NextWithRecoveryCode)
 }
