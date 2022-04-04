@@ -1,5 +1,5 @@
 import * as page from './page'
-import * as api from '../utils/api'
+import * as api from '../utils/quizmartApi'
 import * as enums from '../utils/enums'
 import path = require('path')
 
