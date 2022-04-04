@@ -10,4 +10,8 @@ export enum Form {
     RecoveryCodeTooLong = 'Recovery code must be at most 20 characters',
     PasswordsMustMatch = 'Passwords must match',
     IncorrectRecoveryCode = 'The recovery code is incorrect',
+    QuizTitleRequired = 'Quiz title is required',
+    QuizQuestionRequired = 'Question is required',
+    QuizAnswerRequired = 'At least one answer must be provided',
+    QuizTooManyTags = 'Quiz can have 20 tags at most',
 }
