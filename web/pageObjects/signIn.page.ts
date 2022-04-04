@@ -31,3 +31,8 @@ export async function signIn(): Promise<void> {
     await signInWithEmail(userCredentials.user1.email, userCredentials.user1.pass) 
     await discoverPage.waitForSortButtonIsDisplayed(6000)
 }
+
+export async function getFormValidation(): Promise<string> {
+    await page.waitUntilFormButtonByTextIsClickable(enums.Button.SignIn)
+    return await page.getFormValidationError()
+}
