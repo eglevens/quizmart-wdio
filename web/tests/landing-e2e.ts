@@ -1,5 +1,4 @@
 import * as landingPage from '../pageObjects/landing.page'
-import * as login from '../pageObjects/login'
 import * as page from '../pageObjects/page'
 import * as enums from '../utils/enums'
 import * as userCredentials from '../utils/userCredentials'
@@ -9,7 +8,6 @@ import { expect } from 'chai'
 describe('Landing page cases', () => {
 
     beforeEach(async function (){
-        await login.getUsername(userCredentials.user1.email, userCredentials.user1.pass)
         await page.openLandingPage()
     })
 
