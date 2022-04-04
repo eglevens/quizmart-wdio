@@ -94,7 +94,7 @@ export async function getPageHeaderText(): Promise<string> {
 }
 
 export async function getPageHeaderTextForGuestAfterBtnIsVisible(btn: string, timeToWait?: number): Promise<string> {
-    await waitUntilFormButtonByTextIsVisibleInViewport(btn, timeToWait)
+    await waitUntilButtonByTextIsVisibleInViewport(btn, timeToWait)
     return await getPageHeaderText()
 }
 
