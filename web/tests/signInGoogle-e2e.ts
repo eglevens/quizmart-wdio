@@ -13,14 +13,12 @@ describe('Continue with Google', () => {
     
     it('Initiate Continue with Google and return back to landing', async () => {
         await browser.back()
-        await page.waitUntilButtonByTextIsVisibleInViewport(enums.Button.ContinueWithGoogle, 6000)
-        expect (await page.getPageHeaderTextForGuest()).equals(enums.Header.Landing)
+        expect (await page.getPageHeaderTextForGuestAfterBtnIsVisible(enums.Button.ContinueWithGoogle, 6000)).equals(enums.Header.Landing)
     })
 
     it('Success Continue with Google login', async () => {
         await landingPage.loginOnGoogle(userGoogle.email, userGoogle.pass)
-        await discoverPage.waitForSortButtonIsDisplayed(10000)
-        expect (await page.getPageHeaderTextForGuest()).equals(enums.Header.Discover)
+        expect (await page.getPageHeaderTextAfterLogin()).equals(enums.Header.Discover)
     })
 
 })

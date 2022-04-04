@@ -11,7 +11,7 @@ describe('Continue with Facebook', () => {
         await landingPage.openFacebook()
     })
     
-    it.only('Return back from facebook to landing', async () => {
+    it('Return back from facebook to landing', async () => {
         await browser.back()
         expect (await page.getPageHeaderTextForGuestAfterBtnIsVisible(enums.Button.ContinueWithFacebook, 6000)).equals(enums.Header.Landing)
     })
