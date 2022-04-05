@@ -24,6 +24,7 @@ export async function fillQuizTitle() {
 }
 
 export async function fillInputWithtags(length: number) {
+    await page.scrollIntoInputView(enums.Input.QuizCreationDescription)
     const quizTags = arrayGenerator(length)
     for (const tag of quizTags) {
         await page.fillInputWithValue(enums.Input.QuizCreationTags, tag)
