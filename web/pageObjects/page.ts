@@ -148,6 +148,10 @@ export async function fillInputWithValue(inputName: string, value: string): Prom
     await sendValueByLocator(input(inputName), value)
 }
 
+export async function scrollIntoInputView(inputName: string): Promise<void> {
+    await (await getElementByLocator(input(inputName))).scrollIntoView()
+}
+
 //----------------WAIT----------------
 
 const defaultTimeout = 2000
