@@ -4,6 +4,7 @@ import * as page from '../pageObjects/page'
 import * as discoverPage from '../pageObjects/discover.page'
 import * as privacyPolicyPage from '../pageObjects/privacyPolicy.page'
 import * as enums from '../utils/enums'
+import * as api from '../utils/quizmartApi'
 import { expect } from 'chai'
 import * as validations from '../utils/validations'
 import randomEmail = require('random-email')
@@ -24,12 +25,16 @@ describe('Register with email from register page', () => {
         await registerPage.registerWithEmail(randomEmail(), userCredentials.user1.pass, userCredentials.user1.pass)
         await discoverPage.waitForSortButtonIsDisplayed(8000)
         expect (await page.getPageHeaderTextAfterLogin()).equals(enums.Header.Discover)
+        expect (await api.isUserSubscribedToNewsletter()).to.be.false
+        await api.deleteAccount()
     })
     
     it('Success register with newsletter', async () => {
         await registerPage.registerWithEmailAndNewsletterSubscription(randomEmail(), userCredentials.user1.pass, userCredentials.user1.pass)
         await discoverPage.waitForSortButtonIsDisplayed(8000)
         expect (await page.getPageHeaderTextAfterLogin()).equals(enums.Header.Discover)
+        expect (await api.isUserSubscribedToNewsletter()).to.be.true
+        await api.deleteAccount()
     })
 
     it('Validation error with invalid email format', async () => {
