@@ -4,7 +4,7 @@ import * as page from '../pageObjects/page'
 import * as discoverPage from '../pageObjects/discover.page'
 import * as privacyPolicyPage from '../pageObjects/privacyPolicy.page'
 import * as enums from '../utils/enums'
-import * as api from '../utils/quizmartApi'
+import * as api from '../utils/api'
 import { expect } from 'chai'
 import * as validations from '../utils/validations'
 import randomEmail = require('random-email')
@@ -64,12 +64,16 @@ describe('Register with email from register page', () => {
 
     it('Open sign in page from register page', async () => {
         await page.clickOnLink(enums.Link.SignIn)
-        expect (await page.getPageHeaderTextForGuestAfterBtnIsVisible(enums.Button.SignIn)).equals(enums.Header.SignIn)
+        expect (await page.getPageHeaderTextForGuestAfterFormBtnIsVisible(enums.Button.SignIn)).equals(enums.Header.SignIn)
     })
 
     it('Open privacy policy page from register page', async () => {
         await registerPage.clickNewsletterPrivacyPolicyLink()
         expect (await privacyPolicyPage.getPageHeaderText()).equals(enums.Header.PrivacyPolicy)
+    })
+
+    afterEach(async function() {
+        await api.takeScreenshot(this)
     })
 
 })

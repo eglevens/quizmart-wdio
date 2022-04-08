@@ -5,7 +5,7 @@ import * as validations from '../utils/validations'
 import * as myQuizzPage from '../pageObjects/myQuizz.page'
 import { expect } from 'chai'
 import { user1 } from '../utils/userCredentials'
-import * as api from '../utils/quizmartApi'
+import * as api from '../utils/api'
 
 
 describe('Quiz creation cases', () => {
@@ -15,7 +15,7 @@ describe('Quiz creation cases', () => {
         await page.clickOnLink(enums.Link.Create)
     })
 
-    it('Cancel redirects to discover', async () => {
+    it.only('Cancel redirects to discover', async () => {
         await page.clickOnButton(enums.Button.Cancel)
         expect(await page.getPageHeaderTextAfterLogin()).equals(enums.Header.Discover)
     })
@@ -48,6 +48,10 @@ describe('Quiz creation cases', () => {
         expect(await myQuizzPage.getQuizTitle()).equals(enums.QuizCreation.Title)
         expect(await myQuizzPage.getQuizDescription()).equals(enums.QuizCreation.Description)
         expect(await myQuizzPage.getQuizQuestionCount()).equals('1 question')
+    })
+
+    afterEach(async function () {
+        await api.takeScreenshot(this)
     })
 
     after(async function () {

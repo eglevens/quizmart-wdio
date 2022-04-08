@@ -3,6 +3,7 @@ import * as page from '../pageObjects/page'
 import * as userCredentials from '../utils/userCredentials'
 import * as  validations from '../utils/validations'
 import * as enums from '../utils/enums'
+import * as api from '../utils/api'
 import { expect } from 'chai'
 import randomEmail = require('random-email')
 
@@ -68,5 +69,10 @@ describe('Password recovery from forgot password page', () => {
     //     await discoverPage.waitForSortButtonIsDisplayed(8000)
     //     expect (await page.getPageHeaderText()).equals(Enums.Header.Discover)
     // })
+
+
+    afterEach(async function() {
+        await api.takeScreenshot(this)
+    })
 
 })

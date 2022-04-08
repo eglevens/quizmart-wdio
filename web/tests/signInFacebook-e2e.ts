@@ -3,6 +3,7 @@ import * as page from '../pageObjects/page'
 import * as discoverPage from '../pageObjects/discover.page'
 import { expect } from 'chai'
 import { userFacebook } from '../utils/userCredentials'
+import * as api from '../utils/api'
 import * as enums from '../utils/enums'
 
 
@@ -11,7 +12,7 @@ describe('Continue with Facebook', () => {
         await landingPage.openFacebook()
     })
     
-    it('Return back from facebook to landing', async () => {
+    it.only('Return back from facebook to landing', async () => {
         await browser.back()
         expect (await page.getPageHeaderTextForGuestAfterBtnIsVisible(enums.Button.ContinueWithFacebook, 6000)).equals(enums.Header.Landing)
     })
@@ -20,6 +21,10 @@ describe('Continue with Facebook', () => {
         await landingPage.loginOnFacebook(userFacebook.email, userFacebook.pass)
         await discoverPage.waitForSortButtonIsDisplayed(9000)
         expect (await page.getPageHeaderTextAfterLogin()).equals(enums.Header.Discover)
+    })
+
+    afterEach(async function() {
+        await api.takeScreenshot(this)
     })
 
 })
