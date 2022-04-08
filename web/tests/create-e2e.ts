@@ -15,7 +15,7 @@ describe('Quiz creation cases', () => {
         await page.clickOnLink(enums.Link.Create)
     })
 
-    it.only('Cancel redirects to discover', async () => {
+    it('Cancel redirects to discover', async () => {
         await page.clickOnButton(enums.Button.Cancel)
         expect(await page.getPageHeaderTextAfterLogin()).equals(enums.Header.Discover)
     })

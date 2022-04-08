@@ -25,6 +25,8 @@ export async function getQuizIds(email: string, password: string): Promise<strin
         .get('/created-collections')
         .set('Authorization', 'Bearer ' + token)
     expect(response.status).equals(200)
+    expect(response.body.quizzes.data[0].id).is.not.undefined
+
     return response.body.quizzes.data[0].id
 }
 
@@ -51,7 +53,7 @@ export async function isUserSubscribedToNewsletter(): Promise<boolean> {
         .get('/user')
         .set('Authorization', 'Bearer ' + token)
     expect(response.status).equals(200)
-    console.log(response.body.isSubscribedToNewsletter + 'user is subscribed????')
+    
     return response.body.isSubscribedToNewsletter
 }
 
