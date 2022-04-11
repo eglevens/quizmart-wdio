@@ -14,13 +14,13 @@ describe('Continue with Facebook', () => {
     it('Return back from facebook to landing', async () => {
         await browser.back()
         await page.waitUntilButtonByTextIsVisibleInViewport(enums.Button.ContinueWithFacebook, 6000)
-        expect (await page.getPageHeaderText()).equals(enums.Header.Landing)
+        expect (await page.getPageHeaderTextForGuest()).equals(enums.Header.Landing)
     })
 
     it('Success Facebook login & redirection to discover', async () => {
         await landingPage.loginOnFacebook(userFacebook.email, userFacebook.pass)
         await discoverPage.waitForSortButtonIsDisplayed(10000)
-        expect (await page.getPageHeaderText()).equals(enums.Header.Discover)
+        expect (await page.getPageHeaderTextForGuest()).equals(enums.Header.Discover)
     })
 
 })

@@ -17,7 +17,7 @@ describe('Sign in with email', () => {
     it('Success sign in', async () => {
         await signInPage.signInWithEmail(userCredentials.user1.email, userCredentials.user1.pass)
         await discoverPage.waitForSortButtonIsDisplayed(6000)
-        expect (await page.getPageHeaderText()).equals(enums.Header.Discover)
+        expect (await page.getPageHeaderTextForGuest()).equals(enums.Header.Discover)
     })
 
     it('Attempt to sign in with invalid password', async() => {
@@ -56,13 +56,13 @@ describe('Sign in with email', () => {
     it('Open register page from sign in page', async () => {
         await page.clickOnLink(enums.Link.SignUp)
         await page.waitUntilFormButtonByTextIsVisibleInViewport(enums.Button.Register)
-        expect (await page.getPageHeaderText()).equals(enums.Header.Register)
+        expect (await page.getPageHeaderTextForGuest()).equals(enums.Header.Register)
     })
 
     it('Open reset password page from sign in page', async () => {
         await page.clickOnLink(enums.Link.ResetPass)
         await page.waitUntilFormButtonByTextIsVisibleInViewport(enums.Button.SendRecoveryCode)
-        expect (await page.getPageHeaderText()).equals(enums.Header.ResetPass)
+        expect (await page.getPageHeaderTextForGuest()).equals(enums.Header.ResetPass)
     })
 
 })
