@@ -44,3 +44,8 @@ export async function fillPassInputs(pass: string, passRepeat: string): Promise<
     await page.fillFormInputWithValue(enums.Input.RepeatPass, passRepeat)
     await clickRegisterBtn()
 }
+
+export async function getFormValidation(): Promise<string> {
+    await page.waitUntilFormButtonByTextIsClickable(enums.Button.Register)
+    return await page.getFormValidationError()
+}

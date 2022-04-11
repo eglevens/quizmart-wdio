@@ -1,3 +1,6 @@
+import * as discoverPage from '../pageObjects/discover.page'
+import * as enums from '../utils/enums'
+
 const headerGuest = '(//h1)[1]'
 const headerLoggedIn = '//div[./p[@data-cy="subtitle"]]//h1'
 const backendFormValidationError = '//form/div/h3'
@@ -22,6 +25,13 @@ function button(btnName: string): string {
     return `//button[text()="${btnName}"]`
 }
 
+function input(inputName: string): string {
+    return `//input[@name="${inputName}"]`
+}
+
+function elByText(text: string): string {
+    return `//*[text() = '${text}']`
+}
 
 //----------------DEFAULT----------------
 
@@ -31,19 +41,31 @@ export async function openLandingPage(): Promise<void> {
 
 export async function openRegisterPage(): Promise<void> {
     await browser.url('sign-up/')
+    await waitUntilFormButtonByTextIsClickable(enums.Button.Register)
 }
 
 export async function openSignInPage(): Promise<void> {
     await browser.url('sign-in/')
+    await waitUntilFormButtonByTextIsClickable(enums.Button.SignIn)
 }
 
 export async function openForgotPassPage(): Promise<void> {
     await browser.url('reset-password/')
+    await waitUntilFormButtonByTextIsClickable(enums.Button.SendRecoveryCode)
 }
 
 export async function openForgotPassPageRecoveryCode(): Promise<void> {
     await browser.url('reset-password/#recovery')
 }
+
+export async function openCreatePage(): Promise<void> {
+    await browser.url('https://staging-app.quizmart.io/library/quiz/add')
+}
+
+export async function openMyCreatedQuizPage(): Promise<void> {
+    await browser.url('https://staging-app.quizmart.io/collections/created-collections')
+}
+
 
 //----------------GET----------------
 
@@ -51,23 +73,45 @@ export async function getElementByLocator(locator: string): Promise<WebdriverIO.
     return await (browser).$(locator)
 }
 
+export async function isMessageDisplayed(el: string): Promise<boolean> {
+    return await (await getElementByLocator(elByText(el))).isDisplayed()
+}
+
+export async function getElementsByLocator(locator: string) {
+    return await (browser).$$(locator)
+}
+
+export async function elementPresentByElementText(elText: string): Promise<boolean> {
+    return (await getElementsByLocator(elByText(elText))).length > 0
+}
+
 export async function getElementTextByLocator(locator: string): Promise<string> {
     return await (await getElementByLocator(locator)).getText()
 }
 
-export async function getPageHeaderTextForGuest(): Promise<string> {
+export async function getPageHeaderText(): Promise<string> {
     return await (await getElementByLocator(headerGuest)).getText()
 }
 
-export async function getPageHeaderTextForLoggedInUser(): Promise<string> {
+export async function getPageHeaderTextForGuestAfterBtnIsVisible(btn: string, timeToWait?: number): Promise<string> {
+    await waitUntilButtonByTextIsVisibleInViewport(btn, timeToWait)
+    return await getPageHeaderText()
+}
+
+export async function getPageHeaderTextForLoggedIn(): Promise<string> {
     return await (await getElementByLocator(headerLoggedIn)).getText()
 }
 
-export async function getBackendFormValidationError(): Promise<string> {
+export async function getPageHeaderTextAfterLogin(): Promise<string> {
+    await discoverPage.waitForSortButtonIsDisplayed(8000)
+    return await getPageHeaderTextForLoggedIn()
+}
+
+export async function getFormValidationError(): Promise<string> {
     return await getElementTextByLocator(backendFormValidationError)
 }
 
-export async function getFrontendInputValidationTextByInputName(inputName: string): Promise<string> {
+export async function getInputValidationTextByInputName(inputName: string): Promise<string> {
     return await getElementTextByLocator(frontendInputError(inputName))
 }
 
@@ -98,6 +142,14 @@ export async function clickOnFormButton(btnName: string): Promise<void> {
 
 export async function fillFormInputWithValue(inputName: string, value: string): Promise<void> {
     await sendValueByLocator(formInput(inputName), value)
+}
+
+export async function fillInputWithValue(inputName: string, value: string): Promise<void> {
+    await sendValueByLocator(input(inputName), value)
+}
+
+export async function scrollIntoInputView(inputName: string): Promise<void> {
+    await (await getElementByLocator(input(inputName))).scrollIntoView()
 }
 
 //----------------WAIT----------------
@@ -165,6 +217,17 @@ export async function waitUntilFormButtonByTextIsClickable(btnName: string, cust
     const timeoutMessage = `${btnName} button still unclickable after ${customTimeout || defaultTimeout} ms`
     await browser.waitUntil(async function () {
         return (await getElementByLocator(formButton(btnName))).isClickable()
+    },
+    {
+        timeout: customTimeout || defaultTimeout,
+        timeoutMsg: timeoutMessage
+    })
+}
+
+export async function waitUntilGenericElementByTextIsPresent(el: string, customTimeout?: number): Promise<void> {
+    const timeoutMessage = `${el} button still invisible after ${customTimeout || defaultTimeout} ms`
+    await browser.waitUntil(async function () {
+        return (await getElementByLocator(elByText(el))).isDisplayed()
     },
     {
         timeout: customTimeout || defaultTimeout,
