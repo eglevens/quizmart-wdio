@@ -8,7 +8,6 @@ import * as api from '../utils/quizmartApi'
 import { expect } from 'chai'
 import * as validations from '../utils/validations'
 import * as mailApp from '../utils/mailApp'
-import { openMyCreatedQuizzes } from '../pageObjects/myQuizz.page'
 
 describe('Register with email from register page', () => {
 
