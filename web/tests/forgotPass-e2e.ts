@@ -1,7 +1,7 @@
 import * as forgotPassPage from '../pageObjects/forgotPass.page'
 import * as page from '../pageObjects/page'
 import * as userCredentials from '../utils/userCredentials'
-import * as  validations from '../utils/validations'
+import * as validations from '../utils/validations'
 import * as enums from '../utils/enums'
 import * as api from '../utils/api'
 import { expect } from 'chai'
@@ -63,13 +63,11 @@ describe('Password recovery from forgot password page', () => {
         expect (await forgotPassPage.getBackendValidationErrorTextAfterBtnIsClickable(enums.Button.DonePasswordReset)).equals(validations.Form.IncorrectRecoveryCode)
     })
     
-    //does not work, email service is not implemented yet.
-    // it('Success password reset', async () => {
-    //     await forgotPassPage.registeredEmailWithSuccessRecoveryCode()
-    //     await discoverPage.waitForSortButtonIsDisplayed(8000)
-    //     expect (await page.getPageHeaderText()).equals(Enums.Header.Discover)
-    // })
-
+    it('Success password reset', async () => {
+        await forgotPassPage.registeredEmailWithSuccessRecoveryCode()
+        await page.getPageHeaderTextAfterLogin()
+        expect (await page.getPageHeaderText()).equals(enums.Header.Discover)
+    })
 
     afterEach(async function() {
         await api.takeScreenshot(this)
