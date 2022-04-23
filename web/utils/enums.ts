@@ -28,7 +28,8 @@ export enum Button {
     SaveQuiz = 'Save Quiz',
     Cancel = 'Cancel',
     Add = 'Add',
-    DiscoverMore = 'Discover More'
+    DiscoverMore = 'Discover More',
+    ConfirmEmail = 'Confirm Email'
 }
 
 export enum Link {
