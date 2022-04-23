@@ -9,6 +9,8 @@ import { expect } from 'chai'
 import * as validations from '../utils/validations'
 import * as mailApp from '../utils/mailApp'
 
+const verificationText = '//h1/following-sibling::text()[1]'
+
 describe('Register with email from register page', () => {
 
     beforeEach(async function () {
@@ -77,6 +79,12 @@ describe('Register with email from register page', () => {
         const confirmationLink = await mailApp.getVerificationLinkFromEmail(mailApp.tag)
         await browser.url(confirmationLink)
         await browser.pause(5000)
+        await page.clickOnButton(enums.Button.ConfirmEmail)
+        //Dont know how to take element from confirmation screen, so waiting for button to be not visible. for now
+        await page.waitUntilButtonByTextIsNotVisibleInViewport(enums.Button.ConfirmEmail)
+        //naviagte to quizmart to get token for deleting acc
+        await page.openMyCreatedQuizPage()
+        await api.deleteAccount()
     })
 
 })

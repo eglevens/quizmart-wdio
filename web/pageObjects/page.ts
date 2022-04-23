@@ -202,6 +202,18 @@ export async function waitUntilButtonByTextIsVisibleInViewport(btnName: string, 
     })
 }
 
+export async function waitUntilButtonByTextIsNotVisibleInViewport(btnName: string, customTimeout?: number): Promise<any> {
+    const timeoutMessage = `${btnName} button still visible after ${customTimeout || defaultTimeout} ms`
+    //await browser.waitUntil(async function () {
+    
+        return (await getElementByLocator(button(btnName))).waitForExist({ reverse: true })
+    // },
+    // {
+    //     timeout: customTimeout || defaultTimeout,
+    //     timeoutMsg: timeoutMessage
+    // })
+}
+
 export async function waitUntilFormButtonByTextIsVisibleInViewport(btnName: string, customTimeout?: number): Promise<void> {
     const timeoutMessage = `${btnName} button still invisible after ${customTimeout || defaultTimeout} ms`
     await browser.waitUntil(async function () {
@@ -225,7 +237,7 @@ export async function waitUntilFormButtonByTextIsClickable(btnName: string, cust
 }
 
 export async function waitUntilGenericElementByTextIsPresent(el: string, customTimeout?: number): Promise<void> {
-    const timeoutMessage = `${el} button still invisible after ${customTimeout || defaultTimeout} ms`
+    const timeoutMessage = `${el} element still invisible after ${customTimeout || defaultTimeout} ms`
     await browser.waitUntil(async function () {
         return (await getElementByLocator(elByText(el))).isDisplayed()
     },
