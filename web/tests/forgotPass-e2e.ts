@@ -4,7 +4,7 @@ import * as userCredentials from '../utils/userCredentials'
 import * as  validations from '../utils/validations'
 import * as enums from '../utils/enums'
 import { expect } from 'chai'
-import randomEmail = require('random-email')
+import * as mailApp from '../utils/mailApp'
 
 
 describe('Password recovery from forgot password page', () => {
@@ -14,7 +14,7 @@ describe('Password recovery from forgot password page', () => {
     })
 
     it('Attempt to reset pass with not registered email', async() => {
-        await forgotPassPage.receiveRecoveryCodeWithEmail(randomEmail())
+        await forgotPassPage.receiveRecoveryCodeWithEmail(`${mailApp.namespace}.${mailApp.tag}${mailApp.testMail}`)
         expect (await forgotPassPage.getBackendValidationErrorTextAfterBtnIsClickable(enums.Button.SendRecoveryCode)).equals(validations.Form.NoUserWithThisEmail)
     })
 

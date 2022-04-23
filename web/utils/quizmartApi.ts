@@ -46,7 +46,6 @@ export async function isUserSubscribedToNewsletter(): Promise<boolean> {
     return response.body.isSubscribedToNewsletter
 }
 
-
 export async function loginToQuizmartApp(email: string, password: string) {
     const response = await chai.request(apiBaseUrl)
         .post('/auth/login')

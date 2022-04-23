@@ -7,8 +7,7 @@ import * as enums from '../utils/enums'
 import * as api from '../utils/quizmartApi'
 import { expect } from 'chai'
 import * as validations from '../utils/validations'
-import randomEmail = require('random-email')
-
+import * as mailApp from '../utils/mailApp'
 
 describe('Register with email from register page', () => {
 
@@ -22,7 +21,7 @@ describe('Register with email from register page', () => {
     })
 
     it('Success register without newsletter', async () => {
-        await registerPage.registerWithEmail(randomEmail(), userCredentials.user1.pass, userCredentials.user1.pass)
+        await registerPage.registerWithEmail(`${mailApp.namespace}.${mailApp.tag}${mailApp.testMail}`, userCredentials.user1.pass, userCredentials.user1.pass)
         await discoverPage.waitForSortButtonIsDisplayed(8000)
         expect (await page.getPageHeaderTextAfterLogin()).equals(enums.Header.Discover)
         expect (await api.isUserSubscribedToNewsletter()).to.be.false
@@ -30,7 +29,7 @@ describe('Register with email from register page', () => {
     })
     
     it('Success register with newsletter', async () => {
-        await registerPage.registerWithEmailAndNewsletterSubscription(randomEmail(), userCredentials.user1.pass, userCredentials.user1.pass)
+        await registerPage.registerWithEmailAndNewsletterSubscription(`${mailApp.namespace}.${mailApp.tag}${mailApp.testMail}`, userCredentials.user1.pass, userCredentials.user1.pass)
         await discoverPage.waitForSortButtonIsDisplayed(8000)
         expect (await page.getPageHeaderTextAfterLogin()).equals(enums.Header.Discover)
         expect (await api.isUserSubscribedToNewsletter()).to.be.true
@@ -70,6 +69,14 @@ describe('Register with email from register page', () => {
     it('Open privacy policy page from register page', async () => {
         await registerPage.clickNewsletterPrivacyPolicyLink()
         expect (await privacyPolicyPage.getPageHeaderText()).equals(enums.Header.PrivacyPolicy)
+    })
+
+
+    it.only('Email confirmation after registration', async () => {
+        await registerPage.registerWithEmail(`${mailApp.namespace}.${mailApp.tag}${mailApp.testMail}`, userCredentials.user1.pass, userCredentials.user1.pass)
+        const confirmationLink = await mailApp.getVerificationLinkFromEmail(mailApp.tag)
+        await browser.url(confirmationLink)
+        await browser.pause(5000)
     })
 
 })
