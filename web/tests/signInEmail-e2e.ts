@@ -2,6 +2,7 @@ import * as signInPage from '../pageObjects/signIn.page'
 import * as page from '../pageObjects/page'
 import * as validations from '../utils/validations'
 import * as userCredentials from '../utils/userCredentials'
+import * as api from '../utils/api'
 import { expect } from 'chai'
 import * as enums from '../utils/enums'
 import randomEmail = require('random-email')
@@ -51,12 +52,16 @@ describe('Sign in with email', () => {
 
     it('Open register page from sign in page', async () => {
         await page.clickOnLink(enums.Link.SignUp)
-        expect(await page.getPageHeaderTextForGuestAfterBtnIsVisible(enums.Button.Register)).equals(enums.Header.Register)
+        expect(await page.getPageHeaderTextForGuestAfterFormBtnIsVisible(enums.Button.Register)).equals(enums.Header.Register)
     })
 
     it('Open reset password page from sign in page', async () => {
         await page.clickOnLink(enums.Link.ResetPass)
-        expect(await page.getPageHeaderTextForGuestAfterBtnIsVisible(enums.Button.SendRecoveryCode)).equals(enums.Header.ResetPass)
+        expect(await page.getPageHeaderTextForGuestAfterFormBtnIsVisible(enums.Button.SendRecoveryCode)).equals(enums.Header.ResetPass)
+    })
+
+    afterEach(async function() {
+        await api.takeScreenshot(this)
     })
 
 })

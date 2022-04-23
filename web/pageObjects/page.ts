@@ -93,6 +93,11 @@ export async function getPageHeaderText(): Promise<string> {
     return await (await getElementByLocator(headerGuest)).getText()
 }
 
+export async function getPageHeaderTextForGuestAfterFormBtnIsVisible(btn: string, timeToWait?: number): Promise<string> {
+    await waitUntilFormButtonByTextIsVisibleInViewport(btn, timeToWait)
+    return await getPageHeaderText()
+}
+
 export async function getPageHeaderTextForGuestAfterBtnIsVisible(btn: string, timeToWait?: number): Promise<string> {
     await waitUntilButtonByTextIsVisibleInViewport(btn, timeToWait)
     return await getPageHeaderText()
