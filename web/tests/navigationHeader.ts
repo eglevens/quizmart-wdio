@@ -1,5 +1,5 @@
 import * as page from '../pageObjects/page'
-import * as api from '../utils/quizmartApi'
+import * as api from '../utils/api'
 import * as discoverPage from '../pageObjects/discover.page'
 import * as enums from '../utils/enums'
 import { expect } from 'chai'
@@ -40,4 +40,9 @@ describe('Navigation from header', () => {
         url = await browser.getUrl()
         chai.expect(url).to.have.path(enums.Path.Discover)
     })
+
+    afterEach(async function() {
+        await api.takeScreenshot(this)
+    })
+
 })

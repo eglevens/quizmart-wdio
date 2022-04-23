@@ -2,13 +2,22 @@ import chai = require('chai')
 import chaiHttp = require('chai-http')
 import { expect } from 'chai'
 chai.use(chaiHttp)
+import path = require('path')
 
 import * as discoverPage from '../pageObjects/discover.page'
 import * as localStr from './localStr'
+import { Context as MochaContext } from 'mocha'
 
 
 const apiBaseUrl = 'https://staging-api.quizmart.io/api/v1'
 
+
+export async function takeScreenshot(testContext: MochaContext): Promise<void> {
+    const test = testContext.currentTest!
+    const title = test.title.split(' ').join('-')
+    const dir = `../../screenshots/${test.state}/${test.state}-${title}.png`
+    await browser.saveScreenshot(path.join( __dirname, `${dir}`))
+}
 
 export async function getQuizIds(email: string, password: string): Promise<string> {
     const token = await localStr.getLocalStorageValue('auth_header')
@@ -16,6 +25,8 @@ export async function getQuizIds(email: string, password: string): Promise<strin
         .get('/created-collections')
         .set('Authorization', 'Bearer ' + token)
     expect(response.status).equals(200)
+    expect(response.body.quizzes.data[0].id).is.not.undefined
+
     return response.body.quizzes.data[0].id
 }
 
@@ -42,7 +53,7 @@ export async function isUserSubscribedToNewsletter(): Promise<boolean> {
         .get('/user')
         .set('Authorization', 'Bearer ' + token)
     expect(response.status).equals(200)
-    console.log (response.body.isSubscribedToNewsletter + 'user is subscribed????')
+    
     return response.body.isSubscribedToNewsletter
 }
 
