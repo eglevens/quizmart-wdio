@@ -36,6 +36,7 @@ export async function fillQuizWithOpenEndedQuestion() {
     await fillQuizTitle()
     await page.sendValueByLocator(imageUploadInput, filePath)
     await page.fillInputWithValue(enums.Input.QuizCreationDescription, enums.QuizCreation.Description)
+    await page.scrollIntoInputView(enums.Input.QuizCreationDescription)
     await page.fillInputWithValue(enums.Input.QuizCreationTags, enums.QuizCreation.Tags)
     await page.clickOnButton(enums.Button.Add)
     await page.clickByLocator(languageSelector)
