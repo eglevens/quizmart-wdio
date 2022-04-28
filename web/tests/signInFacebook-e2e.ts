@@ -1,6 +1,5 @@
 import *  as landingPage from '../pageObjects/landing.page'
 import * as page from '../pageObjects/page'
-import * as discoverPage from '../pageObjects/discover.page'
 import { expect } from 'chai'
 import { userFacebook } from '../utils/userCredentials'
 import * as api from '../utils/api'
@@ -19,7 +18,7 @@ describe('Continue with Facebook', () => {
 
     it('Success Facebook login & redirection to discover', async () => {
         await landingPage.loginOnFacebook(userFacebook.email, userFacebook.pass)
-        await discoverPage.waitForSortButtonIsDisplayed(9000)
+        await page.waitUntilSortButtonIsDisplayed(9000)
         expect (await page.getPageHeaderTextAfterLogin()).equals(enums.Header.Discover)
     })
 

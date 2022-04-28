@@ -1,6 +1,5 @@
 import * as page from '../pageObjects/page'
 import * as api from '../utils/api'
-import * as discoverPage from '../pageObjects/discover.page'
 import * as enums from '../utils/enums'
 import { expect } from 'chai'
 import { user1 } from '../utils/userCredentials'

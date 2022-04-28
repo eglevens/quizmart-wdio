@@ -1,7 +1,6 @@
 import * as registerPage from '../pageObjects/register.page'
 import * as userCredentials from '../utils/userCredentials'
 import * as page from '../pageObjects/page'
-import * as discoverPage from '../pageObjects/discover.page'
 import * as privacyPolicyPage from '../pageObjects/privacyPolicy.page'
 import * as enums from '../utils/enums'
 import * as api from '../utils/api'
@@ -22,17 +21,19 @@ describe('Register with email from register page', () => {
 
     it('Success register without newsletter', async () => {
         await registerPage.registerWithEmail(`${mailApp.namespace}.${mailApp.tag}${mailApp.testMail}`, userCredentials.user1.pass, userCredentials.user1.pass)
-        await discoverPage.waitForSortButtonIsDisplayed(8000)
+        await page.waitUntilSortButtonIsDisplayed(8000)
         expect (await page.getPageHeaderTextAfterLogin()).equals(enums.Header.Discover)
         expect (await api.isUserSubscribedToNewsletter()).to.be.false
+        expect (await page.waitUntilButtonByTextIsVisibleInViewport(enums.Button.SendVerificationEmail))
         await api.deleteAccount()
     })
     
     it('Success register with newsletter', async () => {
         await registerPage.registerWithEmailAndNewsletterSubscription(`${mailApp.namespace}.${mailApp.tag}${mailApp.testMail}`, userCredentials.user1.pass, userCredentials.user1.pass)
-        await discoverPage.waitForSortButtonIsDisplayed(8000)
+        await page.waitUntilSortButtonIsDisplayed(8000)
         expect (await page.getPageHeaderTextAfterLogin()).equals(enums.Header.Discover)
         expect (await api.isUserSubscribedToNewsletter()).to.be.true
+        expect (await page.waitUntilButtonByTextIsVisibleInViewport(enums.Button.SendVerificationEmail))
         await api.deleteAccount()
     })
 
@@ -72,19 +73,20 @@ describe('Register with email from register page', () => {
     })
 
 
-    it.only('Email confirmation after registration', async () => {
+    it('Email confirmation after registration', async () => {
         await registerPage.registerWithEmail(`${mailApp.namespace}.${mailApp.tag}${mailApp.testMail}`, userCredentials.user1.pass, userCredentials.user1.pass)
-        const confirmationLink = await mailApp.getVerificationLinkFromEmail(mailApp.tag)
+        const confirmationLink = await mailApp.getVerificationLinkFromEmail()
         await browser.url(confirmationLink)
         await browser.pause(5000)
         await page.clickOnButton(enums.Button.ConfirmEmail)
         //Dont know how to take an element from confirmation screen, so waiting for button to be not visible. for now
         await page.waitUntilButtonByTextIsNotVisibleInViewport(enums.Button.ConfirmEmail)
-        //open quizmart page to get token for deleting acc
-        await page.openCreatePage()
-        await browser.pause(2000)
+        await page.openDiscover()
+        expect (await api.isUserEmailVerified()).to.be.true
+        expect (await page.isButtonByTextDisplayed(enums.Button.SendVerificationEmail))
         await api.deleteAccount()
     })
+
     afterEach(async function() {
         await api.takeScreenshot(this)
     })
