@@ -29,7 +29,8 @@ export enum Button {
     Cancel = 'Cancel',
     Add = 'Add',
     DiscoverMore = 'Discover More',
-    ConfirmEmail = 'Confirm Email'
+    ConfirmEmail = 'Confirm Email',
+    SendVerificationEmail = 'Send Verification Email'
 }
 
 export enum Link {
