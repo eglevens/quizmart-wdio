@@ -40,6 +40,27 @@ describe('Navigation from header', () => {
         chai.expect(url).to.have.path(enums.Path.Discover)
     })
 
+    it('Open each page by clicking on buttons on offline mode', async () => {
+        await page.setOfflineMode()
+
+        await page.clickOnLink(enums.Link.Play)
+        expect(await page.isMessageDisplayed(enums.Messages.FailedToFetch)).to.be.true
+
+        await page.clickOnLink(enums.Link.Join)
+        expect(await page.isMessageDisplayed(enums.Messages.FailedToFetch)).to.be.true
+
+        await page.clickOnLink(enums.Link.Create)
+        expect(await page.isMessageDisplayed(enums.Messages.FailedToFetch)).to.be.true
+
+        await page.clickOnLink(enums.Link.Collections)
+        expect(await page.isMessageDisplayed(enums.Messages.FailedToFetch)).to.be.true
+
+        await page.clickOnLink(enums.Link.Discover)
+        expect(await page.isMessageDisplayed(enums.Messages.FailedToFetch)).to.be.true
+
+        
+    })
+
     afterEach(async function() {
         await api.takeScreenshot(this)
     })

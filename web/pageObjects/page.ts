@@ -262,3 +262,23 @@ export async function waitUntilGenericElementByTextIsPresent(el: string, customT
 export async function isButtonByTextDisplayed(btnName: string): Promise<boolean> {
     return (await getElementByLocator(button(btnName))).isDisplayed()
 }
+
+
+
+export async function setOfflineMode(): Promise<void> {
+    await browser.throttle({
+        offline: true,
+        downloadThroughput: 200 * 1024 / 8,
+        uploadThroughput: 200 * 1024 / 8,
+        latency: 20
+    })
+}
+
+export async function setOnlineMode(): Promise<void> {
+    await browser.throttle({
+        offline: false,
+        downloadThroughput: 200 * 1024 / 8,
+        uploadThroughput: 200 * 1024 / 8,
+        latency: 20
+    })
+}
