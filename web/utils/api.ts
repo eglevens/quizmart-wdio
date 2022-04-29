@@ -3,8 +3,8 @@ import chaiHttp = require('chai-http')
 import { expect } from 'chai'
 chai.use(chaiHttp)
 import path = require('path')
+import * as page from '../pageObjects/page'
 
-import * as discoverPage from '../pageObjects/discover.page'
 import * as localStr from './localStr'
 import { Context as MochaContext } from 'mocha'
 
@@ -16,7 +16,7 @@ export async function takeScreenshot(testContext: MochaContext): Promise<void> {
     const test = testContext.currentTest!
     const title = test.title.split(' ').join('-')
     const dir = `../../screenshots/${test.state}/${test.state}-${title}.png`
-    await browser.saveScreenshot(path.join( __dirname, `${dir}`))
+    await browser.saveScreenshot(path.join(__dirname, `${dir}`))
 }
 
 export async function getQuizIds(email: string, password: string): Promise<string> {
@@ -53,10 +53,19 @@ export async function isUserSubscribedToNewsletter(): Promise<boolean> {
         .get('/user')
         .set('Authorization', 'Bearer ' + token)
     expect(response.status).equals(200)
-    
+
     return response.body.isSubscribedToNewsletter
 }
 
+export async function isUserEmailVerified(): Promise<boolean> {
+    const token = await localStr.getLocalStorageValue('auth_header')
+    const response = await chai.request(apiBaseUrl)
+        .get('/user')
+        .set('Authorization', 'Bearer ' + token)
+    expect(response.status).equals(200)
+
+    return response.body.emailVerified
+}
 
 export async function loginToQuizmartApp(email: string, password: string) {
     const response = await chai.request(apiBaseUrl)
@@ -64,5 +73,5 @@ export async function loginToQuizmartApp(email: string, password: string) {
         .send({ 'email': email, 'password': password })
 
     await browser.url(`https://staging-app.quizmart.io/auth#${response.body.accessToken}$$${response.body.refreshToken}$$`)
-    await discoverPage.waitForSortButtonIsDisplayed(8000)
+    await page.waitUntilSortButtonIsDisplayed()
 }

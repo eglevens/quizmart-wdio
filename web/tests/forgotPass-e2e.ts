@@ -1,11 +1,11 @@
 import * as forgotPassPage from '../pageObjects/forgotPass.page'
 import * as page from '../pageObjects/page'
 import * as userCredentials from '../utils/userCredentials'
-import * as  validations from '../utils/validations'
+import * as validations from '../utils/validations'
 import * as enums from '../utils/enums'
 import * as api from '../utils/api'
 import { expect } from 'chai'
-import randomEmail = require('random-email')
+import * as mailApp from '../utils/mailApp'
 
 
 describe('Password recovery from forgot password page', () => {
@@ -15,7 +15,7 @@ describe('Password recovery from forgot password page', () => {
     })
 
     it('Attempt to reset pass with not registered email', async() => {
-        await forgotPassPage.receiveRecoveryCodeWithEmail(randomEmail())
+        await forgotPassPage.receiveRecoveryCodeWithEmail(`${mailApp.namespace}.${mailApp.tag}${mailApp.testMail}`)
         expect (await forgotPassPage.getBackendValidationErrorTextAfterBtnIsClickable(enums.Button.SendRecoveryCode)).equals(validations.Form.NoUserWithThisEmail)
     })
 
@@ -63,13 +63,11 @@ describe('Password recovery from forgot password page', () => {
         expect (await forgotPassPage.getBackendValidationErrorTextAfterBtnIsClickable(enums.Button.DonePasswordReset)).equals(validations.Form.IncorrectRecoveryCode)
     })
     
-    //does not work, email service is not implemented yet.
-    // it('Success password reset', async () => {
-    //     await forgotPassPage.registeredEmailWithSuccessRecoveryCode()
-    //     await discoverPage.waitForSortButtonIsDisplayed(8000)
-    //     expect (await page.getPageHeaderText()).equals(Enums.Header.Discover)
-    // })
-
+    it('Success password reset', async () => {
+        await forgotPassPage.registeredEmailWithSuccessRecoveryCode()
+        await page.getPageHeaderTextAfterLogin()
+        expect (await page.getPageHeaderText()).equals(enums.Header.Discover)
+    })
 
     afterEach(async function() {
         await api.takeScreenshot(this)

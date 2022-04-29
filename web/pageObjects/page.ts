@@ -1,9 +1,9 @@
-import * as discoverPage from '../pageObjects/discover.page'
 import * as enums from '../utils/enums'
 
 const headerGuest = '(//h1)[1]'
 const headerLoggedIn = '//div[./p[@data-cy="subtitle"]]//h1'
 const backendFormValidationError = '//form/div/h3'
+const popularBtn = '//button[./input[@name="language"]]'
 
 function link(href: string): string {
     return `//a[@href="${href}"]`
@@ -58,6 +58,11 @@ export async function openForgotPassPageRecoveryCode(): Promise<void> {
     await browser.url('reset-password/#recovery')
 }
 
+export async function openDiscover(): Promise<void> {
+    await browser.url('https://staging-app.quizmart.io/discover')
+    await waitUntilSortButtonIsDisplayed()
+}
+
 export async function openCreatePage(): Promise<void> {
     await browser.url('https://staging-app.quizmart.io/library/quiz/add')
 }
@@ -108,7 +113,7 @@ export async function getPageHeaderTextForLoggedIn(): Promise<string> {
 }
 
 export async function getPageHeaderTextAfterLogin(): Promise<string> {
-    await discoverPage.waitForSortButtonIsDisplayed(8000)
+    await waitUntilSortButtonIsDisplayed(8000)
     return await getPageHeaderTextForLoggedIn()
 }
 
@@ -130,8 +135,6 @@ export async function clickByLocator(locator: string): Promise<void> {
 export async function sendValueByLocator(locator: string, value: string): Promise<void> {
     await (await getElementByLocator(locator)).addValue(value)
 }
-
-//---
 
 export async function clickOnLink(href: string): Promise<void> {
     await (await getElementByLocator(link(href))).click()
@@ -166,10 +169,10 @@ export async function waitUntilElementIsVisibleInViewportByLocator(locator: stri
     await browser.waitUntil(async function () {
         return (await getElementByLocator(locator)).isDisplayedInViewport()
     },
-    {
-        timeout: customTimeout || defaultTimeout,
-        timeoutMsg: timeoutMessage
-    })
+        {
+            timeout: customTimeout || defaultTimeout,
+            timeoutMsg: timeoutMessage
+        })
 }
 
 export async function waitUntilElementIsPresentByLocator(locator: string, customTimeout?: number): Promise<void> {
@@ -177,10 +180,10 @@ export async function waitUntilElementIsPresentByLocator(locator: string, custom
     await browser.waitUntil(async function () {
         return (await getElementByLocator(locator)).isDisplayed()
     },
-    {
-        timeout: customTimeout || defaultTimeout,
-        timeoutMsg: timeoutMessage
-    })
+        {
+            timeout: customTimeout || defaultTimeout,
+            timeoutMsg: timeoutMessage
+        })
 }
 
 export async function waitUntilElementIsClickableByLocator(locator: string, customTimeout?: number): Promise<void> {
@@ -188,10 +191,21 @@ export async function waitUntilElementIsClickableByLocator(locator: string, cust
     await browser.waitUntil(async function () {
         return (await getElementByLocator(locator)).isClickable()
     },
-    {
-        timeout: customTimeout || defaultTimeout,
-        timeoutMsg: timeoutMessage
-    })
+        {
+            timeout: customTimeout || defaultTimeout,
+            timeoutMsg: timeoutMessage
+        })
+}
+
+export async function waitUntilSortButtonIsDisplayed(customTimeout?: number): Promise<void> {
+    const timeoutMessage = `${popularBtn} element still invisible after ${customTimeout || defaultTimeout} ms`
+    await browser.waitUntil(async function () {
+        return (await getElementByLocator(popularBtn)).isDisplayedInViewport()
+    },
+        {
+            timeout: customTimeout || defaultTimeout,
+            timeoutMsg: timeoutMessage
+        })
 }
 
 //----------------WAIT BY TEXT----------------
@@ -201,10 +215,15 @@ export async function waitUntilButtonByTextIsVisibleInViewport(btnName: string, 
     await browser.waitUntil(async function () {
         return (await getElementByLocator(button(btnName))).isDisplayedInViewport()
     },
-    {
-        timeout: customTimeout || defaultTimeout,
-        timeoutMsg: timeoutMessage
-    })
+        {
+            timeout: customTimeout || defaultTimeout,
+            timeoutMsg: timeoutMessage
+        })
+}
+
+export async function waitUntilButtonByTextIsNotVisibleInViewport(btnName: string, customTimeout?: number): Promise<any> {
+    const timeoutMessage = `${btnName} button still visible after ${customTimeout || defaultTimeout} ms`
+    return (await getElementByLocator(button(btnName))).waitForExist({ reverse: true })
 }
 
 export async function waitUntilFormButtonByTextIsVisibleInViewport(btnName: string, customTimeout?: number): Promise<void> {
@@ -212,10 +231,10 @@ export async function waitUntilFormButtonByTextIsVisibleInViewport(btnName: stri
     await browser.waitUntil(async function () {
         return (await getElementByLocator(formButton(btnName))).isDisplayed()
     },
-    {
-        timeout: customTimeout || defaultTimeout,
-        timeoutMsg: timeoutMessage
-    })
+        {
+            timeout: customTimeout || defaultTimeout,
+            timeoutMsg: timeoutMessage
+        })
 }
 
 export async function waitUntilFormButtonByTextIsClickable(btnName: string, customTimeout?: number): Promise<void> {
@@ -223,19 +242,23 @@ export async function waitUntilFormButtonByTextIsClickable(btnName: string, cust
     await browser.waitUntil(async function () {
         return (await getElementByLocator(formButton(btnName))).isClickable()
     },
-    {
-        timeout: customTimeout || defaultTimeout,
-        timeoutMsg: timeoutMessage
-    })
+        {
+            timeout: customTimeout || defaultTimeout,
+            timeoutMsg: timeoutMessage
+        })
 }
 
 export async function waitUntilGenericElementByTextIsPresent(el: string, customTimeout?: number): Promise<void> {
-    const timeoutMessage = `${el} button still invisible after ${customTimeout || defaultTimeout} ms`
+    const timeoutMessage = `${el} element still invisible after ${customTimeout || defaultTimeout} ms`
     await browser.waitUntil(async function () {
         return (await getElementByLocator(elByText(el))).isDisplayed()
     },
-    {
-        timeout: customTimeout || defaultTimeout,
-        timeoutMsg: timeoutMessage
-    })
+        {
+            timeout: customTimeout || defaultTimeout,
+            timeoutMsg: timeoutMessage
+        })
+}
+
+export async function isButtonByTextDisplayed(btnName: string): Promise<boolean> {
+    return (await getElementByLocator(button(btnName))).isDisplayed()
 }

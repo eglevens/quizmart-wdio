@@ -1,6 +1,7 @@
 import * as page from './page'
 import * as enums from '../utils/enums'
 import * as userCredentials from '../utils/userCredentials'
+import * as mailApp from '../utils/mailApp'
 
 const backendFormValidationError = '//main //form/h3'
 
@@ -40,7 +41,8 @@ export async function fillPassInputsAndSubmit(pass: string, repeatPass: string):
 
 export async function registeredEmailWithSuccessRecoveryCode(): Promise<void> {
     await receiveRecoveryCodeWithEmail(userCredentials.userForgotPass.email)
-    //await fillRecoveryCode()
+    const verificationCode = await mailApp.getTempPasswordFromEmail()
+    await fillRecoveryCode(verificationCode)
     await page.waitUntilFormButtonByTextIsClickable(enums.Button.DonePasswordReset)
     await fillPassInputsAndSubmit(userCredentials.userForgotPass.newPass, userCredentials.userForgotPass.newPass)
 }

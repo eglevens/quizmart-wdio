@@ -5,7 +5,7 @@ import * as userCredentials from '../utils/userCredentials'
 import * as api from '../utils/api'
 import { expect } from 'chai'
 import * as enums from '../utils/enums'
-import randomEmail = require('random-email')
+import * as mailApp from '../utils/mailApp'
 
 describe('Sign in with email', () => {
 
@@ -25,7 +25,7 @@ describe('Sign in with email', () => {
     })
 
     it('Attempt to sign in with non registered email', async () => {
-        await signInPage.signInWithEmail(randomEmail(), userCredentials.invalidPass)
+        await signInPage.signInWithEmail(`${mailApp.namespace}.${mailApp.tag}${mailApp.testMail}`, userCredentials.invalidPass)
         expect(await signInPage.getFormValidation()).equals(validations.Form.IncorrectCredentials)
     })
 
