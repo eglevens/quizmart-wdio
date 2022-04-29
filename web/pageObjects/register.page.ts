@@ -49,3 +49,8 @@ export async function getFormValidation(): Promise<string> {
     await page.waitUntilFormButtonByTextIsClickable(enums.Button.Register)
     return await page.getFormValidationError()
 }
+
+export async function getEmailConfirmationText(): Promise<string> {
+    const emailConfBody = 'tbody tbody  tr td div'
+    return await $(emailConfBody).getHTML()
+}

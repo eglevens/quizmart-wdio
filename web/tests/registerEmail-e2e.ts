@@ -73,19 +73,18 @@ describe('Register with email from register page', () => {
     })
 
 
-    it('Email confirmation after registration', async () => {
+    it.only('Email confirmation after registration', async () => {
         await registerPage.registerWithEmail(`${mailApp.namespace}.${mailApp.tag}${mailApp.testMail}`, userCredentials.user1.pass, userCredentials.user1.pass)
         const confirmationLink = await mailApp.getVerificationLinkFromEmail()
         await browser.url(confirmationLink)
-        await browser.pause(5000)
         await page.clickOnButton(enums.Button.ConfirmEmail)
-        //Dont know how to take an element from confirmation screen, so waiting for button to be not visible. for now
         await page.waitUntilButtonByTextIsNotVisibleInViewport(enums.Button.ConfirmEmail)
+        const emailConfirmationText = await registerPage.getEmailConfirmationText()
+        expect(emailConfirmationText).contains('Your account has been confirmed successfully!')        
         await page.openDiscover()
         expect (await api.isUserEmailVerified()).to.be.true
-        expect (await page.isButtonByTextDisplayed(enums.Button.SendVerificationEmail))
         await api.deleteAccount()
-    })
+     })
 
     afterEach(async function() {
         await api.takeScreenshot(this)
