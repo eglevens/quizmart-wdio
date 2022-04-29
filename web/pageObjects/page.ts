@@ -263,7 +263,7 @@ export async function isButtonByTextDisplayed(btnName: string): Promise<boolean>
     return (await getElementByLocator(button(btnName))).isDisplayed()
 }
 
-
+//----------------Throttle----------------
 
 export async function setOfflineMode(): Promise<void> {
     await browser.throttle({
