@@ -1,5 +1,5 @@
 import * as registerPage from '../pageObjects/register.page'
-import * as userCredentials from '../utils/userCredentials'
+import * as invalidUserCredentials from '../utils/invalidUserCredentials'
 import * as page from '../pageObjects/page'
 import * as privacyPolicyPage from '../pageObjects/privacyPolicy.page'
 import * as enums from '../utils/enums'
@@ -38,7 +38,7 @@ describe('Register with email from register page', () => {
     })
 
     it('Validation error with invalid email format', async () => {
-        for (const invalidFormatEmail of userCredentials.invalidFormatEmails) {
+        for (const invalidFormatEmail of invalidUserCredentials.invalidFormatEmails) {
             await registerPage.fillEmailInputAndLoseFocus(invalidFormatEmail)
             expect(await page.getInputValidationTextByInputName(enums.Input.Email)).equals(validations.Form.InvalidEmail)
             await browser.refresh()
@@ -46,11 +46,11 @@ describe('Register with email from register page', () => {
     })
 
     it('Validation error with too short, too long password and not matching repeat password and inputs required', async () => {
-        await registerPage.fillPassInputs(userCredentials.shortPass, userCredentials.notMatchingRepeatPass)
+        await registerPage.fillPassInputs(invalidUserCredentials.shortPass, invalidUserCredentials.notMatchingRepeatPass)
         expect(await page.getInputValidationTextByInputName(enums.Input.Password)).equals(validations.Form.PassTooShort)
         expect(await page.getInputValidationTextByInputName(enums.Input.RepeatPass)).equals(validations.Form.PasswordsMustMatch)
 
-        await registerPage.fillPassInputs(userCredentials.longPass, userCredentials.notMatchingRepeatPass)
+        await registerPage.fillPassInputs(invalidUserCredentials.longPass, invalidUserCredentials.notMatchingRepeatPass)
         expect(await page.getInputValidationTextByInputName(enums.Input.Password)).equals(validations.Form.PassTooLong)
         expect(await page.getInputValidationTextByInputName(enums.Input.RepeatPass)).equals(validations.Form.PasswordsMustMatch)
 

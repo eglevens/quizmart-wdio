@@ -1,7 +1,7 @@
 import * as signInPage from '../pageObjects/signIn.page'
 import * as page from '../pageObjects/page'
 import * as validations from '../utils/validations'
-import * as userCredentials from '../utils/userCredentials'
+import * as invalidUserCredentials from '../utils/invalidUserCredentials'
 import * as api from '../utils/api'
 import { expect } from 'chai'
 import * as enums from '../utils/enums'
@@ -19,17 +19,17 @@ describe('Sign in with email', () => {
     })
 
     it('Attempt to sign in with invalid password', async () => {
-        await signInPage.signInWithEmail(userCredentials.invalidPass)
+        await signInPage.signInWithEmail(invalidUserCredentials.invalidPass)
         expect(await signInPage.getFormValidation()).equals(validations.Form.IncorrectCredentials)
     })
 
     it('Attempt to sign in with non registered email', async () => {
-        await signInPage.signInWithEmail(userCredentials.invalidPass, `${mailApp.namespace}.${mailApp.tag}${mailApp.testMail}`)
+        await signInPage.signInWithEmail(invalidUserCredentials.invalidPass, `${mailApp.namespace}.${mailApp.tag}${mailApp.testMail}`)
         expect(await signInPage.getFormValidation()).equals(validations.Form.IncorrectCredentials)
     })
 
     it('Validation error with invalid email format', async () => {
-        for (const invalidFormatEmail of userCredentials.invalidFormatEmails) {
+        for (const invalidFormatEmail of invalidUserCredentials.invalidFormatEmails) {
             await signInPage.fillEmailInputAndLoseFocus(invalidFormatEmail)
             expect(await page.getInputValidationTextByInputName(enums.Input.Email)).equals(validations.Form.InvalidEmail)
             await browser.refresh()
@@ -37,9 +37,9 @@ describe('Sign in with email', () => {
     })
 
     it('Validation error with too short and too long password', async () => {
-        await signInPage.fillPassInputAndLoseFocus(userCredentials.shortPass)
+        await signInPage.fillPassInputAndLoseFocus(invalidUserCredentials.shortPass)
         expect(await page.getInputValidationTextByInputName(enums.Input.Password)).equals(validations.Form.PassTooShort)
-        await signInPage.fillPassInputAndLoseFocus(userCredentials.longPass)
+        await signInPage.fillPassInputAndLoseFocus(invalidUserCredentials.longPass)
         expect(await page.getInputValidationTextByInputName(enums.Input.Password)).equals(validations.Form.PassTooLong)
 
         await browser.refresh()

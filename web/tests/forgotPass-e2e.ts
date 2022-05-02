@@ -1,6 +1,6 @@
 import * as forgotPassPage from '../pageObjects/forgotPass.page'
 import * as page from '../pageObjects/page'
-import * as userCredentials from '../utils/userCredentials'
+import * as invalidUserCredentials from '../utils/invalidUserCredentials'
 import * as validations from '../utils/validations'
 import * as enums from '../utils/enums'
 import * as api from '../utils/api'
@@ -20,7 +20,7 @@ describe('Password recovery from forgot password page', () => {
     })
 
     it('Validation error with invalid email format and required email validation error', async () => {
-        for (const invalidFormatEmail of userCredentials.invalidFormatEmails) {
+        for (const invalidFormatEmail of invalidUserCredentials.invalidFormatEmails) {
             await forgotPassPage.receiveRecoveryCodeWithEmail(invalidFormatEmail)
             expect (await page.getInputValidationTextByInputName(enums.Input.Email)).equals(validations.Form.InvalidEmail)
             await browser.refresh()  
@@ -31,11 +31,11 @@ describe('Password recovery from forgot password page', () => {
 
     it('Validation error too short, too long and required recovery code after registered email submitted', async () => {
         await page.openForgotPassPageRecoveryCode()
-        await forgotPassPage.fillRecoveryCode(userCredentials.shortRecoveryCode)
+        await forgotPassPage.fillRecoveryCode(invalidUserCredentials.shortRecoveryCode)
         expect (await page.getInputValidationTextByInputName(enums.Input.RecoveryCode)).equals(validations.Form.RecoveryCodeTooShort)
 
         await browser.refresh()
-        await forgotPassPage.fillRecoveryCode(userCredentials.longRecoveryCode)
+        await forgotPassPage.fillRecoveryCode(invalidUserCredentials.longRecoveryCode)
         expect (await page.getInputValidationTextByInputName(enums.Input.RecoveryCode)).equals(validations.Form.RecoveryCodeTooLong)
 
         await browser.refresh()
@@ -50,10 +50,10 @@ describe('Password recovery from forgot password page', () => {
         expect (await page.getInputValidationTextByInputName(enums.Input.Password)).equals(validations.Form.Required)
         expect (await page.getInputValidationTextByInputName(enums.Input.RepeatPass)).equals(validations.Form.Required)
         
-        await forgotPassPage.fillPassInputsAndSubmit(userCredentials.shortPass, userCredentials.notMatchingRepeatPass)
+        await forgotPassPage.fillPassInputsAndSubmit(invalidUserCredentials.shortPass, invalidUserCredentials.notMatchingRepeatPass)
         expect (await page.getInputValidationTextByInputName(enums.Input.Password)).equals(validations.Form.PassTooShort)
         
-        await forgotPassPage.fillPassInputsAndSubmit(userCredentials.longPass, userCredentials.notMatchingRepeatPass)
+        await forgotPassPage.fillPassInputsAndSubmit(invalidUserCredentials.longPass, invalidUserCredentials.notMatchingRepeatPass)
         expect (await page.getInputValidationTextByInputName(enums.Input.Password)).equals(validations.Form.PassTooLong)
         expect (await page.getInputValidationTextByInputName(enums.Input.RepeatPass)).equals(validations.Form.PasswordsMustMatch)
     })
