@@ -1,5 +1,6 @@
 import * as page from './page'
 import * as enums from '../utils/enums'
+import * as defaultCredentials from '../../userCredentials.json'
 
 //---Google
 const emailGoogleInput = '//input[@type="email"]'
@@ -10,7 +11,7 @@ const nextPassGoogleBtn = '//div[@id="passwordNext"] //button'
 
 //---Facebook
 const cookiesPopup = '//div[@id="cookie_banner_title"]'
-const acceptCookies = '//*[@data-testid="cookie-policy-dialog-accept-button"]'
+const acceptCookies = '//*[@data-cookiebanner="accept_button"]'
 
 const emailFacebookInput = '//input[@id="email"]'
 const passFacebookInput = '//input[@id="pass"]'
@@ -46,37 +47,19 @@ export async function openGoogle(): Promise <void> {
 
 //----------------ACTION----------------
 
-
-
-export async function signInWithEmail(email: string, pass: string): Promise<void> {
-    await page.fillFormInputWithValue(enums.Input.Email, email)
-    await page.fillFormInputWithValue(enums.Input.Password, pass)
-    await clickLoginBtn()
-}
-
-export async function fillEmailInputAndLoseFocus(email: string): Promise<void> {
-    await page.fillFormInputWithValue(enums.Input.Email, email)
-    await clickLoginBtn()
-}
-
-export async function fillPassInputAndLoseFocus(pass: string): Promise<void> {
-    await page.fillFormInputWithValue(enums.Input.Password, pass)
-    await clickLoginBtn()
-}
-
-export async function loginOnGoogle(email: string, pass: string): Promise<void> {
+export async function loginOnGoogle(email?: string, pass?: string): Promise<void> {
     await page.waitUntilElementIsClickableByLocator(nextEmailGoogleBtn, 10000)
-    await page.sendValueByLocator(emailGoogleInput, email)
+    await page.sendValueByLocator(emailGoogleInput, email || defaultCredentials.googleEmail)
     await page.clickByLocator(nextEmailGoogleBtn)
     await page.waitUntilElementIsClickableByLocator(nextPassGoogleBtn, 10000)
-    await page.sendValueByLocator(passGoogleInput, pass)
+    await page.sendValueByLocator(passGoogleInput, pass || defaultCredentials.googlePass)
     await page.clickByLocator(nextPassGoogleBtn)
 }
 
-export async function loginOnFacebook(email: string, pass: string): Promise<void> {
+export async function loginOnFacebook(email?: string, pass?: string): Promise<void> {
     await page.clickByLocator(acceptCookies)
-    await page.sendValueByLocator(emailFacebookInput, email)
-    await page.sendValueByLocator(passFacebookInput, pass)
+    await page.sendValueByLocator(emailFacebookInput, email || defaultCredentials.fbEmail)
+    await page.sendValueByLocator(passFacebookInput, pass || defaultCredentials.fbPass)
     await page.clickByLocator(loginFacebookBtn)
 }
 

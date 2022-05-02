@@ -1,7 +1,6 @@
 import * as landingPage from '../pageObjects/landing.page'
 import * as page from '../pageObjects/page'
 import { expect } from 'chai'
-import { userGoogle } from '../utils/userCredentials'
 import * as api from '../utils/api'
 import * as enums from '../utils/enums'
 
@@ -11,13 +10,13 @@ describe('Continue with Google', () => {
         await landingPage.openGoogle() 
     })
     
-    it.only('Initiate Continue with Google and return back to landing', async () => {
+    it('Initiate Continue with Google and return back to landing', async () => {
         await browser.back()
         expect (await page.getPageHeaderTextForGuestAfterBtnIsVisible(enums.Button.ContinueWithGoogle, 6000)).equals(enums.Header.Landing)
     })
 
     it('Success Continue with Google login', async () => {
-        await landingPage.loginOnGoogle(userGoogle.email, userGoogle.pass)
+        await landingPage.loginOnGoogle()
         await page.waitUntilSortButtonIsDisplayed(9000)
         expect (await page.getPageHeaderTextAfterLogin()).equals(enums.Header.Discover)
     })
