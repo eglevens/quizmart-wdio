@@ -15,12 +15,12 @@ describe('Register with email from register page', () => {
     })
 
     it('Attempt to register with already registered email', async () => {
-        await registerPage.registerWithEmail(userCredentials.user1.email, userCredentials.user1.pass, userCredentials.user1.pass)
+        await registerPage.registerWithEmail()
         expect (await registerPage.getFormValidation()).equals(validations.Form.AlreadyRegisteredEmail)
     })
 
     it('Success register without newsletter', async () => {
-        await registerPage.registerWithEmail(`${mailApp.namespace}.${mailApp.tag}${mailApp.testMail}`, userCredentials.user1.pass, userCredentials.user1.pass)
+        await registerPage.registerWithEmail(`${mailApp.namespace}.${mailApp.tag}${mailApp.testMail}`)
         await page.waitUntilSortButtonIsDisplayed(8000)
         expect (await page.getPageHeaderTextAfterLogin()).equals(enums.Header.Discover)
         expect (await api.isUserSubscribedToNewsletter()).to.be.false
@@ -29,7 +29,7 @@ describe('Register with email from register page', () => {
     })
     
     it('Success register with newsletter', async () => {
-        await registerPage.registerWithEmailAndNewsletterSubscription(`${mailApp.namespace}.${mailApp.tag}${mailApp.testMail}`, userCredentials.user1.pass, userCredentials.user1.pass)
+        await registerPage.registerWithEmailAndNewsletterSubscription(`${mailApp.namespace}.${mailApp.tag}${mailApp.testMail}`)
         await page.waitUntilSortButtonIsDisplayed(8000)
         expect (await page.getPageHeaderTextAfterLogin()).equals(enums.Header.Discover)
         expect (await api.isUserSubscribedToNewsletter()).to.be.true
@@ -72,9 +72,8 @@ describe('Register with email from register page', () => {
         expect (await privacyPolicyPage.getPageHeaderText()).equals(enums.Header.PrivacyPolicy)
     })
 
-
-    it.only('Email confirmation after registration', async () => {
-        await registerPage.registerWithEmail(`${mailApp.namespace}.${mailApp.tag}${mailApp.testMail}`, userCredentials.user1.pass, userCredentials.user1.pass)
+    it('Email confirmation after registration', async () => {
+        await registerPage.registerWithEmail(`${mailApp.namespace}.${mailApp.tag}${mailApp.testMail}`)
         const confirmationLink = await mailApp.getVerificationLinkFromEmail()
         await browser.url(confirmationLink)
         await page.clickOnButton(enums.Button.ConfirmEmail)

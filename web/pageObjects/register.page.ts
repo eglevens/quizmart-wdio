@@ -1,5 +1,6 @@
 import * as page from './page'
 import * as enums from '../utils/enums'
+import * as defaultCredentials from '../../userCredentials.json'
 
 const newsletterCheckbox = '//button[@type="button"]'
 const newsletterPrivacyPolicyLink = '//a[text()="communications"]'
@@ -7,10 +8,10 @@ const newsletterPrivacyPolicyLink = '//a[text()="communications"]'
 
 //--------------------------------
 
-async function fillRegistrationForm(email: string, pass: string, passRepeat: string): Promise<void> {
-    await page.fillFormInputWithValue(enums.Input.Email, email)
-    await page.fillFormInputWithValue(enums.Input.Password, pass)
-    await page.fillFormInputWithValue(enums.Input.RepeatPass, passRepeat)
+async function fillRegistrationForm(email?: string, pass?: string, passRepeat?: string): Promise<void> {
+    await page.fillFormInputWithValue(enums.Input.Email, email || defaultCredentials.email)
+    await page.fillFormInputWithValue(enums.Input.Password, pass || defaultCredentials.pass)
+    await page.fillFormInputWithValue(enums.Input.RepeatPass, passRepeat || defaultCredentials.pass)
 }
 
 //----------------ACTION----------------
@@ -23,12 +24,12 @@ export async function clickNewsletterPrivacyPolicyLink(): Promise<void> {
     await page.clickByLocator(newsletterPrivacyPolicyLink)
 }
 
-export async function registerWithEmail(email: string, pass: string, passRepeat: string): Promise<void> {
+export async function registerWithEmail(email?: string, pass?: string, passRepeat?: string): Promise<void> {
     await fillRegistrationForm(email, pass, passRepeat)
     await clickRegisterBtn()
 }
 
-export async function registerWithEmailAndNewsletterSubscription(email: string, pass: string, passRepeat: string): Promise<void> {
+export async function registerWithEmailAndNewsletterSubscription(email: string, pass?: string, passRepeat?: string): Promise<void> {
     await fillRegistrationForm(email, pass, passRepeat)
     await page.clickByLocator(newsletterCheckbox)
     await clickRegisterBtn()
