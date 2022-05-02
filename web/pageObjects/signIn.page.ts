@@ -1,6 +1,7 @@
 import * as page from './page'
 import * as enums from '../utils/enums'
 import * as userCredentials from '../utils/userCredentials'
+import * as defaultCredentials from '../../userCredentials.json'
 
 async function clickLoginBtn() {
     await page.clickOnFormButton(enums.Button.SignIn)
@@ -9,9 +10,9 @@ async function clickLoginBtn() {
 
 //----------------ACTION----------------
 
-export async function signInWithEmail(email: string, pass: string): Promise<void> {
-    await page.fillFormInputWithValue(enums.Input.Email, email)
-    await page.fillFormInputWithValue(enums.Input.Password, pass)
+export async function signInWithEmail(pass?: string, email?: string): Promise<void> {
+    await page.fillFormInputWithValue(enums.Input.Email, email || defaultCredentials.email)
+    await page.fillFormInputWithValue(enums.Input.Password, pass || defaultCredentials.pass)
     await clickLoginBtn()
 }
 
@@ -27,7 +28,7 @@ export async function fillPassInputAndLoseFocus(pass: string): Promise<void> {
 
 export async function signIn(): Promise<void> {
     await page.openSignInPage()
-    await signInWithEmail(userCredentials.user1.email, userCredentials.user1.pass) 
+    await signInWithEmail() 
     await page.waitUntilSortButtonIsDisplayed
 }
 

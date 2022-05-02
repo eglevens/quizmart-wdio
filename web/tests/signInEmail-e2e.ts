@@ -14,18 +14,17 @@ describe('Sign in with email', () => {
     })
 
     it('Success sign in', async () => {
-        await signInPage.signInWithEmail(userCredentials.user1.email, userCredentials.user1.pass)
+        await signInPage.signInWithEmail()
         expect(await page.getPageHeaderTextAfterLogin()).equals(enums.Header.Discover)
     })
 
     it('Attempt to sign in with invalid password', async () => {
-        await signInPage.signInWithEmail(userCredentials.user1.email, userCredentials.invalidPass)
-
+        await signInPage.signInWithEmail(userCredentials.invalidPass)
         expect(await signInPage.getFormValidation()).equals(validations.Form.IncorrectCredentials)
     })
 
     it('Attempt to sign in with non registered email', async () => {
-        await signInPage.signInWithEmail(`${mailApp.namespace}.${mailApp.tag}${mailApp.testMail}`, userCredentials.invalidPass)
+        await signInPage.signInWithEmail(userCredentials.invalidPass, `${mailApp.namespace}.${mailApp.tag}${mailApp.testMail}`)
         expect(await signInPage.getFormValidation()).equals(validations.Form.IncorrectCredentials)
     })
 
