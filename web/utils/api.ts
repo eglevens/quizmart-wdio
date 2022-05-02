@@ -20,7 +20,7 @@ export async function takeScreenshot(testContext: MochaContext): Promise<void> {
     await browser.saveScreenshot(path.join(__dirname, `${dir}`))
 }
 
-export async function getQuizIds(email?: string, password?: string): Promise<string> {
+export async function getQuizIds(): Promise<string> {
     const token = await localStr.getLocalStorageValue('auth_header')
     const response = await chai.request(apiBaseUrl)
         .get('/created-collections')
@@ -31,9 +31,9 @@ export async function getQuizIds(email?: string, password?: string): Promise<str
     return response.body.quizzes.data[0].id
 }
 
-export async function deleteQuiz(email: string, password: string): Promise<void> {
+export async function deleteQuiz(): Promise<void> {
     const token = await localStr.getLocalStorageValue('auth_header')
-    const quizId = await getQuizIds(email, password)
+    const quizId = await getQuizIds()
     const response = await chai.request(apiBaseUrl)
         .delete(`/quizzes/${quizId}`)
         .set('Authorization', 'Bearer ' + token)

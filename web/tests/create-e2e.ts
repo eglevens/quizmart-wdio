@@ -4,14 +4,13 @@ import * as createPage from '../pageObjects/create.page'
 import * as validations from '../utils/validations'
 import * as myQuizzPage from '../pageObjects/myQuizz.page'
 import { expect } from 'chai'
-import { user1 } from '../utils/userCredentials'
 import * as api from '../utils/api'
 
 
 describe('Quiz creation cases', () => {
 
     beforeEach(async function () {
-        await api.loginToQuizmartApp(user1.email, user1.pass)
+        await api.loginToQuizmartApp()
         await page.clickOnLink(enums.Link.Create)
     })
 
@@ -55,7 +54,7 @@ describe('Quiz creation cases', () => {
     })
 
     after(async function () {
-        await api.deleteQuiz(user1.email, user1.pass)
+        await api.deleteQuiz()
     })
 
 })

@@ -14,7 +14,7 @@ const filePath = path.join(__dirname, '../../resources/img/quizImg.jpg')
 
 //----------------ACTION----------------
 
-export async function loginAndOpenCreatePage(email: string, password: string) {
+export async function loginAndOpenCreatePage(email?: string, password?: string) {
     await api.loginToQuizmartApp(email, password)
     await page.openCreatePage()
 }
