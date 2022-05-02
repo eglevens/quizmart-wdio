@@ -6,6 +6,7 @@ import path = require('path')
 import * as page from '../pageObjects/page'
 
 import * as localStr from './localStr'
+import * as defaultCredentials from '../../userCredentials.json'
 import { Context as MochaContext } from 'mocha'
 
 
@@ -19,7 +20,7 @@ export async function takeScreenshot(testContext: MochaContext): Promise<void> {
     await browser.saveScreenshot(path.join(__dirname, `${dir}`))
 }
 
-export async function getQuizIds(email: string, password: string): Promise<string> {
+export async function getQuizIds(email?: string, password?: string): Promise<string> {
     const token = await localStr.getLocalStorageValue('auth_header')
     const response = await chai.request(apiBaseUrl)
         .get('/created-collections')
@@ -67,10 +68,10 @@ export async function isUserEmailVerified(): Promise<boolean> {
     return response.body.emailVerified
 }
 
-export async function loginToQuizmartApp(email: string, password: string) {
+export async function loginToQuizmartApp(email?: string, password?: string) {
     const response = await chai.request(apiBaseUrl)
         .post('/auth/login')
-        .send({ 'email': email, 'password': password })
+        .send({ 'email': email || defaultCredentials.email, 'password': password || defaultCredentials.pass})
 
     await browser.url(`https://staging-app.quizmart.io/auth#${response.body.accessToken}$$${response.body.refreshToken}$$`)
     await page.waitUntilSortButtonIsDisplayed()

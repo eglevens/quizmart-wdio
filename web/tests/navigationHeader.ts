@@ -2,7 +2,6 @@ import * as page from '../pageObjects/page'
 import * as api from '../utils/api'
 import * as enums from '../utils/enums'
 import { expect } from 'chai'
-import { user1 } from '../utils/userCredentials'
 const chai = require('chai')
 chai.use(require('chai-url'))
 
@@ -10,7 +9,7 @@ chai.use(require('chai-url'))
 describe('Navigation from header', () => {
 
     beforeEach(async function () {
-        await api.loginToQuizmartApp(user1.email, user1.pass)
+        await api.loginToQuizmartApp()
     })
 
     it('Open each page by clicking on buttons', async () => {
@@ -40,7 +39,7 @@ describe('Navigation from header', () => {
         chai.expect(url).to.have.path(enums.Path.Discover)
     })
 
-    it.only('Open each page by clicking on buttons on offline mode', async () => {
+    it('Open each page by clicking on buttons on offline mode', async () => {
         await page.setOfflineMode()
 
         await page.clickOnLink(enums.Link.Play)
