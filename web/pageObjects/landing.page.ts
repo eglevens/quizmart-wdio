@@ -18,12 +18,6 @@ const passFacebookInput = '//input[@id="pass"]'
 
 const loginFacebookBtn = '//button[@id="loginbutton"]'
 
-
-async function clickLoginBtn() {
-    await page.clickOnFormButton(enums.Button.SignIn)
-}
-
-
 //----------------ACTION----------------
 
 

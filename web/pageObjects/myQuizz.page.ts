@@ -1,5 +1,4 @@
 import * as page from './page'
-import * as enums from '../utils/enums'
 
 
 const latestQuiz = '(//div[./div[@data-cy="quizCover"]]) [1]'
@@ -9,8 +8,6 @@ const latestQuizTitle = `${latestQuiz} //h2[@data-cy="quizTitle"]`
 const latestQuizDesc = `${latestQuiz} //div[@data-cy="quizDescription"]`
 const latestQuizQuestionCount = `${latestQuiz} //div[@data-cy="quizQuestionCount"]`
 const latestQuizImage = `${latestQuiz} //div[@data-cy="quizCover"]`
-
-const moreOptBtn = '//button[@data-cy="moreOptionsButton"]'
 
 
 //----------------ACTION----------------

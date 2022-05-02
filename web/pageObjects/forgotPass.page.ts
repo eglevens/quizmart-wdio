@@ -1,6 +1,5 @@
 import * as page from './page'
 import * as enums from '../utils/enums'
-import * as userCredentials from '../utils/userCredentials'
 import * as mailApp from '../utils/mailApp'
 import * as defaultCredentials from '../../userCredentials.json'
 

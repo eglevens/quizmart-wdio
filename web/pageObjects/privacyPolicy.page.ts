@@ -8,5 +8,5 @@ const closeBtn = '//*[@id="btn_close"]'
 
 export async function getPageHeaderText() {
     await page.waitUntilElementIsPresentByLocator(closeBtn)
-   return await (await page.getElementByLocator(header)).getText()
+    return await (await page.getElementByLocator(header)).getText()
 }

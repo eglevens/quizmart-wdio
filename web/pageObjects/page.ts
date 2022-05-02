@@ -221,8 +221,7 @@ export async function waitUntilButtonByTextIsVisibleInViewport(btnName: string, 
         })
 }
 
-export async function waitUntilButtonByTextIsNotVisibleInViewport(btnName: string, customTimeout?: number): Promise<any> {
-    const timeoutMessage = `${btnName} button still visible after ${customTimeout || defaultTimeout} ms`
+export async function waitUntilButtonByTextIsNotVisibleInViewport(btnName: string): Promise<any> {
     return (await getElementByLocator(button(btnName))).waitForExist({ reverse: true })
 }
 
