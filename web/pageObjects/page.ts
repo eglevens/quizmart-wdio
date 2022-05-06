@@ -4,6 +4,8 @@ const headerGuest = '(//h1)[1]'
 const headerLoggedIn = '//div[./p[@data-cy="subtitle"]]//h1'
 const backendFormValidationError = '//form/div/h3'
 const popularBtn = '//button[./input[@name="language"]]'
+const message = '//div[@data-cy="notification"]'
+
 
 function link(href: string): string {
     return `//a[@href="${href}"]`
@@ -78,8 +80,8 @@ export async function getElementByLocator(locator: string): Promise<WebdriverIO.
     return await (browser).$(locator)
 }
 
-export async function isMessageDisplayed(el: string): Promise<boolean> {
-    return await (await getElementByLocator(elByText(el))).isDisplayed()
+export async function isMessageDisplayed(): Promise<boolean> {
+    return await (await getElementByLocator(message)).isDisplayed()
 }
 
 export async function getElementsByLocator(locator: string) {
@@ -247,19 +249,27 @@ export async function waitUntilFormButtonByTextIsClickable(btnName: string, cust
         })
 }
 
-export async function waitUntilGenericElementByTextIsPresent(el: string, customTimeout?: number): Promise<void> {
-    const timeoutMessage = `${el} element still invisible after ${customTimeout || defaultTimeout} ms`
-    await browser.waitUntil(async function () {
-        return (await getElementByLocator(elByText(el))).isDisplayed()
-    },
+export async function waitAndReturnMessageTextByLocator(customTimeout?: number): Promise<any> {
+    const timeoutMessage = `${message} element still not displayed in viewport after ${customTimeout || defaultTimeout} ms`
+    if (await browser.waitUntil(async function() {
+            return await (await getElementByLocator(message)).isDisplayedInViewport()
+        },
         {
             timeout: customTimeout || defaultTimeout,
             timeoutMsg: timeoutMessage
-        })
+        })) {
+        return (await getElementByLocator(message)).getText()
+    } else {
+        throw Error
+    }
 }
 
 export async function isButtonByTextDisplayed(btnName: string): Promise<boolean> {
     return (await getElementByLocator(button(btnName))).isDisplayed()
+}
+
+export async function waitUntilElementByTextIsNotVisibleInViewport(el: string): Promise<any> {
+    return (await getElementByLocator(elByText(el))).waitForExist({ timeout: 5000, reverse: true, interval: 5 })
 }
 
 //----------------Throttle----------------

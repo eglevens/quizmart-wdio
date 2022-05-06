@@ -39,26 +39,22 @@ describe('Navigation from header', () => {
         chai.expect(url).to.have.path(enums.Path.Discover)
     })
 
-    it('Open each page by clicking on buttons on offline mode', async () => {
+    it('Click to openone page in offline mode', async () => {
         await page.setOfflineMode()
 
         await page.clickOnLink(enums.Link.Play)
-        expect(await page.isMessageDisplayed(enums.Messages.FailedToFetch)).to.be.true
+        expect(await page.waitAndReturnMessageTextByLocator()).to.equal(enums.Messages.FailedToFetch)
 
-        await page.clickOnLink(enums.Link.Join)
-        expect(await page.isMessageDisplayed(enums.Messages.FailedToFetch)).to.be.true
+        await page.setOnlineMode()
 
-        await page.clickOnLink(enums.Link.Create)
-        expect(await page.isMessageDisplayed(enums.Messages.FailedToFetch)).to.be.true
-
-        await page.clickOnLink(enums.Link.Collections)
-        expect(await page.isMessageDisplayed(enums.Messages.FailedToFetch)).to.be.true
-
-        await page.clickOnLink(enums.Link.Discover)
-        expect(await page.isMessageDisplayed(enums.Messages.FailedToFetch)).to.be.true
+        await page.waitUntilElementByTextIsNotVisibleInViewport(enums.Messages.FailedToFetch)
+        await page.clickOnLink(enums.Link.Play)
+        //nezinau, ar cia verta sita expect'a det, nes jeigu ir atsirastu tas alertas, tai neras is pat pradziu
+        //reik pergalvot
+        expect(await page.isMessageDisplayed()).to.be.false
     })
 
-    afterEach(async function() {
+    afterEach(async function () {
         await api.takeScreenshot(this)
     })
 

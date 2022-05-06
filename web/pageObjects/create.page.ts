@@ -32,7 +32,7 @@ export async function fillInputWithtags(length: number) {
     }
 }
 
-export async function fillQuizWithOpenEndedQuestion() {
+export async function createQuizWithOpenEndedQuestion() {
     await fillQuizTitle()
     await page.sendValueByLocator(imageUploadInput, filePath)
     await page.fillInputWithValue(enums.Input.QuizCreationDescription, enums.QuizCreation.Description)
@@ -45,7 +45,6 @@ export async function fillQuizWithOpenEndedQuestion() {
     await page.fillInputWithValue(enums.Input.QuizCreationQuestion, enums.QuizCreation.Question)
     await page.fillInputWithValue(enums.Input.QuizCreationAnswer, enums.QuizCreation.Answer)
     await page.clickOnButton(enums.Button.SaveQuiz)
-    await page.waitUntilGenericElementByTextIsPresent(enums.Messages.QuizCreated, 3000)
 }
 
 //----------------GET----------------

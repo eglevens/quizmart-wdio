@@ -40,7 +40,9 @@ describe('Quiz creation cases', () => {
     })
 
     it('Create quiz with open-ended question and verify it exists in created collections', async () => {
-        await createPage.fillQuizWithOpenEndedQuestion()
+        await createPage.createQuizWithOpenEndedQuestion()
+        expect (await page.waitAndReturnMessageTextByLocator()).equals(enums.Messages.QuizCreated)
+        
         await myQuizzPage.openMyCreatedQuizzes()
         expect(await myQuizzPage.isQuizImageUploaded()).to.be.true
         expect(await myQuizzPage.getQuizPrice()).equals('Free')
