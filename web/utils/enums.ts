@@ -77,5 +77,6 @@ export enum QuizCreation {
 
 export enum Messages {
     QuizCreated = 'Quiz created',
-    QuizDeleted = 'Quiz deleted'
+    QuizDeleted = 'Quiz deleted',
+    FailedToFetch = 'Failed to fetch'
 }
