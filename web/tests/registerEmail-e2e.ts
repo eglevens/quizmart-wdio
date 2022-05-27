@@ -73,7 +73,7 @@ describe('Register with email from register page', () => {
     })
 
 
-    it.only('Email confirmation after registration', async () => {
+    it('Email confirmation after registration', async () => {
         await registerPage.registerWithEmail(`${mailApp.namespace}.${mailApp.tag}${mailApp.testMail}`, userCredentials.user1.pass, userCredentials.user1.pass)
         const confirmationLink = await mailApp.getVerificationLinkFromEmail()
         await browser.url(confirmationLink)

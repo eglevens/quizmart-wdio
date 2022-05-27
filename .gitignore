@@ -1,5 +1,6 @@
 # dependencies
 node_modules
 .vscode 
-screenshots
+screenshots/passed/*
+screenshots/failed/*
 userCredentials.json

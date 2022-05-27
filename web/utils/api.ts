@@ -5,6 +5,8 @@ chai.use(chaiHttp)
 import path = require('path')
 import * as page from '../pageObjects/page'
 
+let walletBalace = require('../../resources/mockResponseBody/walletBalance.json')
+
 import * as localStr from './localStr'
 import { Context as MochaContext } from 'mocha'
 
@@ -83,29 +85,5 @@ export async function abortRequest(url: string) {
 
 export async function mockWalletResponse() {
 
-    (await browser.mock(apiBaseUrl + '/wallet/balance', {method: 'get'})).respond(
-        {
-            balance: 1400.0000,
-            purchased: 200.0000,
-            earned: 100.0,
-            spent: 50.0
-        }
-    )
+    (await browser.mock(apiBaseUrl + '/wallet/balance', { method: 'get' })).respond(walletBalace)
 }
-
-export async function download(filename, text?) {
-
-    
-
-    var element = document.createElement('a');
-    element.setAttribute('href', 'data:text/plain;charset=utf-8,' + 
-    encodeURIComponent(text));
-    element.setAttribute('download', filename);
-   
-     element.style.display = 'none';
-     document.body.appendChild(element);
-   
-     element.click();
-   
-     document.body.removeChild(element);
-   }

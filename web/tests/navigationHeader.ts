@@ -68,9 +68,7 @@ describe('Navigation from header', () => {
     })
 
     it('Open collection page with mocked response body', async () => {
-
         await page.openCredits()
-
         await api.mockWalletResponse()
 
         await browser.refresh()
@@ -78,7 +76,6 @@ describe('Navigation from header', () => {
         expect (await page.getCurrentCredits()).equals('1400')
 
         await browser.mockRestoreAll()
-
         await browser.refresh()
 
         expect (await page.getCurrentCredits()).equals('200')
