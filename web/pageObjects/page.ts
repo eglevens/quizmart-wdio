@@ -33,6 +33,13 @@ function elByText(text: string): string {
     return `//*[text() = '${text}']`
 }
 
+function getNotification(): string {
+    return '//*[@data-cy="notification"]'
+}
+
+function getCredits(): string {
+    return '(//div[@data-cy="usersCredits"])[1]'
+}
 //----------------DEFAULT----------------
 
 export async function openLandingPage(): Promise<void> {
@@ -48,6 +55,7 @@ export async function openSignInPage(): Promise<void> {
     await browser.url('sign-in/')
     await waitUntilFormButtonByTextIsClickable(enums.Button.SignIn)
 }
+
 
 export async function openForgotPassPage(): Promise<void> {
     await browser.url('reset-password/')
@@ -71,15 +79,16 @@ export async function openMyCreatedQuizPage(): Promise<void> {
     await browser.url('https://staging-app.quizmart.io/collections/created-collections')
 }
 
+export async function openCredits(): Promise<void> {
+    await browser.url('https://staging-app.quizmart.io/credits')
+    await browser.pause(1000)
+}
+
 
 //----------------GET----------------
 
 export async function getElementByLocator(locator: string): Promise<WebdriverIO.Element> {
     return await (browser).$(locator)
-}
-
-export async function isMessageDisplayed(el: string): Promise<boolean> {
-    return await (await getElementByLocator(elByText(el))).isDisplayed()
 }
 
 export async function getElementsByLocator(locator: string) {
@@ -125,6 +134,27 @@ export async function getInputValidationTextByInputName(inputName: string): Prom
     return await getElementTextByLocator(frontendInputError(inputName))
 }
 
+
+export async function getNotificationTitle(): Promise<string> {
+    await waitUntilElementIsPresentByLocator(getNotification())
+    return await getElementTextByLocator(getNotification())
+}
+
+export async function getCurrentCredits(): Promise<string> {
+    await waitUntilElementIsPresentByLocator(getCredits())
+    for (let a = 0; a < 5; a++) {
+        if ((await getElementTextByLocator(getCredits())).length > 0) {
+            return await getElementTextByLocator(getCredits())
+
+        }
+        else {
+            console.log('pause ')
+            await driver.pause(200)
+            a += a
+        }
+    }
+
+}
 
 //----------------ACTION----------------
 

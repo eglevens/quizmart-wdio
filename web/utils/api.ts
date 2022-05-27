@@ -73,5 +73,39 @@ export async function loginToQuizmartApp(email: string, password: string) {
         .send({ 'email': email, 'password': password })
 
     await browser.url(`https://staging-app.quizmart.io/auth#${response.body.accessToken}$$${response.body.refreshToken}$$`)
-    await page.waitUntilSortButtonIsDisplayed()
+    await page.waitUntilSortButtonIsDisplayed(4000)
 }
+
+export async function abortRequest(url: string) {
+    (await browser.mock(apiBaseUrl + url)).abort('Failed')
+}
+
+
+export async function mockWalletResponse() {
+
+    (await browser.mock(apiBaseUrl + '/wallet/balance', {method: 'get'})).respond(
+        {
+            balance: 1400.0000,
+            purchased: 200.0000,
+            earned: 100.0,
+            spent: 50.0
+        }
+    )
+}
+
+export async function download(filename, text?) {
+
+    
+
+    var element = document.createElement('a');
+    element.setAttribute('href', 'data:text/plain;charset=utf-8,' + 
+    encodeURIComponent(text));
+    element.setAttribute('download', filename);
+   
+     element.style.display = 'none';
+     document.body.appendChild(element);
+   
+     element.click();
+   
+     document.body.removeChild(element);
+   }

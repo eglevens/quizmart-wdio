@@ -184,11 +184,11 @@ export const config: WebdriverIO.Config = {
             }
           })
 
-        fs.readdir(failed, (err, files) => {
+        fs.readdir(failedDir, (err, files) => {
             if (err) throw err
           
             for (const file of files) {
-              fs.unlink(path.join(failed, file), err => {
+              fs.unlink(path.join(failedDir, file), err => {
                 if (err) throw err
               })
             }
